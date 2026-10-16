@@ -2,7 +2,7 @@
   "tasks": {
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
-    "package": "cd public && rm -f effective-docs.zip && zip -X -r effective-docs.zip . -x effective-docs.zip '.*' '*/.*'"
+    "package": "cd public && rm -f effective.zip && zip -X -r effective.zip . -x effective.zip '.*' '*/.*'"
   },
   "imports": {
     "@std/http": "jsr:@std/http@^1"
