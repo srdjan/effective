@@ -6,7 +6,8 @@
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
     "test": "deno test --allow-read=public",
-    "package": "cd public && rm -f effective.zip && zip -X -r effective.zip . -x effective.zip '.*' '*/.*'"
+    "package": "cd public && rm -f effective.zip && zip -X -r effective.zip . -x effective.zip '.*' '*/.*'",
+    "og-image": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --screenshot=public/og-image.png \"file://$PWD/assets/og-card.html\""
   },
   "imports": {
     "@std/http": "jsr:@std/http@^1",
