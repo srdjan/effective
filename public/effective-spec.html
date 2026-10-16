@@ -402,6 +402,265 @@ pipeStage    = QualifiedName [&quot;(&quot; arguments &quot;)&quot;]</code></pre
 <p>Collection fixtures must verify callback purity, order, empty arrays, and distinct closed builtin identities.</p>
 <p>Backend fixtures must compare values, typed failures, and operation traces. A future Effect target also requires strict TypeScript checking and runtime checks.</p>
 <p>Delivered checks cover document consistency, the manual log IR fixture, and strict TypeScript checks of every illustrative Effect-TS tab. No Effective execution or translation-equivalence check exists.</p><nav class="section-nav" aria-label="Navigation for section 16"><a href="#grammar">Previous section</a><a href="#examples">Next section</a></nav></section><section class="section" id="examples" aria-labelledby="heading-examples"><h2 id="heading-examples">Examples and deferred work</h2><div class="table-wrap"><table><thead><tr><th scope="col">Example</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td><a href="effective-examples/log.eff">effective-examples/log.eff</a></td><td>A service declaration and one direct call.</td></tr><tr><td><a href="effective-examples/collections.eff">effective-examples/collections.eff</a></td><td>Pure data-first collection pipelines.</td></tr><tr><td><a href="effective-examples/pay.eff">effective-examples/pay.eff</a></td><td>A complete payment workflow with matching, retry, and immutable updates.</td></tr><tr><td><a href="effective-examples/users.eff">effective-examples/users.eff</a></td><td>Lookup, update, recovery, and collection transformation in a reusable module.</td></tr><tr><td><a href="effective-examples/main.eff">effective-examples/main.eff</a></td><td>A separate application module that provides the imported user service.</td></tr></tbody></table></div>
+<p>The two figures below show users.eff and pay.eff in full. Each Effect-TS tab translates the complete module, including its exports.</p>
+<figure data-ui class="code" data-tabs data-check="spec-example-users"><figcaption>The complete Users module <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export type User = {
+  id: string,
+  name: string,
+  active: boolean
+}
+
+export error UserMissing = { id: string }
+export error StoreUnavailable = { message: string }
+
+export service Users {
+  find(id: string): Option&lt;User&gt; fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}
+
+export const getUser = (id: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find =&gt;
+  match Users.find(id) {
+    Some(user) =&gt; user,
+    None =&gt; fail(UserMissing({ id }))
+  }
+
+export const rename = (id: string, name: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find | Users.save =&gt; {
+  const user = getUser(id)
+  const renamed: User = { ...user, name }
+  Users.save(renamed)
+  renamed
+}
+
+export const displayName = (id: string): string
+  fails StoreUnavailable
+  uses Users.find =&gt;
+  try {
+    getUser(id).name
+  } catch {
+    UserMissing(error) =&gt; &quot;Guest&quot;
+  }
+
+export const activeNames = (): string[]
+  fails StoreUnavailable
+  uses Users.all =&gt;
+  Users.all()
+    |&gt; filter((user) =&gt; user.active)
+    |&gt; map((user) =&gt; user.name)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-example-users"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+export const User = Schema.Struct({
+  id: Schema.String,
+  name: Schema.String,
+  active: Schema.Boolean
+})
+export type User = typeof User.Type
+
+export class UserMissing extends Schema.TaggedError&lt;UserMissing&gt;()(
+  &quot;UserMissing&quot;,
+  { id: Schema.String }
+) {}
+
+export class StoreUnavailable extends Schema.TaggedError&lt;StoreUnavailable&gt;()(
+  &quot;StoreUnavailable&quot;,
+  { message: Schema.String }
+) {}
+
+export class Users extends Context.Service&lt;Users, {
+  readonly find: (id: string) =&gt; Effect.Effect&lt;
+    Option.Option&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+  readonly save: (user: User) =&gt; Effect.Effect&lt;
+    void,
+    StoreUnavailable
+  &gt;
+  readonly all: () =&gt; Effect.Effect&lt;
+    ReadonlyArray&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+}&gt;()(&quot;Users&quot;) {}
+
+export const getUser = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt;
+  Effect.flatMap(
+    Users.use((users) =&gt; users.find(id)),
+    (found) =&gt; Option.match(found, {
+      onNone: () =&gt; Effect.fail(new UserMissing({ id })),
+      onSome: (user) =&gt; Effect.succeed(user)
+    })
+  )
+
+export const rename = (id: string, name: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt; Effect.gen(function* () {
+  const user = yield* getUser(id)
+  const renamed: User = { ...user, name }
+  yield* Users.use((users) =&gt; users.save(renamed))
+  return renamed
+})
+
+export const displayName = (id: string): Effect.Effect&lt;
+  string,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.map(getUser(id), (user) =&gt; user.name).pipe(
+  Effect.catchTag(
+    &quot;UserMissing&quot;,
+    () =&gt; Effect.succeed(&quot;Guest&quot;)
+  )
+)
+
+export const activeNames = (): Effect.Effect&lt;
+  ReadonlyArray&lt;string&gt;,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.map(
+  Users.use((users) =&gt; users.all()),
+  (all) =&gt; all.filter((user) =&gt; user.active).map((user) =&gt; user.name)
+)</code></pre></div></figure>
+<figure data-ui class="code" data-tabs data-check="spec-example-pay"><figcaption>The complete payment module <a href="effective-examples/pay.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type OrderId = Brand&lt;string&gt;
+type Order = {
+  id: OrderId,
+  totalCents: int,
+  status: &quot;pending&quot; | &quot;paid&quot;
+}
+
+error OrderNotFound = { id: OrderId }
+error PaymentDeclined = { reason: string }
+
+service Orders {
+  find(id: OrderId): Option&lt;Order&gt;
+  save(order: Order): void
+}
+
+service Payments {
+  charge(amount: int): string fails PaymentDeclined
+}
+
+const findOrder = (id: OrderId): Order
+  fails OrderNotFound
+  uses Orders.find =&gt;
+  match Orders.find(id) {
+    Some(order) =&gt; order,
+    None =&gt; fail(OrderNotFound({ id }))
+  }
+
+const chargeOrder = (order: Order): Order
+  fails PaymentDeclined
+  uses Payments.charge =&gt; {
+  retry(() =&gt; Payments.charge(order.totalCents), { times: 2 })
+  order
+}
+
+const markPaid = (order: Order): Order =&gt;
+  ({ ...order, status: &quot;paid&quot; })
+
+const saveOrder = (order: Order): Order
+  uses Orders.save =&gt; {
+  Orders.save(order)
+  order
+}
+
+export const pay = (id: OrderId): Order
+  fails OrderNotFound | PaymentDeclined
+  uses Orders | Payments.charge =&gt;
+  id
+    |&gt; findOrder
+    |&gt; chargeOrder
+    |&gt; markPaid
+    |&gt; saveOrder</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-example-pay"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+const OrderId = Schema.String.pipe(Schema.brand(&quot;OrderId&quot;))
+type OrderId = typeof OrderId.Type
+
+const Int = Schema.Finite.check(
+  Schema.makeFilter(
+    (value) =&gt; Number.isSafeInteger(value) || &quot;expected a safe integer&quot;
+  )
+)
+
+const Order = Schema.Struct({
+  id: OrderId,
+  totalCents: Int,
+  status: Schema.Literals([&quot;pending&quot;, &quot;paid&quot;])
+})
+type Order = typeof Order.Type
+
+class OrderNotFound extends Schema.TaggedError&lt;OrderNotFound&gt;()(
+  &quot;OrderNotFound&quot;,
+  { id: OrderId }
+) {}
+
+class PaymentDeclined extends Schema.TaggedError&lt;PaymentDeclined&gt;()(
+  &quot;PaymentDeclined&quot;,
+  { reason: Schema.String }
+) {}
+
+class Orders extends Context.Service&lt;Orders, {
+  readonly find: (id: OrderId) =&gt; Effect.Effect&lt;Option.Option&lt;Order&gt;&gt;
+  readonly save: (order: Order) =&gt; Effect.Effect&lt;void&gt;
+}&gt;()(&quot;Orders&quot;) {}
+
+class Payments extends Context.Service&lt;Payments, {
+  readonly charge: (amount: number) =&gt; Effect.Effect&lt;
+    string,
+    PaymentDeclined
+  &gt;
+}&gt;()(&quot;Payments&quot;) {}
+
+const findOrder = (id: OrderId): Effect.Effect&lt;
+  Order,
+  OrderNotFound,
+  Orders
+&gt; =&gt; Effect.flatMap(
+  Orders.use((orders) =&gt; orders.find(id)),
+  (found) =&gt; Option.match(found, {
+    onNone: () =&gt; Effect.fail(new OrderNotFound({ id })),
+    onSome: (order) =&gt; Effect.succeed(order)
+  })
+)
+
+const chargeOrder = (order: Order): Effect.Effect&lt;
+  Order,
+  PaymentDeclined,
+  Payments
+&gt; =&gt; Effect.map(
+  Effect.retry(
+    Effect.suspend(() =&gt;
+      Payments.use((payments) =&gt; payments.charge(order.totalCents))
+    ),
+    { times: 2 }
+  ),
+  () =&gt; order
+)
+
+const markPaid = (order: Order): Order =&gt;
+  ({ ...order, status: &quot;paid&quot; })
+
+const saveOrder = (order: Order): Effect.Effect&lt;Order, never, Orders&gt; =&gt;
+  Effect.map(
+    Orders.use((orders) =&gt; orders.save(order)),
+    () =&gt; order
+  )
+
+export const pay = (id: OrderId): Effect.Effect&lt;
+  Order,
+  OrderNotFound | PaymentDeclined,
+  Orders | Payments
+&gt; =&gt; Effect.gen(function* () {
+  const order = yield* findOrder(id)
+  const charged = yield* chargeOrder(order)
+  const paid = markPaid(charged)
+  return yield* saveOrder(paid)
+})</code></pre></div></figure>
 <p>The <a href="index.html">mini book</a> explains these forms and pairs each one with an illustrative Effect-TS tab. The typed IR model and validation notes accompany both documents.</p>
 <p>Deferred features include user generics, effect-row polymorphism, source purity assertions, resource scopes, concurrency, streams, mutable references, macros, and recursive schemas.</p>
 <p>Source layer construction, arbitrary JavaScript interop, package resolution, early returns, and codec generation also require later specifications.</p>

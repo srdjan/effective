@@ -3,7 +3,7 @@ Draft 0.1, language core version 0, October 15, 2026.
 
 Delivered content
 Two linked HTML documents contain 18 reference sections and nine book chapters.
-The documents contain 61 code blocks, 28 Effect-TS tabs, and seven exercises.
+The documents contain 65 code blocks, 30 Effect-TS tabs, and seven exercises.
 Each Effective example has an Effect-TS tab with a manual translation.
 Five .eff files provide canonical source examples.
 The package also includes typed-ir.ts and the manual log.ir.json fixture.
@@ -24,7 +24,7 @@ The reusable Users module contains no provider acquisition or application entry 
 Completed TypeScript checks
 TypeScript 7.0.2 checks typed-ir.ts and the manual fixture under strict settings.
 The settings also enable exactOptionalPropertyTypes and noUncheckedIndexedAccess.
-All 28 Effect-TS tabs pass these strict settings against Effect 4.0.5.
+All 30 Effect-TS tabs pass these strict settings against Effect 4.0.5.
 The three other contract explorer translations in site.js also pass.
 Each translation is checked together with the declarations it requires.
 Provider examples declare UsersLive and AppLive as Layer values in typecheck/preludes.
