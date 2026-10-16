@@ -3,7 +3,7 @@ import { serveDir } from "@std/http/file-server";
 // The standard media types map .ts to video/mp2t and do not know .eff or .lft.
 const TEXT_EXTENSIONS = [".ts", ".eff", ".lft"];
 
-export default {
+const server: Deno.ServeDefaultExport = {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const response = await serveDir(request, { fsRoot: "public", quiet: true });
@@ -13,4 +13,6 @@ export default {
     response.headers.set("x-content-type-options", "nosniff");
     return response;
   },
-} satisfies Deno.ServeDefaultExport;
+};
+
+export default server;
