@@ -2,13 +2,24 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><title>Effective - Mini book</title><link rel="canonical" href="https://effective.timok.deno.net/"><meta property="og:site_name" content="Effective"><meta property="og:type" content="website"><meta property="og:title" content="Effective - Mini book"><meta property="og:description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><meta property="og:url" content="https://effective.timok.deno.net/"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effective. Fails. Uses. A small language that transpiles to Effect-TS."><meta property="og:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effective - Mini book"><meta name="twitter:description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><meta name="twitter:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effective. Fails. Uses. A small language that transpiles to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://effective.timok.deno.net/#website","name":"Effective","url":"https://effective.timok.deno.net/","description":"Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output.","inLanguage":"en"},{"@type":"TechArticle","@id":"https://effective.timok.deno.net/#book","headline":"Effective mini book","name":"Effective - Mini book","description":"Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output.","url":"https://effective.timok.deno.net/","image":"https://effective.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@id":"https://effective.timok.deno.net/#website"}}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css"><script src="site.js" defer></script></head>
 <body id="top" class="book-page"><a class="skip" href="#content">Skip to content</a>
 <header class="topbar"><a class="brand" href="index.html">Effective<span class="brand-period" aria-hidden="true">.</span></a><nav class="toplinks" aria-label="Documents"><a href="index.html" aria-current="page">Mini book</a><a href="effective-spec.html">Specification</a><a href="effective.zip" download>Download package</a></nav></header>
-<main id="site-content"><section class="hero" aria-labelledby="hero-heading"><div class="hero-type"><h1 id="hero-heading"><span>Fails.</span><span>Uses.</span></h1></div><div class="hero-bottom"><p class="subtitle">A small language that transpiles to Effect-TS.<br>Ordinary values. Explicit contracts.</p><a class="button primary-action" href="#orientation">Read the book <span aria-hidden="true">↗</span></a></div></section><section class="argument" aria-label="About Effective"><p class="argument-statement">A function tells you what it returns, how it can fail, and which services it needs.</p><div class="argument-bottom"><p>Effective keeps these facts in the contract. The body reads like direct TypeScript. The transpiler turns each contract into an Effect-TS type.</p><p>Language core 0. Design draft 0.1.<br>October 15, 2026. Transpiler specified, not yet built.</p></div></section><section class="showcase" id="contracts-explorer" aria-labelledby="explorer-heading"><div class="showcase-heading"><h2 id="explorer-heading">Read a contract.</h2><p>Choose a function from the Users example. This illustration shows declared contracts. It does not execute Effective.</p></div><form data-contract-explorer><div class="contract-controls" hidden><label for="contract-function">Explore a function</label><div class="function-input"><input id="contract-function" name="function" value="getUser" list="function-names" autocomplete="off" spellcheck="false" aria-describedby="contract-message"><button type="submit" aria-label="Show function contract">↵</button></div><datalist id="function-names"><option value="getUser"></option><option value="rename"></option><option value="displayName"></option><option value="activeNames"></option></datalist><div class="function-choices" aria-label="Example functions"><button type="button" data-function="getUser" aria-pressed="true">Lookup</button><button type="button" data-function="rename" aria-pressed="false">Rename</button><button type="button" data-function="displayName" aria-pressed="false">Recover</button><button type="button" data-function="activeNames" aria-pressed="false">Collect</button></div></div><div class="contract-result"><figure class="code source contract-source" data-ui><figcaption>Effective <a href="effective-examples/users.eff">View source</a></figcaption><pre id="contract-source" tabindex="0"><code>export const getUser = (id: string): User
+<main id="site-content"><section class="hero" aria-labelledby="hero-heading"><div class="hero-type"><h1 id="hero-heading"><span>Fails.</span><span>Uses.</span></h1></div><div class="hero-bottom"><p class="subtitle">A small language that transpiles to Effect-TS.<br>Ordinary values. Explicit contracts.</p><a class="button primary-action" href="#orientation">Read the book <span aria-hidden="true">↗</span></a></div></section><section class="argument" aria-label="About Effective"><p class="argument-statement">A function tells you what it returns, how it can fail, and which services it needs.</p><div class="argument-bottom"><p>Effective keeps these facts in the contract. The body reads like direct TypeScript. The transpiler turns each contract into an Effect-TS type.</p><p>Language core 0. Design draft 0.1.<br>October 15, 2026. Transpiler specified, not yet built.</p></div></section><section class="showcase" id="contracts-explorer" aria-labelledby="explorer-heading"><div class="showcase-heading"><h2 id="explorer-heading">Read a contract.</h2><p>Choose a function from the Users example. This illustration shows declared contracts. It does not execute Effective.</p></div><form data-contract-explorer><div class="contract-controls" hidden><label for="contract-function">Explore a function</label><div class="function-input"><input id="contract-function" name="function" value="getUser" list="function-names" autocomplete="off" spellcheck="false" aria-describedby="contract-message"><button type="submit" aria-label="Show function contract">↵</button></div><datalist id="function-names"><option value="getUser"></option><option value="rename"></option><option value="displayName"></option><option value="activeNames"></option></datalist><div class="function-choices" aria-label="Example functions"><button type="button" data-function="getUser" aria-pressed="true">Lookup</button><button type="button" data-function="rename" aria-pressed="false">Rename</button><button type="button" data-function="displayName" aria-pressed="false">Recover</button><button type="button" data-function="activeNames" aria-pressed="false">Collect</button></div></div><div class="contract-result"><figure class="code contract-source" data-ui data-tabs data-check="explorer-getUser" data-check-requires="users-declarations"><figcaption>Selected contract <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre id="contract-source" tabindex="0"><code class="language-effective">export const getUser = (id: string): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
   match Users.find(id) {
     Some(user) =&gt; user,
     None =&gt; fail(UserMissing({ id }))
-  }</code></pre></figure><div class="contract-reading" aria-live="polite" aria-atomic="true"><dl><div><dt>Returns</dt><dd id="contract-success">User</dd></div><div><dt>Fails with</dt><dd id="contract-failures">UserMissing | StoreUnavailable</dd></div><div><dt>Uses</dt><dd id="contract-uses">Users.find</dd></div></dl><p id="contract-description">getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.</p></div></div><p id="contract-message" role="status">Showing getUser.</p></form></section><section class="book-index" id="book" aria-labelledby="book-heading"><div><h2 id="book-heading">The mini book.</h2><p>Nine chapters, from immutable values to a complete payment pipeline. Each paired example shows Effective source and its intended Effect-TS output.</p></div><nav class="chapter-index" aria-label="Book chapters"><a href="#orientation"><span>What Effective is</span><span>The language</span></a><a href="#values"><span>Values and types</span><span>Immutable data</span></a><a href="#contracts"><span>Function contracts</span><span>Explicit effects</span></a><a href="#users-foundation"><span>One domain, two languages</span><span>Shared declarations</span></a><a href="#lookup-update"><span>Lookup and update</span><span>Service workflows</span></a><a href="#pipelines-collections"><span>Pipelines and collections</span><span>Composition</span></a><a href="#control"><span>Recovery and provision</span><span>Control</span></a><a href="#payment"><span>A payment pipeline</span><span>Complete example</span></a><a href="#modules-reference"><span>Modules and typed IR</span><span>Transpiler boundary</span></a></nav></section><details class="contents-menu"><summary>Chapters of the mini book</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav></details><div class="layout" id="reader"><nav class="contents" aria-label="Contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="explorer-getUser"><pre id="contract-effect" tabindex="0"><code class="language-typescript">const getUser = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt;
+  Effect.flatMap(
+    Users.use((users) =&gt; users.find(id)),
+    (found) =&gt; Option.match(found, {
+      onNone: () =&gt; Effect.fail(new UserMissing({ id })),
+      onSome: (user) =&gt; Effect.succeed(user)
+    })
+  )</code></pre></div></figure><div class="contract-reading" aria-live="polite" aria-atomic="true"><dl><div><dt>Returns</dt><dd id="contract-success">User</dd></div><div><dt>Fails with</dt><dd id="contract-failures">UserMissing | StoreUnavailable</dd></div><div><dt>Uses</dt><dd id="contract-uses">Users.find</dd></div></dl><p id="contract-description">getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.</p></div></div><p id="contract-message" role="status">Showing getUser.</p></form></section><section class="book-index" id="book" aria-labelledby="book-heading"><div><h2 id="book-heading">The mini book.</h2><p>Nine chapters, from immutable values to a complete payment pipeline. Each example has an Effective tab and an Effect-TS tab that shows its intended output.</p></div><nav class="chapter-index" aria-label="Book chapters"><a href="#orientation"><span>What Effective is</span><span>The language</span></a><a href="#values"><span>Values and types</span><span>Immutable data</span></a><a href="#contracts"><span>Function contracts</span><span>Explicit effects</span></a><a href="#users-foundation"><span>One domain, two languages</span><span>Shared declarations</span></a><a href="#lookup-update"><span>Lookup and update</span><span>Service workflows</span></a><a href="#pipelines-collections"><span>Pipelines and collections</span><span>Composition</span></a><a href="#control"><span>Recovery and provision</span><span>Control</span></a><a href="#payment"><span>A payment pipeline</span><span>Complete example</span></a><a href="#modules-reference"><span>Modules and typed IR</span><span>Transpiler boundary</span></a></nav></section><details class="contents-menu"><summary>Chapters of the mini book</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav></details><div class="layout" id="reader"><nav class="contents" aria-label="Contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
 <article class="main" id="content"><div class="reference-links"><p>Effect-TS means the Effect library for TypeScript, version 4. The target examples use Effect 4.0.5.</p><nav aria-label="Further reading"><a href="effective-spec.html">Read the specification</a><a href="effective-examples/main.eff">Open the application boundary</a><a href="typed-ir.ts">Inspect the typed IR model</a></nav></div><section class="section" id="orientation" aria-labelledby="heading-orientation"><h2 id="heading-orientation">What Effective is</h2><p class="lead">Effective is a small functional language designed to transpile to Effect-TS.</p><p>Effective combines immutable data, arrow functions, pattern matching, and typed service operations. A program reads like direct TypeScript, while each function contract records expected failures and required capabilities.</p>
 <p>The transpiler turns each contract into an Effect-TS type. A function that returns A, fails with E, and uses R becomes Effect.Effect&lt;A, E, R&gt;.</p>
 <p>Services become Context services, and providers become Layer values. Records, errors, and brands become Schema declarations. Options become Option values.</p>
@@ -68,7 +79,7 @@ const load = (id: string): Option&lt;User&gt;
 }</code></pre></figure>
 <p>A block returns its final expression. Effective source has no return statement. Ordered expressions run from left to right, and only the selected branch runs.</p>
 <aside class="exercise"><h3>Exercise</h3><p>What do omitted fails and uses clauses mean when a function has a result annotation?</p><details><summary>Show the answer</summary><p>Both sets are empty. The body must handle failures and provide requirements before the function boundary.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 3"><a href="#values">Previous section</a><a href="#users-foundation">Next section</a></nav></section><section class="section" id="users-foundation" aria-labelledby="heading-users-foundation"><h2 id="heading-users-foundation">One domain, two languages</h2><p class="lead">The Users domain provides the shared declarations for the next four chapters.</p><p>Effective service declarations contain method signatures. Service methods have no this binding. Each method remains a distinct capability after name resolution.</p>
-<figure data-ui class="code source"><figcaption>Effective shared Users declarations</figcaption><pre tabindex="0"><code class="language-effective">type User = {
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Shared Users declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = {
   id: string,
   name: string,
   active: boolean
@@ -81,10 +92,7 @@ service Users {
   find(id: string): Option&lt;User&gt; fails StoreUnavailable
   save(user: User): void fails StoreUnavailable
   all(): User[] fails StoreUnavailable
-}</code></pre></figure>
-<p>A service method lists only failures from that operation. Method requirement sets are empty. A host provider can have separate acquisition failures and dependencies.</p>
-<p>Users.find, Users.save, and Users.all are separate capabilities. A contract can name one method without declaring the other methods. Static tracking does not sandbox host adapters.</p>
-<figure data-ui class="code target"><figcaption>Illustrative Effect-TS shared Users declarations</figcaption><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+}</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-declarations"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
 
 const User = Schema.Struct({
   id: Schema.String,
@@ -116,18 +124,20 @@ class Users extends Context.Service&lt;Users, {
     ReadonlyArray&lt;User&gt;,
     StoreUnavailable
   &gt;
-}&gt;()(&quot;Users&quot;) {}</code></pre></figure>
-<p>The TypeScript target represents successful values inside Effect.Effect. Its error parameter contains tagged errors. Its requirement parameter contains the Users service when a function accesses that context.</p>
-<p>Later TypeScript examples assume these imports, schemas, errors, and the Users class. Later Effective examples assume the declarations above. Each pair shows intended translation, not generated output.</p>
+}&gt;()(&quot;Users&quot;) {}</code></pre></div></figure>
+<p>A service method lists only failures from that operation. Method requirement sets are empty. A host provider can have separate acquisition failures and dependencies.</p>
+<p>Users.find, Users.save, and Users.all are separate capabilities. A contract can name one method without declaring the other methods. Static tracking does not sandbox host adapters.</p>
+<p>The Effect-TS tab represents successful values inside Effect.Effect. Its error parameter contains tagged errors. Its requirement parameter contains the Users service when a function accesses that context.</p>
+<p>Later TypeScript examples assume these imports, schemas, errors, and the Users class. Later Effective examples assume the declarations above. Each Effect-TS tab shows intended translation, not generated output.</p>
 <p>Effect-TS tracks the whole Users service in its requirement type. Effective retains each method requirement in checked IR or backend metadata.</p>
-<p>These isolated comparisons use short error tags and service keys. A transpiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous section</a><a href="#lookup-update">Next section</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">Lookup and update</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third function sequences lookup, change, and save.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective lookup</figcaption><pre tabindex="0"><code class="language-effective">const getUser = (id: string): User
+<p>These isolated translations use short error tags and service keys. A transpiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous section</a><a href="#lookup-update">Next section</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">Lookup and update</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third function sequences lookup, change, and save.</p>
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Lookup using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const getUser = (id: string): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
   match Users.find(id) {
     Some(user) =&gt; user,
     None =&gt; fail(UserMissing({ id }))
-  }</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS lookup using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const getUser = (id: string): Effect.Effect&lt;
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-lookup"><pre tabindex="0"><code class="language-typescript">const getUser = (id: string): Effect.Effect&lt;
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -138,10 +148,10 @@ class Users extends Context.Service&lt;Users, {
       onNone: () =&gt; Effect.fail(new UserMissing({ id })),
       onSome: (user) =&gt; Effect.succeed(user)
     })
-  )</code></pre></figure></div>
+  )</code></pre></div></figure>
 <p>fail(error) ends the normal path and contributes the error identity. Errors are nominal, so declarations with equal fields remain different error types.</p>
 <p>The match reads the option once and selects one arm. The None arm constructs UserMissing with the requested identifier. StoreUnavailable remains unchanged.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective update workflow</figcaption><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Update workflow using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
   ({ ...user, active: true })
 
 export const saveActive = (id: string): User
@@ -151,7 +161,7 @@ export const saveActive = (id: string): User
   const active = activate(user)
   Users.save(active)
   active
-}</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS update using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activate = (user: User): User =&gt;
+}</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-update"><pre tabindex="0"><code class="language-typescript">const activate = (user: User): User =&gt;
   ({ ...user, active: true })
 
 const saveActive = (id: string): Effect.Effect&lt;
@@ -163,14 +173,14 @@ const saveActive = (id: string): Effect.Effect&lt;
   const active = activate(user)
   yield* Users.use((users) =&gt; users.save(active))
   return active
-})</code></pre></figure></div>
+})</code></pre></div></figure>
 <p>Effective uses one direct call syntax for pure functions and service methods. The checked call still distinguishes an ordinary call from a service operation in typed IR.</p>
 <p>The block evaluates each binding and expression in order. A failure stops the remaining steps. The final active value becomes the successful result.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Why does saveActive return active after Users.save(active)?</p><details><summary>Show the answer</summary><p>The final value supports later composition. The save operation returns void, which cannot carry the updated user.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 5"><a href="#users-foundation">Previous section</a><a href="#pipelines-collections">Next section</a></nav></section><section class="section" id="pipelines-collections" aria-labelledby="heading-pipelines-collections"><h2 id="heading-pipelines-collections">Pipelines and collections</h2><p class="lead">A pipeline passes its left value as the first argument of each stage.</p><figure data-ui class="code neutral"><figcaption>Pipeline expansion</figcaption><pre tabindex="0"><code class="language-text">value |&gt; transform          means transform(value)
 value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure>
 <p>The runtime evaluates the left side once. It then evaluates the stage callee and explicit arguments. Pipelines associate from left to right.</p>
 <p>A stage can name a local function, imported function, builtin, or declared service method. Version 0 excludes placeholders, currying, inline lambda stages, and record-member stages.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective collection workflow using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-effective">const activeNames = (users: User[]): string[] =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Collection workflow using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activeNames = (users: User[]): string[] =&gt;
   users
     |&gt; filter((user) =&gt; user.active)
     |&gt; map((user) =&gt; user.name)
@@ -178,7 +188,7 @@ value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure
 export const listActiveNames = (): string[]
   fails StoreUnavailable
   uses Users.all =&gt;
-  Users.all() |&gt; activeNames</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS collection workflow using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activeNames = (
+  Users.all() |&gt; activeNames</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-collection"><pre tabindex="0"><code class="language-typescript">const activeNames = (
   users: ReadonlyArray&lt;User&gt;
 ): ReadonlyArray&lt;string&gt; =&gt;
   users.filter((user) =&gt; user.active).map((user) =&gt; user.name)
@@ -190,7 +200,7 @@ const listActiveNames = (): Effect.Effect&lt;
 &gt; =&gt; Effect.map(
   Users.use((users) =&gt; users.all()),
   activeNames
-)</code></pre></figure></div>
+)</code></pre></div></figure>
 <p>The prelude provides map, filter, and fold. Each builtin traverses from left to right. Map and filter preserve order, while fold carries one accumulator.</p>
 <p>Map and filter call their callback once for each visited element. Empty inputs produce empty outputs. Fold returns its initial accumulator for an empty input.</p>
 <p>Each callback must be pure and have empty failure and requirement sets. Contextual inline arrows work because the builtin supplies their parameter types. Known pure functions also work.</p>
@@ -199,7 +209,7 @@ const listActiveNames = (): Effect.Effect&lt;
 <figure data-ui class="code source"><figcaption>Fold from left to right</figcaption><pre tabindex="0"><code class="language-effective">export const total = (amounts: int[]): int =&gt;
   amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></figure>
 <aside class="exercise"><h3>Exercise</h3><p>Why can version 0 reject a callback parameter whose source type only shows empty effect sets?</p><details><summary>Show the answer</summary><p>An unbodied function type defaults to effect execution. Version 0 has no source annotation that requires pure execution.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 6"><a href="#lookup-update">Previous section</a><a href="#control">Next section</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">Recovery and provision</h2><p class="lead">Effective controls an operation through explicit syntax and deferred zero-argument functions.</p><p>A typed catch handles matching failures from its protected block. Unhandled failures continue to the caller. Catch does not intercept defects or cancellation.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective recovery using chapters 4 and 5 declarations</figcaption><pre tabindex="0"><code class="language-effective">export const activationLabel = (id: string): string
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Recovery using chapters 4 and 5 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const activationLabel = (id: string): string
   fails StoreUnavailable
   uses Users.find | Users.save =&gt;
   try {
@@ -207,7 +217,7 @@ const listActiveNames = (): Effect.Effect&lt;
     &quot;active&quot;
   } catch {
     UserMissing(error) =&gt; &quot;missing: &quot; + error.id
-  }</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS recovery using chapters 4 and 5 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activationLabel = (id: string): Effect.Effect&lt;
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-recovery"><pre tabindex="0"><code class="language-typescript">const activationLabel = (id: string): Effect.Effect&lt;
   string,
   StoreUnavailable,
   Users
@@ -216,26 +226,26 @@ const listActiveNames = (): Effect.Effect&lt;
     &quot;UserMissing&quot;,
     (error) =&gt; Effect.succeed(&quot;missing: &quot; + error.id)
   )
-)</code></pre></figure></div>
+)</code></pre></div></figure>
 <p>retry requires a deferred operation. The function below runs its first attempt and allows two more attempts. Each attempt can perform the Users.find operation again.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective retry using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: string): Option&lt;User&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Retry using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: string): Option&lt;User&gt;
   fails StoreUnavailable
   uses Users.find =&gt;
-  retry(() =&gt; Users.find(id), { times: 2 })</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS retry using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const lookupWithRetry = (id: string): Effect.Effect&lt;
+  retry(() =&gt; Users.find(id), { times: 2 })</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-retry"><pre tabindex="0"><code class="language-typescript">const lookupWithRetry = (id: string): Effect.Effect&lt;
   Option.Option&lt;User&gt;,
   StoreUnavailable,
   Users
 &gt; =&gt; Effect.retry(
   Effect.suspend(() =&gt; Users.use((users) =&gt; users.find(id))),
   { times: 2 }
-)</code></pre></figure></div>
+)</code></pre></div></figure>
 <p>Passing Users.find(id) directly would run the call before retry took control. Effective never inserts suspension because a parameter expects a deferred function.</p>
 <p>Retry preserves the callback result, failures, and requirements. Retry itself has effect execution mode. Its times value must be a finite, nonnegative safe integer literal in version 0.</p>
-<div class="pair" aria-label="Effective and illustrative Effect-TS comparison"><figure data-ui class="code source"><figcaption>Effective provider execution</figcaption><pre tabindex="0"><code class="language-effective">import { UsersLive } from &quot;host:providers&quot;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Provider execution</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import { UsersLive } from &quot;host:providers&quot;
 
 export const runLookup = (id: string): Option&lt;User&gt;
   fails StoreUnavailable =&gt;
-  provide(UsersLive, () =&gt; lookupWithRetry(id))</code></pre></figure><figure data-ui class="code target"><figcaption>Illustrative Effect-TS provider execution</figcaption><pre tabindex="0"><code class="language-typescript">import { UsersLive } from &quot;./users-live.js&quot;
+  provide(UsersLive, () =&gt; lookupWithRetry(id))</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-provider"><pre tabindex="0"><code class="language-typescript">import { UsersLive } from &quot;./users-live.js&quot;
 
 const runLookup = (id: string): Effect.Effect&lt;
   Option.Option&lt;User&gt;,
@@ -243,11 +253,11 @@ const runLookup = (id: string): Effect.Effect&lt;
 &gt; =&gt; Effect.provide(
   Effect.suspend(() =&gt; lookupWithRetry(id)),
   UsersLive
-)</code></pre></figure></div>
-<p>The host maps its provider registration to users-live.js in this target example. Effective source keeps the registered host:providers import.</p>
+)</code></pre></div></figure>
+<p>The host maps its provider registration to users-live.js in the Effect-TS tab. Effective source keeps the registered host:providers import.</p>
 <p>These provider examples assume UsersLive is a Layer&lt;Users&gt; with infallible acquisition and no dependencies. A fallible provider adds its acquisition failures and requirements to the result.</p>
 <p>Providing Users removes the Users requirement. The operation still uses effect execution mode. Version 0 receives provider values from typed host modules and defines no layer construction syntax.</p>
-<aside class="exercise"><h3>Exercise</h3><p>Why do retry and provide require () =&gt; operation() instead of operation()?</p><details><summary>Show the answer</summary><p>The zero-argument function defers execution. The controlling builtin can choose when and how often to invoke the operation.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 7"><a href="#pipelines-collections">Previous section</a><a href="#payment">Next section</a></nav></section><section class="section" id="payment" aria-labelledby="heading-payment"><h2 id="heading-payment">A payment pipeline</h2><p class="lead">The payment workflow composes effectful and pure stages through one data-first pipeline.</p><figure data-ui class="code source"><figcaption>Effective payment module</figcaption><pre tabindex="0"><code class="language-effective">type OrderId = Brand&lt;string&gt;
+<aside class="exercise"><h3>Exercise</h3><p>Why do retry and provide require () =&gt; operation() instead of operation()?</p><details><summary>Show the answer</summary><p>The zero-argument function defers execution. The controlling builtin can choose when and how often to invoke the operation.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 7"><a href="#pipelines-collections">Previous section</a><a href="#payment">Next section</a></nav></section><section class="section" id="payment" aria-labelledby="heading-payment"><h2 id="heading-payment">A payment pipeline</h2><p class="lead">The payment workflow composes effectful and pure stages through one data-first pipeline.</p><figure data-ui class="code" data-tabs data-check="payment"><figcaption>Payment module</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type OrderId = Brand&lt;string&gt;
 type Order = {
   id: OrderId,
   totalCents: int,
@@ -297,12 +307,7 @@ export const pay = (id: OrderId): Order
     |&gt; findOrder
     |&gt; chargeOrder
     |&gt; markPaid
-    |&gt; saveOrder</code></pre></figure>
-<p>The pipeline stops at the first expected failure. chargeOrder retries only the charge call. saveOrder cannot run after a missing order or declined payment.</p>
-<p>The uses Orders clause expands to Orders.find and Orders.save. Payments.charge stays method-specific. The resulting contract exposes only the needed service surface.</p>
-<p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
-<p>The target schema checks safe integers at a boundary. Effective separately requires its checker and runtime to preserve int arithmetic rules.</p>
-<figure data-ui class="code target"><figcaption>Illustrative Effect-TS payment target</figcaption><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+    |&gt; saveOrder</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="payment"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
 
 const OrderId = Schema.String.pipe(Schema.brand(&quot;OrderId&quot;))
 type OrderId = typeof OrderId.Type
@@ -386,8 +391,12 @@ const pay = (id: OrderId): Effect.Effect&lt;
   const charged = yield* chargeOrder(order)
   const paid = markPaid(charged)
   return yield* saveOrder(paid)
-})</code></pre></figure>
-<p>The target uses Effect.gen for ordered operations. Effective keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
+})</code></pre></div></figure>
+<p>The pipeline stops at the first expected failure. chargeOrder retries only the charge call. saveOrder cannot run after a missing order or declined payment.</p>
+<p>The uses Orders clause expands to Orders.find and Orders.save. Payments.charge stays method-specific. The resulting contract exposes only the needed service surface.</p>
+<p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
+<p>The Effect-TS tab uses a schema to check safe integers at a boundary. Effective separately requires its checker and runtime to preserve int arithmetic rules.</p>
+<p>The Effect-TS tab uses Effect.gen for ordered operations. Effective keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous section</a><a href="#modules-reference">Next section</a></nav></section><section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">Modules and typed IR</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure data-ui class="code source"><figcaption>Version 0 imports and exports</figcaption><pre tabindex="0"><code class="language-effective">import {
   User,
   UserMissing,
@@ -409,8 +418,8 @@ export const load = (id: string): User
 <p>Acceptance fixtures must cover evaluation order, branch selection, failure propagation, contract rejection, closure deferral, retry, and provider resolution. Pipeline fixtures must also check stage identity.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Why must a future validator recompute types and effects instead of trusting serialized annotations?</p><details><summary>Show the answer</summary><p>A payload can contain inconsistent annotations. Recalculation confirms reference, type, execution, failure, requirement, and source-position rules.</p></details></aside>
 <p>Effective version 0 now has a bounded teaching model. The next engineering step is a parser and checker with fixtures for order, failures, retry, providers, and pipelines.</p>
-<p>The paired targets use the official Effect v4 documentation. Eight target examples pass strict TypeScript checks against Effect 4.0.5, with their chapter dependencies.</p>
+<p>The Effect-TS tabs use the official Effect v4 documentation. Every Effect-TS tab passes strict TypeScript checks against Effect 4.0.5, with its chapter dependencies.</p>
 <p>Target references: <a href="https://effect.website/docs/v4/data-types/option">https://effect.website/docs/v4/data-types/option</a> and <a href="https://effect.website/docs/v4/schema/basic-usage">https://effect.website/docs/v4/schema/basic-usage</a>.</p>
 <p>Schema filter reference: <a href="https://effect.website/docs/v4/schema/filters">https://effect.website/docs/v4/schema/filters</a>. Brand reference: <a href="https://effect.website/docs/v4/schema/advanced-usage">https://effect.website/docs/v4/schema/advanced-usage</a>.</p>
 <p>The provider check uses a declared adapter interface, without a provider implementation. The checks do not execute Effective or prove translation equivalence.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#payment">Previous section</a><a href="effective-spec.html">Read the specification</a></nav></section>
-<div class="document-note"><p>Effective documentation, draft 0.1. Source examples and target comparisons are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="effective-spec.html">Read the specification</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="effective.zip" download>Download package</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>
+<div class="document-note"><p>Effective documentation, draft 0.1. Source examples and Effect-TS translations are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="effective-spec.html">Read the specification</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="effective.zip" download>Download package</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>

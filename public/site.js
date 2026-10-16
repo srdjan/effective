@@ -49,6 +49,18 @@
       uses: "Users.find",
       description:
         "getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.",
+      effect: `const getUser = (id: string): Effect.Effect<
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+> =>
+  Effect.flatMap(
+    Users.use((users) => users.find(id)),
+    (found) => Option.match(found, {
+      onNone: () => Effect.fail(new UserMissing({ id })),
+      onSome: (user) => Effect.succeed(user)
+    })
+  )`,
     },
     rename: {
       source: `export const rename = (id: string, name: string): User
@@ -64,6 +76,16 @@
       uses: "Users.find | Users.save",
       description:
         "rename returns a User, has the same failures as getUser, and requires Users.find and Users.save.",
+      effect: `const rename = (id: string, name: string): Effect.Effect<
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+> => Effect.gen(function* () {
+  const user = yield* getUser(id)
+  const renamed: User = { ...user, name }
+  yield* Users.use((users) => users.save(renamed))
+  return renamed
+})`,
     },
     displayName: {
       source: `export const displayName = (id: string): string
@@ -79,6 +101,16 @@
       uses: "Users.find",
       description:
         "displayName returns a string, handles UserMissing, can fail with StoreUnavailable, and requires Users.find.",
+      effect: `const displayName = (id: string): Effect.Effect<
+  string,
+  StoreUnavailable,
+  Users
+> => Effect.map(getUser(id), (user) => user.name).pipe(
+  Effect.catchTag(
+    "UserMissing",
+    () => Effect.succeed("Guest")
+  )
+)`,
     },
     activeNames: {
       source: `export const activeNames = (): string[]
@@ -92,6 +124,14 @@
       uses: "Users.all",
       description:
         "activeNames returns string[], can fail with StoreUnavailable, and requires Users.all. Its collection callbacks remain pure.",
+      effect: `const activeNames = (): Effect.Effect<
+  ReadonlyArray<string>,
+  StoreUnavailable,
+  Users
+> => Effect.map(
+  Users.use((users) => users.all()),
+  (all) => all.filter((user) => user.active).map((user) => user.name)
+)`,
     },
   };
 
@@ -182,6 +222,7 @@
 
     const input = form.querySelector("#contract-function");
     const source = form.querySelector("#contract-source > code");
+    const effect = form.querySelector("#contract-effect > code");
     const success = form.querySelector("#contract-success");
     const failures = form.querySelector("#contract-failures");
     const uses = form.querySelector("#contract-uses");
@@ -193,6 +234,7 @@
     if (
       !input ||
       !source ||
+      !effect ||
       !success ||
       !failures ||
       !uses ||
@@ -213,6 +255,8 @@
       input.value = name;
       source.textContent = contract.source;
       highlightCode(source);
+      effect.textContent = contract.effect;
+      highlightCode(effect);
       success.textContent = contract.success;
       failures.textContent = contract.failures;
       uses.textContent = contract.uses;
@@ -243,6 +287,69 @@
 
     if (!selectFunction(input.value)) return;
     if (controls) controls.hidden = false;
+  };
+
+  const setupCodeTabs = () => {
+    const figures = document.querySelectorAll("figure[data-tabs]");
+    figures.forEach((figure, figureIndex) => {
+      const panels = Array.from(
+        figure.querySelectorAll(".code-panel[data-tab]"),
+      );
+      const caption = figure.querySelector("figcaption");
+      if (panels.length < 2 || !caption) return;
+
+      const number = figureIndex + 1;
+      if (!caption.id) caption.id = `tabs-${number}-caption`;
+
+      const tablist = document.createElement("div");
+      tablist.setAttribute("role", "tablist");
+      tablist.setAttribute("aria-labelledby", caption.id);
+
+      const tabs = panels.map((panel) => {
+        const label = panel.dataset.tab;
+        const slug = label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const tab = document.createElement("button");
+        tab.type = "button";
+        tab.setAttribute("role", "tab");
+        tab.id = `tabs-${number}-${slug}-tab`;
+        tab.textContent = label;
+        panel.id = `tabs-${number}-${slug}`;
+        tab.setAttribute("aria-controls", panel.id);
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("aria-labelledby", tab.id);
+        return tab;
+      });
+
+      const activate = (selected, moveFocus) => {
+        tabs.forEach((tab, index) => {
+          const isActive = index === selected;
+          tab.setAttribute("aria-selected", String(isActive));
+          tab.tabIndex = isActive ? 0 : -1;
+          panels[index].hidden = !isActive;
+        });
+        if (moveFocus) tabs[selected].focus();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activate(index, false));
+        tab.addEventListener("keydown", (event) => {
+          let target = null;
+          if (event.key === "ArrowRight") target = (index + 1) % tabs.length;
+          else if (event.key === "ArrowLeft") {
+            target = (index - 1 + tabs.length) % tabs.length;
+          } else if (event.key === "Home") target = 0;
+          else if (event.key === "End") target = tabs.length - 1;
+          if (target === null) return;
+          event.preventDefault();
+          activate(target, true);
+        });
+      });
+
+      tablist.append(...tabs);
+      caption.after(tablist);
+      activate(0, false);
+      figure.classList.add("tabs-ready");
+    });
   };
 
   const setupContents = () => {
@@ -359,5 +466,6 @@
   highlightAllCode();
   setupContractExplorer();
   setupContents();
+  setupCodeTabs();
   setupEntryMotion();
 })();

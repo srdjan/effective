@@ -130,9 +130,11 @@ pre { scrollbar-width: thin; scrollbar-color: var(--code-comment) var(--code-bg)
 .syntax-keyword { color: var(--code-keyword); }
 .syntax-string { color: var(--code-string); }
 .syntax-comment { color: var(--code-comment); }
-.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-block: 32px; }
-.pair .code { margin: 0; }
-.pair .code pre { padding: 20px; }
+.code-panel::before { display: block; padding: 18px 24px 0; content: attr(data-tab); font-family: var(--font); font-size: var(--small); line-height: 1.4; color: var(--code-comment); }
+.tabs-ready .code-panel::before { display: none; }
+.code [role="tablist"] { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px 0; }
+.code [role="tab"] { min-height: 44px; padding: 0 16px; border-bottom: 3px solid transparent; background: transparent; color: var(--code-comment); font: inherit; font-size: var(--small); line-height: 1.4; }
+.code [role="tab"][aria-selected="true"] { color: var(--code-ink); border-bottom-color: var(--accent); }
 .table-wrap { overflow-x: auto; margin: 32px 0; }
 table { width: 100%; border-collapse: collapse; font-size: var(--body); text-align: left; line-height: 1.5; color: var(--ink); }
 th, td { padding: 16px 20px; vertical-align: top; }
@@ -175,7 +177,6 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 @media (max-width: 1150px) {
   .layout { grid-template-columns: 218px minmax(0, 1fr); }
   .section, .document-note, .reference-links { padding-inline: 40px; }
-  .pair { grid-template-columns: minmax(0, 1fr); }
   .contract-result { gap: 32px; }
   .book-index { gap: 40px; }
   .chapter-index a { grid-template-columns: 1fr; gap: 2px; }
@@ -247,7 +248,9 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .section h2 { margin-bottom: 24px; }
   .section .lead { font-size: var(--body); font-weight: 500; }
   .code figcaption { padding: 16px 16px 0; }
-  .code pre, .pair .code pre { padding: 20px 16px; }
+  .code [role="tablist"] { padding-inline: 0; }
+  .code-panel::before { padding: 16px 16px 0; }
+  .code pre { padding: 20px 16px; }
   .exercise { padding: 24px; }
   th, td { padding: 12px; font-size: var(--small); }
   .footer { padding-top: 64px; }
@@ -294,8 +297,9 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .section p { max-width: none; }
   .code pre { overflow: visible; max-height: none; font-size: 9pt; white-space: pre-wrap; }
   .code pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
-  .pair { display: block; }
-  .pair .code { margin-block: 16pt; }
+  .code [role="tablist"] { display: none; }
+  .code-panel[hidden] { display: block !important; }
+  .tabs-ready .code-panel::before { display: block; }
   .exercise { break-inside: avoid; }
   details::details-content { content-visibility: visible; }
   .exercise details:not([open]) > :not(summary) { display: block; }

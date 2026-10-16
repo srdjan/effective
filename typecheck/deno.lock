@@ -1,0 +1,16 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:effect@4.0.5": "4.0.5"
+  },
+  "npm": {
+    "effect@4.0.5": {
+      "integrity": "sha512-BY4/28NlpOd99yzmV741xbVGmp+1U7tks4oB7F/Png64bTa5tm5eCA6W0RiXsnuLDDoJpjfVSo4Dnq4BZb/89Q=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:effect@4.0.5"
+    ]
+  }
+}
