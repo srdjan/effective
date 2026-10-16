@@ -98,11 +98,6 @@
   const functionNames = Object.keys(functions);
 
   const appendSyntaxToken = (fragment, className, value) => {
-    if (className === null) {
-      fragment.append(document.createTextNode(value));
-      return;
-    }
-
     const span = document.createElement("span");
     span.className = className;
     span.textContent = value;
@@ -110,17 +105,13 @@
   };
 
   const highlightCode = (code) => {
-    if (code.dataset.syntaxHighlighted === "true") return;
-
-    const source = code.textContent || "";
+    const source = code.textContent;
     const fragment = document.createDocumentFragment();
     let plainStart = 0;
     let index = 0;
 
     const appendPlainText = (end) => {
-      if (end > plainStart) {
-        appendSyntaxToken(fragment, null, source.slice(plainStart, end));
-      }
+      if (end > plainStart) fragment.append(source.slice(plainStart, end));
     };
 
     while (index < source.length) {
@@ -173,7 +164,6 @@
 
     appendPlainText(source.length);
     code.replaceChildren(fragment);
-    code.dataset.syntaxHighlighted = "true";
   };
 
   const highlightAllCode = () => {
@@ -212,8 +202,6 @@
       return;
     }
 
-    let selectedName = null;
-
     const selectFunction = (candidate) => {
       const name = normalizeFunctionName(candidate);
       if (name === null) {
@@ -222,10 +210,8 @@
       }
 
       const contract = functions[name];
-      selectedName = name;
       input.value = name;
       source.textContent = contract.source;
-      delete source.dataset.syntaxHighlighted;
       highlightCode(source);
       success.textContent = contract.success;
       failures.textContent = contract.failures;
@@ -236,18 +222,17 @@
       buttons.forEach((button) => {
         button.setAttribute(
           "aria-pressed",
-          String(button.dataset.function === selectedName),
+          String(button.dataset.function === name),
         );
       });
       return true;
     };
 
     buttons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        const name = button.dataset.function;
-        if (name) selectFunction(name);
-      });
+      button.addEventListener(
+        "click",
+        () => selectFunction(button.dataset.function),
+      );
     });
 
     input.addEventListener("change", () => selectFunction(input.value));
@@ -287,10 +272,12 @@
         ?.forEach((anchor) => anchor.setAttribute("aria-current", "location"));
     };
 
+    const readingLine = () => globalThis.innerHeight * 0.22;
+
     const chooseNearestSection = () => {
-      const readingLine = globalThis.innerHeight * 0.22;
+      const line = readingLine();
       return sections.reduce((nearest, section) => {
-        if (section.getBoundingClientRect().top <= readingLine) return section;
+        if (section.getBoundingClientRect().top <= line) return section;
         return nearest;
       }, sections[0]);
     };
@@ -309,13 +296,13 @@
           const candidates = visibleSections.size
             ? Array.from(visibleSections)
             : [chooseNearestSection()];
-          const readingLine = globalThis.innerHeight * 0.22;
+          const line = readingLine();
           const current = candidates.reduce((nearest, section) => {
             const distance = Math.abs(
-              section.getBoundingClientRect().top - readingLine,
+              section.getBoundingClientRect().top - line,
             );
             const nearestDistance = Math.abs(
-              nearest.getBoundingClientRect().top - readingLine,
+              nearest.getBoundingClientRect().top - line,
             );
             return distance < nearestDistance ? section : nearest;
           });
@@ -326,15 +313,11 @@
       sections.forEach((section) => observer.observe(section));
     }
 
-    const narrowScreen = globalThis.matchMedia("(max-width: 800px)");
+    // Only the mobile copy of the contents sits inside the menu, so desktop clicks change nothing.
     anchors.forEach((anchor) => {
       anchor.addEventListener("click", () => {
-        if (!narrowScreen.matches) return;
-        document
-          .querySelectorAll("details.contents-menu, .contents-menu details")
-          .forEach((details) => {
-            details.open = false;
-          });
+        const menu = anchor.closest("details.contents-menu");
+        if (menu) menu.open = false;
       });
     });
   };
@@ -344,7 +327,7 @@
 
     const groupCounts = new Map();
     const targets = document.querySelectorAll(
-      "h2, .lead, .section > p:first-of-type, .code, .exercise, .chapter-index a",
+      "h2, .section > p:first-of-type, .code, .exercise, .chapter-index a",
     );
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -372,16 +355,9 @@
     });
   };
 
-  const initialize = () => {
-    highlightAllCode();
-    setupContractExplorer();
-    setupContents();
-    setupEntryMotion();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize, { once: true });
-  } else {
-    initialize();
-  }
+  // Both pages load this script with defer, so the document is already parsed.
+  highlightAllCode();
+  setupContractExplorer();
+  setupContents();
+  setupEntryMotion();
 })();
