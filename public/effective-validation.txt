@@ -3,7 +3,7 @@ Draft 0.1, language core version 0, October 15, 2026.
 
 Delivered content
 Two linked HTML documents contain 18 reference sections and nine book chapters.
-The documents contain 39 code blocks, eight EffectJS targets, and seven exercises.
+The documents contain 39 code blocks, eight Effect-TS targets, and seven exercises.
 Five .eff files provide canonical source examples.
 The package also includes typed-ir.ts and the manual log.ir.json fixture.
 The fixture retains log.lft as its source identity.
@@ -23,7 +23,7 @@ The reusable Users module contains no provider acquisition or application entry 
 Completed TypeScript checks
 TypeScript 7.0.2 checks typed-ir.ts and the manual fixture under strict settings.
 The settings also enable exactOptionalPropertyTypes and noUncheckedIndexedAccess.
-Eight EffectJS comparisons pass these strict settings against Effect 4.0.5.
+Eight Effect-TS comparisons pass these strict settings against Effect 4.0.5.
 Each comparison includes its stated chapter dependencies.
 The provider comparison resolves users-live.js through a declaration file.
 That declaration supplies UsersLive as Layer.Layer<Users>.
@@ -43,7 +43,7 @@ Short keys in isolated book comparisons do not define a backend encoding policy.
 Official Effect v4 documentation supports the target API choices.
 
 Limits
-This package contains no Effective parser, checker, compiler, interpreter, or runtime.
+This package contains no Effective parser, checker, transpiler, interpreter, or runtime.
 All source examples, target comparisons, and the IR fixture are manually authored.
 No check executes Effective source or proves translation equivalence.
 Strict target checking proves static compatibility for the checked target examples and declared provider interface.

@@ -1,4 +1,16 @@
-# Effective documentation site
+# Effective
+
+Effective is a friendly language that transpiles to [Effect-TS](https://effect.website), version 4. Inspired by https://forma-lang.com/effect. Each function contract names its result, its expected failures, and the services that it uses. The transpiler turns that contract into an `Effect.Effect<A, E, R>` type.
+
+The transpiler targets the `effect` core modules: `Effect`, `Context`, `Layer`, `Option`, and `Schema`. It also targets selected modules from the Effect ecosystem:
+
+- `effect/http`, `FileSystem`, and the `@effect/platform-node`, `@effect/platform-bun`, and `@effect/platform-browser` runtimes
+- `effect/sql` and the `@effect/sql-*` drivers, such as `@effect/sql-pg`
+- `@effect/opentelemetry` for traces, metrics, and logs
+
+Version 0 specifies the language and the core mapping. Bindings for the ecosystem modules need later specifications. The transpiler is not built yet. The Effect-TS examples are manually written, and they pass strict TypeScript checks against Effect 4.0.5.
+
+## This repository
 
 This repository contains the Effective mini book, the language specification, and their source files. The site files are in `public/`.
 
