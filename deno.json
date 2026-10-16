@@ -1,4 +1,7 @@
 {
+  "name": "effective",
+  "version": "0.1.0",
+  "exports": "./main.ts",
   "tasks": {
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
