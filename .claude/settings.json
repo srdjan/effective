@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(deno deploy *)",
+      "Bash(mkdir public *)",
+      "Bash(command mv effective-examples effective-mini-book.html effective-spec.html effective-validation.txt log.ir.json log.lft typed-ir.ts public/)",
+      "Bash(sed -i '' 's/effective-docs/effective/g' README.md deno.json public/index.html public/effective-spec.html && git grep -n \"effective-docs\"; git diff README.md deno.json public)",
+      "Bash(unzip -l public/effective.zip)"
+    ],
+    "additionalDirectories": [
+      "/Users/srdjans/Code/effective"
+    ]
+  }
+}
