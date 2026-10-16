@@ -5,10 +5,12 @@
   "tasks": {
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
+    "test": "deno test --allow-read=public",
     "package": "cd public && rm -f effective.zip && zip -X -r effective.zip . -x effective.zip '.*' '*/.*'"
   },
   "imports": {
-    "@std/http": "jsr:@std/http@^1"
+    "@std/http": "jsr:@std/http@^1",
+    "@std/assert": "jsr:@std/assert@^1"
   },
   "deploy": {
     "runtime": {
