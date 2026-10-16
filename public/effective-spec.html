@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="This reference defines source syntax, type rules, execution behavior, and the contract for typed intermediate representation."><title>Effective - Specification</title><style>
+:root{color-scheme:light;--ink:#202d35;--muted:#56646c;--paper:#fbfaf6;--line:#dcded8;--accent:#1b665c;--source:#e8f0e9;--code:#16262d;--code-ink:#ecf2ef;--aside:258px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}a:focus-visible,summary:focus-visible{outline:3px solid #b16c26;outline-offset:4px}h1,h2,h3{line-height:1.17;font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.035em}h1{font-size:clamp(44px,6vw,78px);margin:12px 0 22px;max-width:940px}h2{font-size:clamp(30px,3vw,42px);margin:0 0 24px}p{margin:0 0 19px;max-width:78ch}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,td code{font-size:.88em;background:#e8eae4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.skip{position:absolute;left:18px;top:-80px;background:white;padding:12px;z-index:20}.skip:focus{top:12px}.topbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(251,250,246,.97);font-size:14px}.brand{font-weight:750;font-size:20px;letter-spacing:-.04em;text-decoration:none;color:var(--ink)}.toplinks{display:flex;gap:22px;flex-wrap:wrap}.toplinks a[aria-current]{font-weight:750;text-decoration-thickness:2px}.layout{display:grid;grid-template-columns:var(--aside) minmax(0,1fr);max-width:1600px;margin:auto}.contents{position:sticky;top:66px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:35px 26px 40px 32px;font-size:13px;line-height:1.5}.contents-title,.eyebrow{font-size:11px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.contents ol{list-style:none;margin:16px 0 26px;padding:0}.contents li{margin:0 0 10px}.contents a{color:var(--muted);text-decoration:none}.contents a:hover{color:var(--accent);text-decoration:underline}.contents .resource{display:block;margin:10px 0}.main{min-width:0;border-left:1px solid var(--line);padding:55px clamp(24px,4.5vw,72px) 50px}.hero{padding-bottom:44px;border-bottom:1px solid var(--line);margin-bottom:50px}.subtitle{color:var(--muted);font-size:19px;max-width:65ch}.status{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0}.pill{border:1px solid #cbd7cc;padding:4px 11px;font-size:12px;border-radius:100px;background:#f0f3eb}.intro-links{display:flex;flex-wrap:wrap;gap:12px 22px;font-size:14px}.section{margin:0 0 56px;padding:0 0 35px;border-bottom:1px solid var(--line)}.lead{font-size:20px;color:var(--accent);margin-bottom:24px}.code{margin:25px 0;border-radius:9px;overflow:hidden;border:1px solid #283b40;background:var(--code);min-width:0}.code figcaption{padding:11px 16px;background:#23373d;color:#eff3ee;font-size:12px;font-weight:650;line-height:1.4;border-bottom:1px solid #3a4b4f}.code.source figcaption{background:var(--source);color:#23483f;border-bottom-color:#bfd1c4}.code pre{margin:0;padding:20px;overflow:auto;tab-size:2;line-height:1.65;font-size:13px;color:var(--code-ink);max-height:760px}.code pre code{font:inherit;white-space:pre}.code.target{background:#1f272d}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin:25px 0}.pair .code{margin:0}.pair .code pre{font-size:12px;padding:16px}.table-wrap{overflow:auto;margin:25px 0;border:1px solid var(--line);border-radius:7px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.55}th,td{padding:13px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#edf0e8;font-weight:700}tr:last-child td{border-bottom:0}td:first-child{width:36%;font-weight:600}.exercise{margin:28px 0;padding:22px 25px;background:#eff1e8;border-left:3px solid #748c66;border-radius:0 7px 7px 0}.exercise h3{font-family:inherit;font-size:12px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;margin:0 0 10px}.exercise p{margin:0 0 12px}.exercise details{font-size:15px}.exercise summary{cursor:pointer;color:var(--accent);font-weight:600}.exercise details p{margin:14px 0 0}.exercise pre{white-space:pre-wrap;font-size:13px;overflow-wrap:anywhere}.section-nav{display:flex;justify-content:space-between;gap:20px;margin-top:25px;font-size:13px}.footer{color:var(--muted);font-size:13px;padding:10px 0 30px}.footer p{margin-bottom:8px}
+@media(min-width:1500px){.main{padding-left:65px;padding-right:65px}}@media(max-width:1150px){.pair{grid-template-columns:minmax(0,1fr)}.pair .code pre{font-size:13px}.pair .code pre{max-height:650px}:root{--aside:218px}.contents{padding-left:24px;padding-right:18px}}@media(max-width:760px){.topbar{position:relative;padding:16px 20px;align-items:flex-start}.toplinks{gap:10px 15px;font-size:12px}.layout{display:block}.contents{position:relative;top:auto;max-height:none;padding:24px 22px;border-bottom:1px solid var(--line)}.contents ol{columns:2;column-gap:25px;margin-bottom:12px}.contents li{break-inside:avoid}.contents .resource{display:inline-block;margin-right:17px}.main{border-left:0;padding:32px 22px}.hero{margin-bottom:35px}.section{margin-bottom:35px}body{font-size:16px}h1{font-size:48px}.code pre{font-size:12px;padding:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{:root{--paper:white;--ink:black}body{font-size:10.5pt;line-height:1.45}.skip,.topbar,.contents,.section-nav,.intro-links{display:none}.layout{display:block}.main{border:0;padding:0}.hero{padding-bottom:20px;margin-bottom:25px}h1{font-size:35pt}h2{font-size:23pt;break-after:avoid}.section{margin-bottom:20px;padding-bottom:16px}.lead{font-size:13pt}.code,.code.target{background:#f6f6f3;border:1px solid #ccc;break-inside:auto}.code figcaption,.code.source figcaption{background:#e9ede6;color:black}.code pre,.pair .code pre{color:black;max-height:none;font-size:8pt;white-space:pre-wrap;overflow:visible}.code pre code{white-space:pre-wrap;overflow-wrap:anywhere}.pair{display:block}.pair .code{margin:15px 0}.table-wrap{overflow:visible}table{font-size:9pt}tr{break-inside:avoid}.exercise{break-inside:avoid}.exercise details:not([open])>*:not(summary){display:block}a{color:black}p{max-width:none}.footer{font-size:9pt}}
+</style></head>
+<body id="top"><a class="skip" href="#content">Skip to content</a>
+<header class="topbar"><a class="brand" href="effective-mini-book.html">Effective</a><nav class="toplinks" aria-label="Documents"><a href="effective-mini-book.html">Mini book</a><a href="effective-spec.html" aria-current="page">Specification</a><a href="effective-docs.zip" download>Download package</a></nav></header>
+<div class="layout"><nav class="contents" aria-label="Contents"><div class="contents-title">Specification / contents</div><ol><li><a href="#status">1. Status and scope</a></li><li><a href="#overview">2. A complete first example</a></li><li><a href="#lexical">3. Source text and lexical rules</a></li><li><a href="#types">4. Data and types</a></li><li><a href="#functions">5. Bindings, functions, and blocks</a></li><li><a href="#services">6. Errors, services, and contracts</a></li><li><a href="#execution">7. Execution order and execution mode</a></li><li><a href="#pipelines">8. Pipelines and pure collection functions</a></li><li><a href="#matching">9. Conditions and pattern matching</a></li><li><a href="#recovery">10. Typed failure and recovery</a></li><li><a href="#control">11. Deferral, retry, and providers</a></li><li><a href="#modules">12. Modules and application boundaries</a></li><li><a href="#ir">13. Typed IR and backend contract</a></li><li><a href="#equations">14. Effect equations and validation</a></li><li><a href="#grammar">15. Compact surface grammar</a></li><li><a href="#diagnostics">16. Diagnostics and conformance</a></li><li><a href="#examples">17. Canonical examples and deferred work</a></li><li><a href="#sources">18. Sources and design lineage</a></li></ol><div class="contents-title">Source and evidence</div><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
+<main class="main" id="content"><div class="hero"><div class="eyebrow">Effective / Specification / draft 0.1</div><h1>Language specification</h1><p class="subtitle">This reference defines source syntax, type rules, execution behavior, and the contract for typed intermediate representation.</p><div class="status"><span class="pill">Language core 0</span><span class="pill">October 15, 2026</span><span class="pill">Design draft</span></div><p>Effective is a language design. The package contains no compiler or runtime. EffectJS means the Effect library for TypeScript, using the v4 documentation.</p><div class="intro-links"><a href="effective-mini-book.html">Read the mini book</a><a href="effective-examples/main.eff">Open the application boundary</a><a href="typed-ir.ts">Inspect the typed IR model</a></div></div>
+<section class="section" id="status" aria-labelledby="heading-status"><h2 id="heading-status">1. Status and scope</h2><p>Effective is a small functional language in the TypeScript family. Immutable values, ordinary functions, and explicit contracts define its source style.</p>
+<p>This reference defines language core version 0. The documentation edition is draft 0.1, dated October 15, 2026.</p>
+<p>The package contains a specification, teaching examples, and a TypeScript model of typed intermediate representation, or IR. It contains no Effective compiler or runtime.</p>
+<p>Rules in this reference describe intended language behavior. The examples are manually authored. EffectJS comparisons illustrate a backend design; a compiler did not generate them.</p>
+<p>Effective files use the .eff extension. Earlier .lft files remain provisional artifacts from the design discussion.</p>
+<p>The core covers data, functions, services, failures, pipelines, retry, providers, and named modules. Later sections identify features outside this core.</p>
+<p>Effective uses familiar TypeScript shapes but adds language forms. A TypeScript parser cannot parse Effective source directly.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#overview">Next section</a></nav></section><section class="section" id="overview" aria-labelledby="heading-overview"><h2 id="heading-overview">2. A complete first example</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">error ConsoleUnavailable = { message: string }
+
+service Console {
+  print(message: string): void fails ConsoleUnavailable
+}
+
+export const log = (message: string): void
+  fails ConsoleUnavailable
+  uses Console.print =&gt; Console.print(message)</code></pre></figure>
+<p>An error declaration creates a nominal tagged error type and a constructor. Nominal identity means the declaration determines which error the value represents.</p>
+<p>A service declaration names external operations. Each service method is a capability, which is a statically tracked requirement for calling that operation.</p>
+<p>The log function returns void, can fail with ConsoleUnavailable, and requires Console.print. Its call runs in the current source execution context.</p>
+<p>Service declarations use method notation. Function values and function type annotations use arrows. Methods have no implicit receiver or this binding.</p>
+<p>The source return type names the successful value. It does not name an Effect object. The target backend supplies its own execution representation.</p><nav class="section-nav" aria-label="Navigation for section 2"><a href="#status">Previous section</a><a href="#lexical">Next section</a></nav></section><section class="section" id="lexical" aria-labelledby="heading-lexical"><h2 id="heading-lexical">3. Source text and lexical rules</h2><p>Source text uses UTF-8. Source positions in IR count UTF-16 code units, with an exclusive end offset.</p>
+<p>Identifiers start with an ASCII letter, underscore, or dollar sign. Later characters may also contain decimal digits. Names are case-sensitive.</p>
+<p>Line comments start with //. Block comments use /* and */ and do not nest. Comments do not produce runtime values.</p>
+<p>Strings use double quotes with JSON escape sequences. String interpolation, single-quoted strings, and template literals are outside the initial lexical core.</p>
+<p>Numeric literals use decimal notation, with optional fraction and exponent parts. Literal values must be finite. Integral literals infer int unless context requires number.</p>
+<p>The parser recognizes |&gt; before |. The first token denotes a pipeline; the second separates type alternatives and effect-set members.</p>
+<p>A newline or semicolon separates declarations, service methods, and block items. Commas separate record fields, arguments, parameters, and match arms.</p>
+<p>A newline continues an incomplete expression. It also continues a signature before fails, uses, or its final arrow, and an expression before |&gt;.</p>
+<p>The core does not apply general JavaScript semicolon insertion. Parentheses make grouping explicit when a multiline form would otherwise be unclear.</p><nav class="section-nav" aria-label="Navigation for section 3"><a href="#overview">Previous section</a><a href="#types">Next section</a></nav></section><section class="section" id="types" aria-labelledby="heading-types"><h2 id="heading-types">4. Data and types</h2><div class="table-wrap"><table><thead><tr><th scope="col">Source type</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>string</td><td>A string value.</td></tr><tr><td>boolean</td><td>true or false.</td></tr><tr><td>int</td><td>A finite JavaScript safe integer.</td></tr><tr><td>number</td><td>A host numeric value; source numeric literals must be finite.</td></tr><tr><td>void</td><td>The unit result of an operation.</td></tr><tr><td>never</td><td>No successful value, as with fail.</td></tr><tr><td>unknown</td><td>A value that needs a checked boundary before typed use.</td></tr><tr><td>T[]</td><td>An immutable array of T values.</td></tr><tr><td>[A, B]</td><td>An immutable tuple with the stated positions.</td></tr><tr><td>Option&lt;T&gt;</td><td>Some(value) or None.</td></tr><tr><td>A | B</td><td>A union of alternatives.</td></tr><tr><td>Brand&lt;T&gt;</td><td>A nominal type whose representation is T.</td></tr></tbody></table></div>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type User = { id: string, name: string, active: boolean }
+type Status = &quot;pending&quot; | &quot;paid&quot;
+type UserId = Brand&lt;string&gt;
+type Profile = { name: string, nickname?: string }</code></pre></figure>
+<p>Type aliases use structural compatibility. Brands and errors retain declaration identity. The checker rejects recursive type definitions in version 0.</p>
+<p>Record fields are required unless the field name has ?. Reading an optional field returns Option&lt;T&gt;.</p>
+<p>A required field of type Option&lt;T&gt; differs from an optional field of type T. A future codec backend must preserve that difference.</p>
+<p>Record construction rejects missing required fields, duplicate fields, and unknown fields. Contextual typing preserves expected literal alternatives.</p>
+<p>Record updates construct a new value. One spread may appear first, followed by replacement fields. The original record remains unchanged.</p>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
+  ({ ...user, active: true })</code></pre></figure>
+<p>OrderId(&quot;o1&quot;) constructs a brand value when OrderId has base type string. A brand adds identity, not an automatic validation predicate.</p>
+<p>unbrand(value) explicitly returns the base value. The checker does not silently discard nominal identity.</p>
+<p>The checker treats int as a subtype of number. Division returns number. An int result outside the safe range is a runtime defect.</p>
+<p>Equality compares compatible primitives, literal unions, and primitive brands. Comparing records requires a named comparison function.</p>
+<p>Conditions require boolean. Effective does not use JavaScript truthiness. void cannot appear in a record field, array, or tuple.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#lexical">Previous section</a><a href="#functions">Next section</a></nav></section><section class="section" id="functions" aria-labelledby="heading-functions"><h2 id="heading-functions">5. Bindings, functions, and blocks</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
+const increment = (value: int): int =&gt; value + 1
+const job = () =&gt; log(&quot;ready&quot;)</code></pre></figure>
+<p>Every binding and aggregate value is immutable. Effective has no assignment operator, mutable let binding, implicit receiver, or source class declaration.</p>
+<p>Parameters and calls use ordinary argument lists. Effective does not insert currying, partial application, or callback execution.</p>
+<p>An arrow with one expression uses that expression as its result. A block uses its final expression as its result.</p>
+<p>A block that ends with a binding, or contains no items, produces void. A final void operation also produces void.</p>
+<p>Effective has no return statement in version 0. Function blocks and other expression blocks use the same result rule.</p>
+<p>A brace after an arrow begins a block. Parentheses distinguish a returned record, as in ({ ...user, active: true }).</p>
+<p>Creating an arrow evaluates no part of its body. Calling the arrow runs the body again. Captured immutable values retain ordinary lexical scope.</p>
+<p>Exported functions require parameter and result annotations. Local parameters require annotations unless a contextual function type supplies their types.</p>
+<p>A local function without a result annotation infers its result and effect sets. A result annotation creates a closed failure and requirement contract.</p>
+<p>For a closed contract, omitted fails means no expected failures. Omitted uses means no unprovided capability requirements.</p>
+<p>Those omissions do not assert pure execution. The checker tracks execution mode separately, including effects whose providers are already supplied.</p>
+<p>A function type without a body defaults to effect execution. Imported interfaces retain their resolved execution modes.</p>
+<p>Version 0 has no source annotation for pure callback parameters. Known pure functions and contextual inline callbacks still work with pure collection builtins.</p><nav class="section-nav" aria-label="Navigation for section 5"><a href="#types">Previous section</a><a href="#services">Next section</a></nav></section><section class="section" id="services" aria-labelledby="heading-services"><h2 id="heading-services">6. Errors, services, and contracts</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">error UserMissing = { id: string }
+error StoreUnavailable = { message: string }
+
+service Users {
+  find(id: string): Option&lt;User&gt; fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}
+
+const getUser = (id: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find =&gt;
+  match Users.find(id) {
+    Some(user) =&gt; user,
+    None =&gt; fail(UserMissing({ id }))
+  }</code></pre></figure>
+<p>fails names a closed set of expected error identities. uses names a closed set of required service methods.</p>
+<p>A whole service name expands to all methods in that service. Method requirements retain resolved identities across module boundaries.</p>
+<p>A service method declaration has no uses clause. Its own invocation adds that method capability to the caller requirements.</p>
+<p>A host provider captures implementation dependencies. The method interface describes only parameters, success, and expected failures.</p>
+<p>The checker verifies that inferred body failures and requirements fit the declared sets. A body cannot silently widen an explicit contract.</p>
+<p>A declared set may be wider than the body needs. Calls through that interface propagate the declared sets.</p>
+<p>Error constructors produce tagged data. The field name _tag is reserved for generated error tags.</p>
+<p>Static capability tracking does not itself prompt for permission or sandbox a host adapter. The host supplies implementations that honor the declared contracts.</p><nav class="section-nav" aria-label="Navigation for section 6"><a href="#functions">Previous section</a><a href="#execution">Next section</a></nav></section><section class="section" id="execution" aria-labelledby="heading-execution"><h2 id="heading-execution">7. Execution order and execution mode</h2><p>Ordinary calls evaluate the callee once, then arguments from left to right, then invoke the function. Fields and bindings evaluate from left to right.</p>
+<p>A record update evaluates its base once before replacement fields. Only the selected if, match, or short-circuit branch executes.</p>
+<p>The checker combines effects from all statically reachable paths. Source execution is sequential unless a future explicit concurrency feature changes that rule.</p>
+<p>Each expression has an execution mode: pure or effect. Each function type records the mode that applies when the function runs.</p>
+<p>Nonempty failure or requirement sets require effect mode. Empty sets permit either mode. Closing a requirement set through provision does not remove execution effects.</p>
+<p>A closure expression is pure even when its function type describes effectful invocation. Module initialization checks the expression mode, not the latent function mode.</p>
+<p>Mode propagation uses logical OR over callee evaluation, arguments, invoked functions, and reachable branches.</p>
+<p>An explicit contract with nonempty sets lifts a pure body into an effectful function interface. A pure function may lift into an effectful callback interface.</p>
+<p>An effectful function cannot satisfy a pure callback requirement. Lifting wraps execution; it does not invoke a callback during construction.</p>
+<p>Recursive functions require explicit signatures. Mode inference starts pure and propagates intrinsic effects and effectful calls until the recursive group reaches a fixed point.</p>
+<p>Expected failure stops the current normal path. Defects and cancellation use separate runtime outcomes and do not enter ordinary typed recovery.</p><nav class="section-nav" aria-label="Navigation for section 7"><a href="#services">Previous section</a><a href="#pipelines">Next section</a></nav></section><section class="section" id="pipelines" aria-labelledby="heading-pipelines"><h2 id="heading-pipelines">8. Pipelines and pure collection functions</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type User = { name: string, active: boolean }
+
+export const activeNames = (users: User[]): string[] =&gt;
+  users
+    |&gt; filter((user) =&gt; user.active)
+    |&gt; map((user) =&gt; user.name)
+
+export const total = (amounts: int[]): int =&gt;
+  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></figure>
+<p>A pipeline passes its left result as the first argument of the next stage. The stages associate from left to right.</p>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">value |&gt; transform
+value |&gt; transform(a, b)</code></pre></figure>
+<p>The first form invokes transform(value). The second invokes transform(value, a, b). Neither form creates a partially applied function.</p>
+<p>Each stage first evaluates the left value once. It then evaluates the resolved callee and explicit arguments, and finally invokes the stage.</p>
+<p>A temporary binding preserves this order during lowering. Direct textual substitution into an ordinary call could change the callee evaluation order.</p>
+<p>Stage names may resolve to local, imported, or builtin functions. Dotted stages must identify declared service methods.</p>
+<p>Version 0 excludes inline lambda stages, placeholders, spread arguments, and runtime record-member stages.</p>
+<p>The pipeline operator has lower precedence than arithmetic, comparisons, and boolean operators. Parentheses may override grouping.</p>
+<p>The prelude supplies map, filter, and fold. Their callbacks require pure execution mode and empty failure and requirement sets.</p>
+<p>map transforms each element. filter selects elements through a boolean predicate. Both visit elements once from left to right and preserve order.</p>
+<p>fold(items, initial, callback) invokes callback(state, item) from left to right. Its result retains the accumulator type. An empty array returns initial.</p>
+<p>Empty arrays produce empty results for map and filter. A defect stops traversal. Effectful traversal remains outside version 0.</p>
+<p>An unbodied callback parameter defaults to effect mode. It cannot pass the pure collection callback check, even when its effect sets are empty.</p>
+<p>The compiler specializes builtin rules before IR serialization. Each distinct closed builtin type receives a unique synthetic ValueId and a closed prelude interface.</p><nav class="section-nav" aria-label="Navigation for section 8"><a href="#execution">Previous section</a><a href="#matching">Next section</a></nav></section><section class="section" id="matching" aria-labelledby="heading-matching"><h2 id="heading-matching">9. Conditions and pattern matching</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const label = (found: Option&lt;User&gt;): string =&gt;
+  match found {
+    Some(user) =&gt; user.name,
+    None =&gt; &quot;missing&quot;
+  }
+
+const category = (active: boolean): string =&gt;
+  if (active) { &quot;active&quot; } else { &quot;inactive&quot; }</code></pre></figure>
+<p>if requires a boolean condition and an else branch. Branch results require a common result type. never fits every successful result type.</p>
+<p>Match subjects evaluate once. The checker requires complete coverage and rejects unreachable arms and constructors that do not belong to the subject type.</p>
+<p>Supported patterns include literals, _, Some(binding), None, nominal error bindings, and a string discriminator in a tagged record.</p>
+<p>Matching an unbounded primitive domain requires a final wildcard. Nested patterns are outside version 0.</p>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type Shape = { kind: &quot;circle&quot;, radius: number } | { kind: &quot;square&quot;, side: number }
+
+const extent = (shape: Shape): number =&gt;
+  match shape {
+    { kind: &quot;circle&quot;, ...circle } =&gt; circle.radius,
+    { kind: &quot;square&quot;, ...square } =&gt; square.side
+  }</code></pre></figure>
+<p>A spread binding in this pattern captures the whole narrowed record. It does not mean JavaScript rest destructuring.</p>
+<p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous section</a><a href="#recovery">Next section</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">10. Typed failure and recovery</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const displayName = (id: string): string
+  fails StoreUnavailable
+  uses Users.find =&gt;
+  try {
+    getUser(id).name
+  } catch {
+    UserMissing(error) =&gt; &quot;Guest&quot;
+  }</code></pre></figure>
+<p>fail(error) produces no normal value. Its success type is never, and its failure set includes the nominal error identity.</p>
+<p>catch installs handlers before evaluating the protected block. It removes handled tags and combines the handlers failures and requirements.</p>
+<p>Successful and handled paths require a common result type. Unhandled tags continue to the caller.</p>
+<p>The checker rejects duplicate handlers and handlers for tags absent from the protected failure set. It does not treat defects as typed failures.</p>
+<p>A backend may use Result data or a typed failure channel. It must not implement domain failures as untyped JavaScript exceptions.</p><nav class="section-nav" aria-label="Navigation for section 10"><a href="#matching">Previous section</a><a href="#control">Next section</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">11. Deferral, retry, and providers</h2><p>This fragment assumes the payment module defines pay, id has type OrderId, and the host supplies AppLive. The fragment belongs inside a function.</p>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const paymentJob = () =&gt; pay(id)
+retry(paymentJob, { times: 2 })
+provide(AppLive, () =&gt; pay(id))</code></pre></figure>
+<p>These control functions require a zero-argument function. They receive work that has not run yet. Ordinary expected parameter types never insert suspension.</p>
+<p>retry invokes its callback for the first attempt and again after each permitted typed failure. times counts retries after the first attempt.</p>
+<p>Version 0 requires a finite nonnegative safe integer literal for times. Defects and cancellation do not trigger typed retry.</p>
+<p>Retry retains the callback result type, failures, and requirements. The author must choose operations that tolerate repeated execution.</p>
+<p>A provider value lists supplied capabilities, acquisition mode, acquisition failures, and acquisition dependencies. Host modules supply provider values in version 0.</p>
+<p>provide installs the provider while invoking its callback. Provider acquisition runs before the callback and may contribute additional failures and requirements.</p>
+<p>Provision removes supplied callback requirements and adds acquisition dependencies. It preserves typed failures from both acquisition and callback execution.</p>
+<p>Provider lookup occurs at invocation time. Creating a closure does not freeze the current provider environment.</p>
+<p>retry, provide, fail, and catch have effect execution mode in the core. A provider with empty acquisition sets can still require effectful acquisition.</p>
+<p>Source layer construction, resource scopes, and concurrency need separate rules. This reference does not infer those rules from the Effect target.</p><nav class="section-nav" aria-label="Navigation for section 11"><a href="#recovery">Previous section</a><a href="#modules">Next section</a></nav></section><section class="section" id="modules" aria-labelledby="heading-modules"><h2 id="heading-modules">12. Modules and application boundaries</h2><figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">import { displayName, StoreUnavailable } from &quot;./users.eff&quot;
+import { UsersLive } from &quot;host:providers&quot;
+
+export const main = (): string
+  fails StoreUnavailable =&gt;
+  provide(UsersLive, () =&gt; displayName(&quot;u1&quot;))</code></pre></figure>
+<p>This boundary imports the supplied users module. UsersLive supplies Users with no acquisition failure or additional dependency.</p>
+<p>Imports select named exports from relative files or registered host modules. Version 0 excludes default imports, namespaces, renaming, re-exports, and package resolution.</p>
+<p>Prefix export exposes a declaration by name. Interfaces also carry the complete supporting type graph, without importing private names into the local source scope.</p>
+<p>The checker resolves declaration identities before checking bodies. Identical printed names from separate modules never share identity merely because their spellings match.</p>
+<p>Module initialization may construct immutable data and closures. It cannot run service operations or other effectful initializers.</p>
+<p>The linker rejects module dependency cycles. Application execution begins when the host invokes an exported entry function with the required providers.</p>
+<p>A host registry supplies interfaces for host: modules. This registry is host configuration, not arbitrary JavaScript import access inside Effective.</p>
+<p>Host adapters must validate boundary values and preserve immutable source data. Registered implementations must honor their declared errors, capabilities, and execution behavior.</p><nav class="section-nav" aria-label="Navigation for section 12"><a href="#control">Previous section</a><a href="#ir">Next section</a></nav></section><section class="section" id="ir" aria-labelledby="heading-ir"><h2 id="heading-ir">13. Typed IR and backend contract</h2><figure class="code neutral"><figcaption>Compiler design</figcaption><pre tabindex="0"><code class="language-text">Effective source
+  -&gt; parse with source positions
+  -&gt; resolve declaration identities
+  -&gt; check types, contracts, patterns, and execution modes
+  -&gt; specialize builtins and lower pipelines
+  -&gt; validate typed IR
+  -&gt; emit target code</code></pre></figure>
+<p>The accompanying <a href="typed-ir.ts">typed-ir.ts</a> defines the proposed payload model. It is a structural TypeScript model, not an implementation of the compiler or validator.</p>
+<p>The internal format marker remains light-functional-ir, version 1. Effective branding does not change that existing wire contract.</p>
+<p>Every expression records its type, active failure and requirement sets, execution mode, and source span. Function types retain invocation effects and mode.</p>
+<p>References use resolved identities. Service operations use perform nodes; ordinary function invocations use call nodes.</p>
+<p>Pipelines lower through fresh block bindings and existing calls. A generated binding uses the left expression span; calls retain the corresponding stage span.</p>
+<p>Diagnostics refer to source expressions and hide temporary names. Source positions count UTF-16 units, with the end position excluded.</p>
+<p>The IR retains explicit retry, provide, catch, brand, and unbrand operations. A backend must not replace deferred control with eager helper calls.</p>
+<p>Pure exports return ordinary target values. Effectful exports return target computations, even when their error and requirement sets are both empty.</p>
+<p>An Effect backend uses Effect.Effect&lt;A, E, R&gt;, Context services, and typed failures. Its R parameter groups requirements by service rather than individual method.</p>
+<p>The backend preserves method precision in checked IR or metadata. A coarser target type does not erase the source contract.</p>
+<p>A backend must encode resolved declaration identities in error tags, service keys, and brand tokens. Equal printed names from different modules must remain distinct.</p>
+<p>The manual log fixture retains its original <a href="log.lft">log.lft</a> source identifier. Its semantic payload illustrates the same method declaration now shown in log.eff.</p><nav class="section-nav" aria-label="Navigation for section 13"><a href="#modules">Previous section</a><a href="#equations">Next section</a></nav></section><section class="section" id="equations" aria-labelledby="heading-equations"><h2 id="heading-equations">14. Effect equations and validation</h2><p>F(expression) denotes active expected failures. R(expression) denotes active capability requirements. Both sets contain resolved identities.</p>
+<figure class="code neutral"><figcaption>Checking equations</figcaption><pre tabindex="0"><code class="language-text">closure construction: F = {}, R = {}, execution = pure
+function interface:   invocation mode and bounded invocation sets
+ordinary call:        evaluated-child sets union callee invocation sets
+service call:         evaluated-child sets union method failures,
+                      with the service method added to requirements
+sequence:             union over statically reachable steps
+if / match:           condition or subject sets union branch sets
+catch:                body failures minus handled tags, union handler failures
+                      body requirements union handler requirements
+retry:                callback construction sets union invocation sets
+provide:              construction sets union provider acquisition sets,
+                      union callback invocation failures;
+                      callback invocation requirements minus supplied methods,
+                      union acquisition and construction requirements</code></pre></figure>
+<p>Execution mode combines the modes of evaluated children, branches, and invocations. Nonempty sets require effect mode. Empty sets do not establish purity.</p>
+<p>A semantic validator must recompute annotations and reject disagreements. TypeScript checks payload shape but cannot prove the semantic equations.</p>
+<p>The validator receives immutable source texts keyed by source identifiers. It uses those texts to check source positions.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Validation area</th><th scope="col">Required check</th></tr></thead><tbody><tr><td>Identity</td><td>References, imports, exports, and capabilities resolve in their scopes.</td></tr><tr><td>Types</td><td>Arguments, fields, branches, and function results match their checked types.</td></tr><tr><td>Contracts</td><td>Function bodies fit declared failures and requirements.</td></tr><tr><td>Execution</td><td>Modes preserve invocation effects, closure deferral, and provider acquisition.</td></tr><tr><td>Recovery</td><td>Handlers select possible tags and return compatible results.</td></tr><tr><td>Control</td><td>Retry jobs and provider jobs are zero-argument functions. Counts satisfy the literal constraint.</td></tr><tr><td>Initialization</td><td>Module constants have pure active execution and empty active sets.</td></tr><tr><td>Serialization</td><td>Sets are sorted and unique. Literals are finite. Source spans refer to supplied text.</td></tr></tbody></table></div><nav class="section-nav" aria-label="Navigation for section 14"><a href="#ir">Previous section</a><a href="#grammar">Next section</a></nav></section><section class="section" id="grammar" aria-labelledby="heading-grammar"><h2 id="heading-grammar">15. Compact surface grammar</h2><p>This grammar summarizes the named extensions. The lexical rules and type rules above constrain the terminal forms. It is not a generated parser.</p>
+<figure class="code neutral"><figcaption>Grammar summary</figcaption><pre tabindex="0"><code class="language-text">module       = (importDecl | declaration)*
+importDecl   = &quot;import&quot; &quot;{&quot; Name (&quot;,&quot; Name)* [&quot;,&quot;] &quot;}&quot; &quot;from&quot; String
+declaration = [&quot;export&quot;] (typeDecl | errorDecl | serviceDecl | binding)
+typeDecl     = &quot;type&quot; Name &quot;=&quot; type
+errorDecl    = &quot;error&quot; Name &quot;=&quot; recordType
+serviceDecl  = &quot;service&quot; Name &quot;{&quot; method* &quot;}&quot;
+method       = Name &quot;(&quot; parameters &quot;)&quot; &quot;:&quot; type [&quot;fails&quot; errorSet]
+binding      = &quot;const&quot; Name [&quot;:&quot; type] &quot;=&quot; expression
+lambda       = &quot;(&quot; parameters &quot;)&quot; [&quot;:&quot; type effects] &quot;=&gt;&quot; expression
+functionType = &quot;(&quot; parameters &quot;)&quot; &quot;=&gt;&quot; type effects
+effects      = [&quot;fails&quot; errorSet] [&quot;uses&quot; requirementSet]
+errorSet     = ErrorName (&quot;|&quot; ErrorName)*
+requirementSet = QualifiedName (&quot;|&quot; QualifiedName)*
+recordType   = &quot;{&quot; [field (&quot;,&quot; field)* [&quot;,&quot;]] &quot;}&quot;
+field        = Name [&quot;?&quot;] &quot;:&quot; type
+type         = union of primitive, named, record, array, tuple,
+               option, brand, and function types
+block        = &quot;{&quot; (binding | expression)* &quot;}&quot;
+matchExpr    = &quot;match&quot; expression &quot;{&quot; arm (&quot;,&quot; arm)* [&quot;,&quot;] &quot;}&quot;
+arm          = pattern &quot;=&gt;&quot; expression
+tryExpr      = &quot;try&quot; block &quot;catch&quot; &quot;{&quot; handler (&quot;,&quot; handler)* [&quot;,&quot;] &quot;}&quot;
+handler      = ErrorName &quot;(&quot; Name &quot;)&quot; &quot;=&gt;&quot; expression
+ifExpr       = &quot;if&quot; &quot;(&quot; expression &quot;)&quot; block &quot;else&quot; (block | ifExpr)
+pipeExpr     = nonPipeExpr (&quot;|&gt;&quot; pipeStage)*
+pipeStage    = QualifiedName [&quot;(&quot; arguments &quot;)&quot;]</code></pre></figure>
+<p>The checker recognizes only the stated core. Unlisted JavaScript features do not become valid merely because the file resembles TypeScript.</p>
+<p>The core operators are +, -, *, /, ===, !==, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, and ||. Their operands follow the primitive typing rules.</p>
+<p>Types use postfix [] for arrays and brackets for tuples. Option&lt;T&gt; and Brand&lt;T&gt; are the initial builtin type applications.</p>
+<p>A brace after an arrow, if condition, else, try, or catch enters its declared control context. Returned object literals require parentheses after an arrow.</p>
+<p>The checker rejects duplicate declarations, fields, methods, match arms, and handler tags where their scopes require uniqueness.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Operator group, highest first</th><th scope="col">Operand and result rules</th></tr></thead><tbody><tr><td>Calls and field reads</td><td>A call checks parameter types. A field read uses the declared field type.</td></tr><tr><td>* and /</td><td>Numeric operands produce a numeric result. Division produces number.</td></tr><tr><td>+ and -</td><td>Numeric operands produce a numeric result. Addition also accepts two strings and produces string.</td></tr><tr><td>&lt;, &lt;=, &gt;, &gt;=</td><td>Numeric operands produce boolean.</td></tr><tr><td>=== and !==</td><td>Compatible primitives, literal unions, or matching primitive brands produce boolean.</td></tr><tr><td>&amp;&amp;</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>||</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>|&gt;</td><td>The stage receives the left result as its first argument.</td></tr></tbody></table></div>
+<p>Binary operators within each group associate from left to right. Numeric arithmetic preserves int when both operands are int, except for division.</p>
+<p>Arithmetic with a number operand produces number. String addition performs no implicit conversion. Invalid int arithmetic produces a defect.</p><nav class="section-nav" aria-label="Navigation for section 15"><a href="#equations">Previous section</a><a href="#diagnostics">Next section</a></nav></section><section class="section" id="diagnostics" aria-labelledby="heading-diagnostics"><h2 id="heading-diagnostics">16. Diagnostics and conformance</h2><p>Diagnostics identify a source span, a category, and a concrete mismatch. Suggested categories include syntax, unknown-name, type-mismatch, failure-contract, requirement-contract, and execution-mode.</p>
+<p>These categories describe the proposed diagnostic contract. No delivered compiler emits them yet.</p>
+<figure class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const broken = (id: string): User
+  uses Users.find =&gt; getUser(id)
+
+// Invalid: getUser can fail, but the annotated failure set is empty.</code></pre></figure>
+<p>Acceptance fixtures must check evaluation order, single evaluation, branch selection, failure propagation, explicit contracts, closure deferral, retry, and provider resolution.</p>
+<p>Pipeline fixtures must verify argument placement, stage order, short-circuiting after failure, and source locations for generated bindings.</p>
+<p>Collection fixtures must verify callback purity, order, empty arrays, and distinct closed builtin identities.</p>
+<p>Backend fixtures must compare values, typed failures, and operation traces. A future Effect target also requires strict TypeScript checking and runtime checks.</p>
+<p>Delivered checks cover document consistency, the manual log IR fixture, and strict TypeScript checks of eight illustrative EffectJS targets. No Effective execution or translation-equivalence check exists.</p><nav class="section-nav" aria-label="Navigation for section 16"><a href="#grammar">Previous section</a><a href="#examples">Next section</a></nav></section><section class="section" id="examples" aria-labelledby="heading-examples"><h2 id="heading-examples">17. Canonical examples and deferred work</h2><div class="table-wrap"><table><thead><tr><th scope="col">Example</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td><a href="effective-examples/log.eff">effective-examples/log.eff</a></td><td>A service declaration and one direct call.</td></tr><tr><td><a href="effective-examples/collections.eff">effective-examples/collections.eff</a></td><td>Pure data-first collection pipelines.</td></tr><tr><td><a href="effective-examples/pay.eff">effective-examples/pay.eff</a></td><td>A complete payment workflow with matching, retry, and immutable updates.</td></tr><tr><td><a href="effective-examples/users.eff">effective-examples/users.eff</a></td><td>Lookup, update, recovery, and collection transformation in a reusable module.</td></tr><tr><td><a href="effective-examples/main.eff">effective-examples/main.eff</a></td><td>A separate application module that provides the imported user service.</td></tr></tbody></table></div>
+<p>The <a href="effective-mini-book.html">mini book</a> explains these forms and compares them with illustrative EffectJS. The typed IR model and validation notes accompany both documents.</p>
+<p>Deferred features include user generics, effect-row polymorphism, source purity assertions, resource scopes, concurrency, streams, mutable references, macros, and recursive schemas.</p>
+<p>Source layer construction, arbitrary JavaScript interop, package resolution, early returns, and codec generation also require later specifications.</p>
+<p>Deferral does not imply that those features need new syntax. Each extension must preserve the current execution, failure, and capability distinctions.</p><nav class="section-nav" aria-label="Navigation for section 17"><a href="#diagnostics">Previous section</a><a href="#sources">Next section</a></nav></section><section class="section" id="sources" aria-labelledby="heading-sources"><h2 id="heading-sources">18. Sources and design lineage</h2><p>Forma inspired the separation of success values, expected failures, and required capabilities. Effective chooses a TypeScript-family functional surface for those ideas.</p>
+<p>Source references: <a href="https://forma-lang.com/effect">https://forma-lang.com/effect</a> and <a href="https://forma-lang.com/effect/reference">https://forma-lang.com/effect/reference</a>.</p>
+<p>Direct-call design reference: <a href="https://forma-lang.com/rfcs/0003-direct-style-effects">https://forma-lang.com/rfcs/0003-direct-style-effects</a>. That RFC described proposed behavior when the design research occurred.</p>
+<p>Target references: <a href="https://effect.website/docs/v4/api/effect/Context">https://effect.website/docs/v4/api/effect/Context</a> and <a href="https://effect.website/docs/v4/error-management/expected-errors">https://effect.website/docs/v4/error-management/expected-errors</a>.</p>
+<p>These references support the design lineage and target examples. They do not establish an Effective implementation.</p><nav class="section-nav" aria-label="Navigation for section 18"><a href="#examples">Previous section</a><a href="effective-mini-book.html">Read the mini book</a></nav></section>
+<footer class="footer"><p>Effective documentation, draft 0.1. Source examples and target comparisons are manually authored.</p><p>The validation report states each completed check and its limits.</p></footer></main></div></body></html>

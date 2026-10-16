@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Nine chapters introduce values, contracts, services, recovery, and pipelines. Paired examples compare Effective with illustrative EffectJS."><title>Effective - Mini book</title><style>
+:root{color-scheme:light;--ink:#202d35;--muted:#56646c;--paper:#fbfaf6;--line:#dcded8;--accent:#1b665c;--source:#e8f0e9;--code:#16262d;--code-ink:#ecf2ef;--aside:258px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}a:focus-visible,summary:focus-visible{outline:3px solid #b16c26;outline-offset:4px}h1,h2,h3{line-height:1.17;font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.035em}h1{font-size:clamp(44px,6vw,78px);margin:12px 0 22px;max-width:940px}h2{font-size:clamp(30px,3vw,42px);margin:0 0 24px}p{margin:0 0 19px;max-width:78ch}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,td code{font-size:.88em;background:#e8eae4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.skip{position:absolute;left:18px;top:-80px;background:white;padding:12px;z-index:20}.skip:focus{top:12px}.topbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(251,250,246,.97);font-size:14px}.brand{font-weight:750;font-size:20px;letter-spacing:-.04em;text-decoration:none;color:var(--ink)}.toplinks{display:flex;gap:22px;flex-wrap:wrap}.toplinks a[aria-current]{font-weight:750;text-decoration-thickness:2px}.layout{display:grid;grid-template-columns:var(--aside) minmax(0,1fr);max-width:1600px;margin:auto}.contents{position:sticky;top:66px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;padding:35px 26px 40px 32px;font-size:13px;line-height:1.5}.contents-title,.eyebrow{font-size:11px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.contents ol{list-style:none;margin:16px 0 26px;padding:0}.contents li{margin:0 0 10px}.contents a{color:var(--muted);text-decoration:none}.contents a:hover{color:var(--accent);text-decoration:underline}.contents .resource{display:block;margin:10px 0}.main{min-width:0;border-left:1px solid var(--line);padding:55px clamp(24px,4.5vw,72px) 50px}.hero{padding-bottom:44px;border-bottom:1px solid var(--line);margin-bottom:50px}.subtitle{color:var(--muted);font-size:19px;max-width:65ch}.status{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0}.pill{border:1px solid #cbd7cc;padding:4px 11px;font-size:12px;border-radius:100px;background:#f0f3eb}.intro-links{display:flex;flex-wrap:wrap;gap:12px 22px;font-size:14px}.section{margin:0 0 56px;padding:0 0 35px;border-bottom:1px solid var(--line)}.lead{font-size:20px;color:var(--accent);margin-bottom:24px}.code{margin:25px 0;border-radius:9px;overflow:hidden;border:1px solid #283b40;background:var(--code);min-width:0}.code figcaption{padding:11px 16px;background:#23373d;color:#eff3ee;font-size:12px;font-weight:650;line-height:1.4;border-bottom:1px solid #3a4b4f}.code.source figcaption{background:var(--source);color:#23483f;border-bottom-color:#bfd1c4}.code pre{margin:0;padding:20px;overflow:auto;tab-size:2;line-height:1.65;font-size:13px;color:var(--code-ink);max-height:760px}.code pre code{font:inherit;white-space:pre}.code.target{background:#1f272d}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin:25px 0}.pair .code{margin:0}.pair .code pre{font-size:12px;padding:16px}.table-wrap{overflow:auto;margin:25px 0;border:1px solid var(--line);border-radius:7px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.55}th,td{padding:13px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#edf0e8;font-weight:700}tr:last-child td{border-bottom:0}td:first-child{width:36%;font-weight:600}.exercise{margin:28px 0;padding:22px 25px;background:#eff1e8;border-left:3px solid #748c66;border-radius:0 7px 7px 0}.exercise h3{font-family:inherit;font-size:12px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;margin:0 0 10px}.exercise p{margin:0 0 12px}.exercise details{font-size:15px}.exercise summary{cursor:pointer;color:var(--accent);font-weight:600}.exercise details p{margin:14px 0 0}.exercise pre{white-space:pre-wrap;font-size:13px;overflow-wrap:anywhere}.section-nav{display:flex;justify-content:space-between;gap:20px;margin-top:25px;font-size:13px}.footer{color:var(--muted);font-size:13px;padding:10px 0 30px}.footer p{margin-bottom:8px}
+@media(min-width:1500px){.main{padding-left:65px;padding-right:65px}}@media(max-width:1150px){.pair{grid-template-columns:minmax(0,1fr)}.pair .code pre{font-size:13px}.pair .code pre{max-height:650px}:root{--aside:218px}.contents{padding-left:24px;padding-right:18px}}@media(max-width:760px){.topbar{position:relative;padding:16px 20px;align-items:flex-start}.toplinks{gap:10px 15px;font-size:12px}.layout{display:block}.contents{position:relative;top:auto;max-height:none;padding:24px 22px;border-bottom:1px solid var(--line)}.contents ol{columns:2;column-gap:25px;margin-bottom:12px}.contents li{break-inside:avoid}.contents .resource{display:inline-block;margin-right:17px}.main{border-left:0;padding:32px 22px}.hero{margin-bottom:35px}.section{margin-bottom:35px}body{font-size:16px}h1{font-size:48px}.code pre{font-size:12px;padding:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{:root{--paper:white;--ink:black}body{font-size:10.5pt;line-height:1.45}.skip,.topbar,.contents,.section-nav,.intro-links{display:none}.layout{display:block}.main{border:0;padding:0}.hero{padding-bottom:20px;margin-bottom:25px}h1{font-size:35pt}h2{font-size:23pt;break-after:avoid}.section{margin-bottom:20px;padding-bottom:16px}.lead{font-size:13pt}.code,.code.target{background:#f6f6f3;border:1px solid #ccc;break-inside:auto}.code figcaption,.code.source figcaption{background:#e9ede6;color:black}.code pre,.pair .code pre{color:black;max-height:none;font-size:8pt;white-space:pre-wrap;overflow:visible}.code pre code{white-space:pre-wrap;overflow-wrap:anywhere}.pair{display:block}.pair .code{margin:15px 0}.table-wrap{overflow:visible}table{font-size:9pt}tr{break-inside:avoid}.exercise{break-inside:avoid}.exercise details:not([open])>*:not(summary){display:block}a{color:black}p{max-width:none}.footer{font-size:9pt}}
+</style></head>
+<body id="top"><a class="skip" href="#content">Skip to content</a>
+<header class="topbar"><a class="brand" href="effective-mini-book.html">Effective</a><nav class="toplinks" aria-label="Documents"><a href="effective-mini-book.html" aria-current="page">Mini book</a><a href="effective-spec.html">Specification</a><a href="effective-docs.zip" download>Download package</a></nav></header>
+<div class="layout"><nav class="contents" aria-label="Contents"><div class="contents-title">Mini book / contents</div><ol><li><a href="#orientation">1. What Effective is</a></li><li><a href="#values">2. Values, records, brands, and options</a></li><li><a href="#contracts">3. Functions and effect contracts</a></li><li><a href="#users-foundation">4. One domain in two languages</a></li><li><a href="#lookup-update">5. Lookup and update workflows</a></li><li><a href="#pipelines-collections">6. Pipelines and collection callbacks</a></li><li><a href="#control">7. Recovery, retry, and provision</a></li><li><a href="#payment">8. A complete payment pipeline</a></li><li><a href="#modules-reference">9. Modules, lowering, and quick reference</a></li></ol><div class="contents-title">Source and evidence</div><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
+<main class="main" id="content"><div class="hero"><div class="eyebrow">Effective / Mini book / draft 0.1</div><h1>A small language for typed effects</h1><p class="subtitle">Nine chapters introduce values, contracts, services, recovery, and pipelines. Paired examples compare Effective with illustrative EffectJS.</p><div class="status"><span class="pill">Language core 0</span><span class="pill">October 15, 2026</span><span class="pill">Design draft</span></div><p>Effective is a language design. The package contains no compiler or runtime. EffectJS means the Effect library for TypeScript, using the v4 documentation.</p><div class="intro-links"><a href="effective-spec.html">Read the specification</a><a href="effective-examples/main.eff">Open the application boundary</a><a href="typed-ir.ts">Inspect the typed IR model</a></div></div>
+<section class="section" id="orientation" aria-labelledby="heading-orientation"><h2 id="heading-orientation">1. What Effective is</h2><p class="lead">Effective is a small functional language in the TypeScript family.</p><p>Effective combines immutable data, arrow functions, pattern matching, and typed service operations. A program reads like direct TypeScript, while each function contract records expected failures and required capabilities.</p>
+<p>Version 0 is a language design, not an available toolchain. The examples in this book are manually written. No compiler, interpreter, package, or command exists.</p>
+<p>The proposed compiler boundary is a typed intermediate representation, or IR. Each expression records its type, execution mode, failures, requirements, and source position. A future backend could translate checked IR into Effect TypeScript.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Version 0 includes</th><th scope="col">Version 0 defers</th></tr></thead><tbody><tr><td>Immutable records, arrays, options, and brands</td><td>Resources, concurrency, and streams</td></tr><tr><td>Functions, pipelines, match, and typed catch</td><td>Macros and recursive schemas</td></tr><tr><td>Services, retry, providers, and modules</td><td>User generics and provider construction</td></tr><tr><td>Pure map, filter, and fold callbacks</td><td>Arbitrary JavaScript and Promise interoperation</td></tr></tbody></table></div>
+<p>Effective separates domain failures from defects and cancellation. A missing user can be data. Invalid safe-integer arithmetic is a defect. A typed catch handles only declared domain failures.</p>
+<p>Three facts describe each function call. The result type describes normal completion. The failure set names expected errors. The requirement set names service methods.</p>
+<p>These facts travel through composition. A caller must account for expected failures and required capabilities. Execution mode separately records whether invocation performs effects.</p>
+<p>This book first explains values and contracts. It then develops one Users service across lookup, update, recovery, retry, and provision. A payment pipeline joins the concepts near the end.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#values">Next section</a></nav></section><section class="section" id="values" aria-labelledby="heading-values"><h2 id="heading-values">2. Values, records, brands, and options</h2><p class="lead">Every Effective binding and aggregate value is immutable.</p><p>This chapter uses a separate example module. Chapter 4 starts the shared Users domain with string identifiers.</p>
+<p>A const binding cannot change. A record update creates a new record and preserves the old value. Effective has no assignment, class inheritance, or implicit receiver.</p>
+<figure class="code source"><figcaption>Immutable values</figcaption><pre tabindex="0"><code class="language-effective">type UserId = Brand&lt;string&gt;
+
+type User = {
+  id: UserId,
+  name: string,
+  active: boolean,
+  nickname?: string
+}
+
+const activate = (user: User): User =&gt;
+  ({ ...user, active: true })
+
+const displayId = (user: User): string =&gt;
+  unbrand(user.id)</code></pre></figure>
+<p>A brand gives nominal identity to a base value. UserId(&quot;u1&quot;) creates the brand, but it performs no validation. The unbrand builtin converts the value back to string.</p>
+<p>Ordinary type aliases use structural equality. Two records with equal fields are compatible. Brands and errors use declaration identity, which prevents accidental substitution.</p>
+<p>An optional field read returns Option&lt;T&gt;. Some(value) represents presence, and None represents absence. This rule prevents an absent field from becoming an unchecked undefined value.</p>
+<figure class="code source"><figcaption>Option matching</figcaption><pre tabindex="0"><code class="language-effective">const nicknameLabel = (user: User): string =&gt;
+  match user.nickname {
+    Some(nickname) =&gt; nickname,
+    None =&gt; user.name
+  }</code></pre></figure>
+<p>Match expressions require complete coverage. Every arm produces a compatible result type. A never branch, such as fail(error), fits any result type.</p>
+<p>The int type contains finite safe integers. Addition, subtraction, and multiplication can defect when the result is invalid. Division always returns number.</p>
+<p>Records reject missing required fields and unknown fields. A record update evaluates its base once, then evaluates update fields from left to right.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Write a pure function that changes a user&#x27;s name without changing the input record.</p><details><summary>Show the answer</summary><pre><code>const rename = (user: User, name: string): User =&gt; ({ ...user, name })</code></pre></details></aside><nav class="section-nav" aria-label="Navigation for section 2"><a href="#orientation">Previous section</a><a href="#contracts">Next section</a></nav></section><section class="section" id="contracts" aria-labelledby="heading-contracts"><h2 id="heading-contracts">3. Functions and effect contracts</h2><p class="lead">A function contract states its success type, expected failures, and required service methods.</p><p>The examples in this chapter use the User, StoreUnavailable, and Users declarations from chapter 4. Chapter 4 defines each shared declaration.</p>
+<figure class="code source"><figcaption>Pure and effectful contracts</figcaption><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
+
+const load = (id: string): Option&lt;User&gt;
+  fails StoreUnavailable
+  uses Users.find =&gt; Users.find(id)</code></pre></figure>
+<p>The result type remains Option&lt;User&gt;. A service call performs its operation when the running function reaches the call. The source type never becomes Effect&lt;Option&lt;User&gt;, E, R&gt;.</p>
+<p>A declared failure is an expected outcome. A required capability records a call to one service method. A service name in uses expands to every method in that service.</p>
+<p>Calls propagate the declared contract of the callee. The declared sets can exceed the body sets, but they cannot omit a body effect.</p>
+<p>A result annotation closes the contract. An omitted fails clause means no expected failures. An omitted uses clause means no service requirements. The body cannot exceed either set.</p>
+<p>Local functions can omit result annotations and infer their result and effects. Exported functions require parameter and result annotations. Parameters also require annotations without a contextual function type.</p>
+<p>Execution mode is separate from failure and requirement sets. A provider can remove every requirement while the computation remains effectful. Empty sets can therefore describe either execution mode.</p>
+<p>Creating an arrow function is pure. Calling that function runs its body each time. Unbodied source function types default to effect execution in version 0.</p>
+<p>Nonempty failure or requirement sets imply effect execution. Empty sets do not imply purity. The compiler must preserve the independently inferred execution mode.</p>
+<figure class="code source"><figcaption>Final-expression blocks</figcaption><pre tabindex="0"><code class="language-effective">const activateAndCount = (user: User): int =&gt; {
+  const active = ({ ...user, active: true })
+  if (active.active) { 1 } else { 0 }
+}</code></pre></figure>
+<p>A block returns its final expression. Effective source has no return statement. Ordered expressions run from left to right, and only the selected branch runs.</p>
+<aside class="exercise"><h3>Exercise</h3><p>What do omitted fails and uses clauses mean when a function has a result annotation?</p><details><summary>Show the answer</summary><p>Both sets are empty. The body must handle failures and provide requirements before the function boundary.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 3"><a href="#values">Previous section</a><a href="#users-foundation">Next section</a></nav></section><section class="section" id="users-foundation" aria-labelledby="heading-users-foundation"><h2 id="heading-users-foundation">4. One domain in two languages</h2><p class="lead">The Users domain provides the shared declarations for the next four chapters.</p><p>Effective service declarations contain method signatures. Service methods have no this binding. Each method remains a distinct capability after name resolution.</p>
+<figure class="code source"><figcaption>Effective shared Users declarations</figcaption><pre tabindex="0"><code class="language-effective">type User = {
+  id: string,
+  name: string,
+  active: boolean
+}
+
+error UserMissing = { id: string }
+error StoreUnavailable = { message: string }
+
+service Users {
+  find(id: string): Option&lt;User&gt; fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}</code></pre></figure>
+<p>A service method lists only failures from that operation. Method requirement sets are empty. A host provider can have separate acquisition failures and dependencies.</p>
+<p>Users.find, Users.save, and Users.all are separate capabilities. A contract can name one method without declaring the other methods. Static tracking does not sandbox host adapters.</p>
+<figure class="code target"><figcaption>Illustrative EffectJS shared Users declarations</figcaption><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+const User = Schema.Struct({
+  id: Schema.String,
+  name: Schema.String,
+  active: Schema.Boolean
+})
+type User = typeof User.Type
+
+class UserMissing extends Schema.TaggedError&lt;UserMissing&gt;()(
+  &quot;UserMissing&quot;,
+  { id: Schema.String }
+) {}
+
+class StoreUnavailable extends Schema.TaggedError&lt;StoreUnavailable&gt;()(
+  &quot;StoreUnavailable&quot;,
+  { message: Schema.String }
+) {}
+
+class Users extends Context.Service&lt;Users, {
+  readonly find: (id: string) =&gt; Effect.Effect&lt;
+    Option.Option&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+  readonly save: (user: User) =&gt; Effect.Effect&lt;
+    void,
+    StoreUnavailable
+  &gt;
+  readonly all: () =&gt; Effect.Effect&lt;
+    ReadonlyArray&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+}&gt;()(&quot;Users&quot;) {}</code></pre></figure>
+<p>The TypeScript target represents successful values inside Effect.Effect. Its error parameter contains tagged errors. Its requirement parameter contains the Users service when a function accesses that context.</p>
+<p>Later TypeScript examples assume these imports, schemas, errors, and the Users class. Later Effective examples assume the declarations above. Each pair shows intended translation, not generated output.</p>
+<p>EffectJS tracks the whole Users service in its requirement type. Effective retains each method requirement in checked IR or backend metadata.</p>
+<p>These isolated comparisons use short error tags and service keys. A compiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous section</a><a href="#lookup-update">Next section</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">5. Lookup and update workflows</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third function sequences lookup, change, and save.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective lookup</figcaption><pre tabindex="0"><code class="language-effective">const getUser = (id: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find =&gt;
+  match Users.find(id) {
+    Some(user) =&gt; user,
+    None =&gt; fail(UserMissing({ id }))
+  }</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS lookup using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const getUser = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt;
+  Effect.flatMap(
+    Users.use((users) =&gt; users.find(id)),
+    (found) =&gt; Option.match(found, {
+      onNone: () =&gt; Effect.fail(new UserMissing({ id })),
+      onSome: (user) =&gt; Effect.succeed(user)
+    })
+  )</code></pre></figure></div>
+<p>fail(error) ends the normal path and contributes the error identity. Errors are nominal, so declarations with equal fields remain different error types.</p>
+<p>The match reads the option once and selects one arm. The None arm constructs UserMissing with the requested identifier. StoreUnavailable remains unchanged.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective update workflow</figcaption><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
+  ({ ...user, active: true })
+
+export const saveActive = (id: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find | Users.save =&gt; {
+  const user = getUser(id)
+  const active = activate(user)
+  Users.save(active)
+  active
+}</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS update using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activate = (user: User): User =&gt;
+  ({ ...user, active: true })
+
+const saveActive = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt; Effect.gen(function* () {
+  const user = yield* getUser(id)
+  const active = activate(user)
+  yield* Users.use((users) =&gt; users.save(active))
+  return active
+})</code></pre></figure></div>
+<p>Effective uses one direct call syntax for pure functions and service methods. The checked call still distinguishes an ordinary call from a service operation in typed IR.</p>
+<p>The block evaluates each binding and expression in order. A failure stops the remaining steps. The final active value becomes the successful result.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Why does saveActive return active after Users.save(active)?</p><details><summary>Show the answer</summary><p>The final value supports later composition. The save operation returns void, which cannot carry the updated user.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 5"><a href="#users-foundation">Previous section</a><a href="#pipelines-collections">Next section</a></nav></section><section class="section" id="pipelines-collections" aria-labelledby="heading-pipelines-collections"><h2 id="heading-pipelines-collections">6. Pipelines and collection callbacks</h2><p class="lead">A pipeline passes its left value as the first argument of each stage.</p><figure class="code neutral"><figcaption>Pipeline expansion</figcaption><pre tabindex="0"><code class="language-text">value |&gt; transform          means transform(value)
+value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure>
+<p>The runtime evaluates the left side once. It then evaluates the stage callee and explicit arguments. Pipelines associate from left to right.</p>
+<p>A stage can name a local function, imported function, builtin, or declared service method. Version 0 excludes placeholders, currying, inline lambda stages, and record-member stages.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective collection workflow using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-effective">const activeNames = (users: User[]): string[] =&gt;
+  users
+    |&gt; filter((user) =&gt; user.active)
+    |&gt; map((user) =&gt; user.name)
+
+export const listActiveNames = (): string[]
+  fails StoreUnavailable
+  uses Users.all =&gt;
+  Users.all() |&gt; activeNames</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS collection workflow using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activeNames = (
+  users: ReadonlyArray&lt;User&gt;
+): ReadonlyArray&lt;string&gt; =&gt;
+  users.filter((user) =&gt; user.active).map((user) =&gt; user.name)
+
+const listActiveNames = (): Effect.Effect&lt;
+  ReadonlyArray&lt;string&gt;,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.map(
+  Users.use((users) =&gt; users.all()),
+  activeNames
+)</code></pre></figure></div>
+<p>The prelude provides map, filter, and fold. Each builtin traverses from left to right. Map and filter preserve order, while fold carries one accumulator.</p>
+<p>Map and filter call their callback once for each visited element. Empty inputs produce empty outputs. Fold returns its initial accumulator for an empty input.</p>
+<p>Each callback must be pure and have empty failure and requirement sets. Contextual inline arrows work because the builtin supplies their parameter types. Known pure functions also work.</p>
+<p>A callback that provides its own service can still execute effects. Empty failures and requirements do not make that callback pure. Execution mode closes this loophole.</p>
+<p>The checker specializes each builtin use to a closed function type before IR serialization. Version 0 does not expose the builtin type variables to users.</p>
+<figure class="code source"><figcaption>Fold from left to right</figcaption><pre tabindex="0"><code class="language-effective">export const total = (amounts: int[]): int =&gt;
+  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></figure>
+<aside class="exercise"><h3>Exercise</h3><p>Why can version 0 reject a callback parameter whose source type only shows empty effect sets?</p><details><summary>Show the answer</summary><p>An unbodied function type defaults to effect execution. Version 0 has no source annotation that requires pure execution.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 6"><a href="#lookup-update">Previous section</a><a href="#control">Next section</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">7. Recovery, retry, and provision</h2><p class="lead">Effective controls an operation through explicit syntax and deferred zero-argument functions.</p><p>A typed catch handles matching failures from its protected block. Unhandled failures continue to the caller. Catch does not intercept defects or cancellation.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective recovery using chapters 4 and 5 declarations</figcaption><pre tabindex="0"><code class="language-effective">export const activationLabel = (id: string): string
+  fails StoreUnavailable
+  uses Users.find | Users.save =&gt;
+  try {
+    saveActive(id)
+    &quot;active&quot;
+  } catch {
+    UserMissing(error) =&gt; &quot;missing: &quot; + error.id
+  }</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS recovery using chapters 4 and 5 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const activationLabel = (id: string): Effect.Effect&lt;
+  string,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.map(saveActive(id), () =&gt; &quot;active&quot;).pipe(
+  Effect.catchTag(
+    &quot;UserMissing&quot;,
+    (error) =&gt; Effect.succeed(&quot;missing: &quot; + error.id)
+  )
+)</code></pre></figure></div>
+<p>retry requires a deferred operation. The function below runs its first attempt and allows two more attempts. Each attempt can perform the Users.find operation again.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective retry using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: string): Option&lt;User&gt;
+  fails StoreUnavailable
+  uses Users.find =&gt;
+  retry(() =&gt; Users.find(id), { times: 2 })</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS retry using chapter 4 declarations</figcaption><pre tabindex="0"><code class="language-typescript">const lookupWithRetry = (id: string): Effect.Effect&lt;
+  Option.Option&lt;User&gt;,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.retry(
+  Effect.suspend(() =&gt; Users.use((users) =&gt; users.find(id))),
+  { times: 2 }
+)</code></pre></figure></div>
+<p>Passing Users.find(id) directly would run the call before retry took control. Effective never inserts suspension because a parameter expects a deferred function.</p>
+<p>Retry preserves the callback result, failures, and requirements. Retry itself has effect execution mode. Its times value must be a finite, nonnegative safe integer literal in version 0.</p>
+<div class="pair" aria-label="Effective and illustrative EffectJS comparison"><figure class="code source"><figcaption>Effective provider execution</figcaption><pre tabindex="0"><code class="language-effective">import { UsersLive } from &quot;host:providers&quot;
+
+export const runLookup = (id: string): Option&lt;User&gt;
+  fails StoreUnavailable =&gt;
+  provide(UsersLive, () =&gt; lookupWithRetry(id))</code></pre></figure><figure class="code target"><figcaption>Illustrative EffectJS provider execution</figcaption><pre tabindex="0"><code class="language-typescript">import { UsersLive } from &quot;./users-live.js&quot;
+
+const runLookup = (id: string): Effect.Effect&lt;
+  Option.Option&lt;User&gt;,
+  StoreUnavailable
+&gt; =&gt; Effect.provide(
+  Effect.suspend(() =&gt; lookupWithRetry(id)),
+  UsersLive
+)</code></pre></figure></div>
+<p>The host maps its provider registration to users-live.js in this target example. Effective source keeps the registered host:providers import.</p>
+<p>These provider examples assume UsersLive is a Layer&lt;Users&gt; with infallible acquisition and no dependencies. A fallible provider adds its acquisition failures and requirements to the result.</p>
+<p>Providing Users removes the Users requirement. The operation still uses effect execution mode. Version 0 receives provider values from typed host modules and defines no layer construction syntax.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Why do retry and provide require () =&gt; operation() instead of operation()?</p><details><summary>Show the answer</summary><p>The zero-argument function defers execution. The controlling builtin can choose when and how often to invoke the operation.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 7"><a href="#pipelines-collections">Previous section</a><a href="#payment">Next section</a></nav></section><section class="section" id="payment" aria-labelledby="heading-payment"><h2 id="heading-payment">8. A complete payment pipeline</h2><p class="lead">The payment workflow composes effectful and pure stages through one data-first pipeline.</p><figure class="code source"><figcaption>Effective payment module</figcaption><pre tabindex="0"><code class="language-effective">type OrderId = Brand&lt;string&gt;
+type Order = {
+  id: OrderId,
+  totalCents: int,
+  status: &quot;pending&quot; | &quot;paid&quot;
+}
+
+error OrderNotFound = { id: OrderId }
+error PaymentDeclined = { reason: string }
+
+service Orders {
+  find(id: OrderId): Option&lt;Order&gt;
+  save(order: Order): void
+}
+
+service Payments {
+  charge(amount: int): string fails PaymentDeclined
+}
+
+const findOrder = (id: OrderId): Order
+  fails OrderNotFound
+  uses Orders.find =&gt;
+  match Orders.find(id) {
+    Some(order) =&gt; order,
+    None =&gt; fail(OrderNotFound({ id }))
+  }
+
+const chargeOrder = (order: Order): Order
+  fails PaymentDeclined
+  uses Payments.charge =&gt; {
+  retry(() =&gt; Payments.charge(order.totalCents), { times: 2 })
+  order
+}
+
+const markPaid = (order: Order): Order =&gt;
+  ({ ...order, status: &quot;paid&quot; })
+
+const saveOrder = (order: Order): Order
+  uses Orders.save =&gt; {
+  Orders.save(order)
+  order
+}
+
+export const pay = (id: OrderId): Order
+  fails OrderNotFound | PaymentDeclined
+  uses Orders | Payments.charge =&gt;
+  id
+    |&gt; findOrder
+    |&gt; chargeOrder
+    |&gt; markPaid
+    |&gt; saveOrder</code></pre></figure>
+<p>The pipeline stops at the first expected failure. chargeOrder retries only the charge call. saveOrder cannot run after a missing order or declined payment.</p>
+<p>The uses Orders clause expands to Orders.find and Orders.save. Payments.charge stays method-specific. The resulting contract exposes only the needed service surface.</p>
+<p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
+<p>The target schema checks safe integers at a boundary. Effective separately requires its checker and runtime to preserve int arithmetic rules.</p>
+<figure class="code target"><figcaption>Illustrative EffectJS payment target</figcaption><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+const OrderId = Schema.String.pipe(Schema.brand(&quot;OrderId&quot;))
+type OrderId = typeof OrderId.Type
+
+const Int = Schema.Finite.check(
+  Schema.makeFilter(
+    (value) =&gt; Number.isSafeInteger(value) || &quot;expected a safe integer&quot;
+  )
+)
+
+const Order = Schema.Struct({
+  id: OrderId,
+  totalCents: Int,
+  status: Schema.Literals([&quot;pending&quot;, &quot;paid&quot;])
+})
+type Order = typeof Order.Type
+
+class OrderNotFound extends Schema.TaggedError&lt;OrderNotFound&gt;()(
+  &quot;OrderNotFound&quot;,
+  { id: OrderId }
+) {}
+
+class PaymentDeclined extends Schema.TaggedError&lt;PaymentDeclined&gt;()(
+  &quot;PaymentDeclined&quot;,
+  { reason: Schema.String }
+) {}
+
+class Orders extends Context.Service&lt;Orders, {
+  readonly find: (id: OrderId) =&gt; Effect.Effect&lt;Option.Option&lt;Order&gt;&gt;
+  readonly save: (order: Order) =&gt; Effect.Effect&lt;void&gt;
+}&gt;()(&quot;Orders&quot;) {}
+
+class Payments extends Context.Service&lt;Payments, {
+  readonly charge: (amount: number) =&gt; Effect.Effect&lt;
+    string,
+    PaymentDeclined
+  &gt;
+}&gt;()(&quot;Payments&quot;) {}
+
+const findOrder = (id: OrderId): Effect.Effect&lt;
+  Order,
+  OrderNotFound,
+  Orders
+&gt; =&gt; Effect.flatMap(
+  Orders.use((orders) =&gt; orders.find(id)),
+  (found) =&gt; Option.match(found, {
+    onNone: () =&gt; Effect.fail(new OrderNotFound({ id })),
+    onSome: (order) =&gt; Effect.succeed(order)
+  })
+)
+
+const chargeOrder = (order: Order): Effect.Effect&lt;
+  Order,
+  PaymentDeclined,
+  Payments
+&gt; =&gt; Effect.map(
+  Effect.retry(
+    Effect.suspend(() =&gt;
+      Payments.use((payments) =&gt; payments.charge(order.totalCents))
+    ),
+    { times: 2 }
+  ),
+  () =&gt; order
+)
+
+const markPaid = (order: Order): Order =&gt;
+  ({ ...order, status: &quot;paid&quot; })
+
+const saveOrder = (order: Order): Effect.Effect&lt;Order, never, Orders&gt; =&gt;
+  Effect.map(
+    Orders.use((orders) =&gt; orders.save(order)),
+    () =&gt; order
+  )
+
+const pay = (id: OrderId): Effect.Effect&lt;
+  Order,
+  OrderNotFound | PaymentDeclined,
+  Orders | Payments
+&gt; =&gt; Effect.gen(function* () {
+  const order = yield* findOrder(id)
+  const charged = yield* chargeOrder(order)
+  const paid = markPaid(charged)
+  return yield* saveOrder(paid)
+})</code></pre></figure>
+<p>The target uses Effect.gen for ordered operations. Effective keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous section</a><a href="#modules-reference">Next section</a></nav></section><section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">9. Modules, lowering, and quick reference</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure class="code source"><figcaption>Version 0 imports and exports</figcaption><pre tabindex="0"><code class="language-effective">import {
+  User,
+  UserMissing,
+  StoreUnavailable,
+  Users,
+  getUser
+} from &quot;./users.eff&quot;
+
+export const load = (id: string): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find =&gt; getUser(id)</code></pre></figure>
+<p>Version 0 permits named imports from relative .eff files and registered host modules. It excludes default imports, namespace imports, renaming, re-exports, and package resolution.</p>
+<p>Module constants require pure initializers. Imports cannot run application service operations. A host starts execution through an entry function after it supplies required providers.</p>
+<p>A future compiler would parse source, resolve identities, infer effects, check contracts, specialize builtins, and emit typed IR. The current project defines these stages but supplies no compiler.</p>
+<p>Resolution assigns stable identities to types, errors, services, capabilities, values, and locals. Equal names in different modules do not identify the same declaration.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Source form</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>A fails E uses R</td><td>A function succeeds with A, can fail with E, and requires R.</td></tr><tr><td>fail(ErrorName({ fields }))</td><td>End the normal path with one declared error value.</td></tr><tr><td>match value { Some(x) =&gt; ..., None =&gt; ... }</td><td>Inspect an option with complete coverage.</td></tr><tr><td>try { expression } catch { ErrorName(e) =&gt; ... }</td><td>Handle matching typed failures from one protected expression.</td></tr><tr><td>value |&gt; f(a)</td><td>Evaluate value once, then call f(value, a).</td></tr><tr><td>retry(() =&gt; op(), { times: 2 })</td><td>Run one attempt and permit two additional attempts.</td></tr><tr><td>provide(P, () =&gt; op())</td><td>Run op with capabilities supplied by provider P.</td></tr><tr><td>({ ...record, field: value })</td><td>Create a record with one immutable update.</td></tr><tr><td>unbrand(value)</td><td>Convert a branded value to its base value.</td></tr><tr><td>map, filter, fold</td><td>Traverse arrays from left to right with pure callbacks.</td></tr></tbody></table></div>
+<p>The IR resolves every reference to a stable identity. It separates ordinary calls from service operations. It preserves retry, provide, catch, brands, and source positions as explicit nodes.</p>
+<p>A pipeline needs no IR node. Lowering creates fresh bindings and ordinary call or service-operation nodes. This preserves single evaluation, stage order, and useful diagnostic positions.</p>
+<p>Acceptance fixtures must cover evaluation order, branch selection, failure propagation, contract rejection, closure deferral, retry, and provider resolution. Pipeline fixtures must also check stage identity.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Why must a future validator recompute types and effects instead of trusting serialized annotations?</p><details><summary>Show the answer</summary><p>A payload can contain inconsistent annotations. Recalculation confirms reference, type, execution, failure, requirement, and source-position rules.</p></details></aside>
+<p>Effective version 0 now has a bounded teaching model. The next engineering step is a parser and checker with fixtures for order, failures, retry, providers, and pipelines.</p>
+<p>The paired targets use the official Effect v4 documentation. Eight target examples pass strict TypeScript checks against Effect 4.0.5, with their chapter dependencies.</p>
+<p>Target references: <a href="https://effect.website/docs/v4/data-types/option">https://effect.website/docs/v4/data-types/option</a> and <a href="https://effect.website/docs/v4/schema/basic-usage">https://effect.website/docs/v4/schema/basic-usage</a>.</p>
+<p>Schema filter reference: <a href="https://effect.website/docs/v4/schema/filters">https://effect.website/docs/v4/schema/filters</a>. Brand reference: <a href="https://effect.website/docs/v4/schema/advanced-usage">https://effect.website/docs/v4/schema/advanced-usage</a>.</p>
+<p>The provider check uses a declared adapter interface, without a provider implementation. The checks do not execute Effective or prove translation equivalence.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#payment">Previous section</a><a href="effective-spec.html">Read the specification</a></nav></section>
+<footer class="footer"><p>Effective documentation, draft 0.1. Source examples and target comparisons are manually authored.</p><p>The validation report states each completed check and its limits.</p></footer></main></div></body></html>

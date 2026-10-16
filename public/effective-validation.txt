@@ -1,0 +1,61 @@
+Effective documentation - validation report
+Draft 0.1, language core version 0, October 15, 2026.
+
+Delivered content
+Two linked HTML documents contain 18 reference sections and nine book chapters.
+The documents contain 39 code blocks, eight EffectJS targets, and seven exercises.
+Five .eff files provide canonical source examples.
+The package also includes typed-ir.ts and the manual log.ir.json fixture.
+The fixture retains log.lft as its source identity.
+The IR wire marker remains light-functional-ir, version 1.
+
+Completed document checks
+The static HTML check passes for both documents.
+The check covers balanced elements, unique identifiers, and 115 local links.
+All local document anchors and artifact links resolve.
+Prose sentences contain at most 25 whitespace-separated words.
+Prose paragraphs contain at most six sentences.
+The documents contain no em dashes.
+Canonical source snippets match their supplied .eff files where the reference names a complete example.
+The source examples contain no return statements or property-arrow service signatures.
+The reusable Users module contains no provider acquisition or application entry function.
+
+Completed TypeScript checks
+TypeScript 7.0.2 checks typed-ir.ts and the manual fixture under strict settings.
+The settings also enable exactOptionalPropertyTypes and noUncheckedIndexedAccess.
+Eight EffectJS comparisons pass these strict settings against Effect 4.0.5.
+Each comparison includes its stated chapter dependencies.
+The provider comparison resolves users-live.js through a declaration file.
+That declaration supplies UsersLive as Layer.Layer<Users>.
+No provider implementation runs during the check.
+
+Completed manual fixture checks
+The fixture check passes for four effect sets and seven source spans.
+The check resolves one reference and one perform node.
+The check validates the log contract, method argument, result, execution mode, and effects.
+The check also validates source slices, exported identities, and sorted unique effect sets.
+These checks cover this fixture, not every possible IR payload.
+
+Review scope
+The reference and book received a review of types, effects, providers, modules, and lowering rules.
+The final reference requires resolved identities in error tags, service keys, and brand tokens.
+Short keys in isolated book comparisons do not define a backend encoding policy.
+Official Effect v4 documentation supports the target API choices.
+
+Limits
+This package contains no Effective parser, checker, compiler, interpreter, or runtime.
+All source examples, target comparisons, and the IR fixture are manually authored.
+No check executes Effective source or proves translation equivalence.
+Strict target checking proves static compatibility for the checked target examples and declared provider interface.
+Static HTML checks do not establish visual rendering or printed pagination.
+No browser rendering check ran for these documents.
+
+Commands
+python3 work/check_effective.py
+python3 work/check-deliverables.py
+tsc --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --noEmit outputs/typed-ir.ts work/typecheck-fixture.ts
+python3 work/typecheck_effective.py
+tsc -p work/typecheck-effect/tsconfig.json --pretty false
+
+The work directory contains validation scripts and intermediate data in this workspace.
+The downloadable package contains user-facing documents, source examples, the IR model, and this report.
