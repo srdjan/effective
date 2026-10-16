@@ -93,3 +93,29 @@ Deno.test("does not cache a missing file", async () => {
   assertEquals(response.headers.get("cache-control"), null);
   await response.body?.cancel();
 });
+
+Deno.test("sets security headers on every response", async () => {
+  for (const path of ["/", "/site.css", "/robots.txt", "/missing.css"]) {
+    const response = await get(path);
+    assertEquals(response.headers.get("x-frame-options"), "DENY", path);
+    assertEquals(
+      response.headers.get("referrer-policy"),
+      "strict-origin-when-cross-origin",
+    );
+    assertEquals(
+      response.headers.get("permissions-policy"),
+      "camera=(), microphone=(), geolocation=()",
+    );
+    await response.body?.cancel();
+  }
+});
+
+Deno.test("serves the sitemap as gzipped XML", async () => {
+  const response = await get("/sitemap.xml", { "accept-encoding": "gzip" });
+  assertEquals(response.headers.get("content-type"), "application/xml");
+  assertEquals(response.headers.get("content-encoding"), "gzip");
+  assertEquals(
+    await decompress(response),
+    await Deno.readTextFile("public/sitemap.xml"),
+  );
+});

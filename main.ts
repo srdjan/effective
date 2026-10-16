@@ -4,7 +4,14 @@ import { serveDir } from "@std/http/file-server";
 const TEXT_EXTENSIONS = [".ts", ".eff", ".lft"];
 
 // Neither serveDir nor Deno Deploy compresses responses or sets a cache lifetime.
-const COMPRESSIBLE_TYPE = /^(text\/|application\/json|image\/svg\+xml)/;
+const COMPRESSIBLE_TYPE = /^(text\/|application\/(json|xml)|image\/svg\+xml)/;
+
+const SECURITY_HEADERS: ReadonlyArray<readonly [string, string]> = [
+  ["x-content-type-options", "nosniff"],
+  ["x-frame-options", "DENY"],
+  ["referrer-policy", "strict-origin-when-cross-origin"],
+  ["permissions-policy", "camera=(), microphone=(), geolocation=()"],
+];
 
 // HTML has no max-age, so a new deploy reaches readers at once.
 const CACHE_LIFETIMES: ReadonlyArray<readonly [RegExp, number]> = [
@@ -40,7 +47,9 @@ const server: Deno.ServeDefaultExport = {
     if (TEXT_EXTENSIONS.some((extension) => url.pathname.endsWith(extension))) {
       response.headers.set("content-type", "text/plain; charset=utf-8");
     }
-    response.headers.set("x-content-type-options", "nosniff");
+    for (const [name, value] of SECURITY_HEADERS) {
+      response.headers.set(name, value);
+    }
 
     const lifetime = CACHE_LIFETIMES.find(([pattern]) =>
       pattern.test(url.pathname)
