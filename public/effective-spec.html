@@ -10,7 +10,7 @@
 <p>Rules in this reference describe intended language behavior. The examples are manually authored. Effect-TS tabs illustrate the intended transpiler output; a transpiler did not generate them.</p>
 <p>Effective files use the .eff extension. Earlier .lft files remain provisional artifacts from the design discussion.</p>
 <p>The core covers data, functions, services, failures, pipelines, retry, providers, and named modules. Later sections identify features outside this core.</p>
-<p>Effective uses familiar TypeScript shapes but adds language forms. A TypeScript parser cannot parse Effective source directly.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#overview">Next section</a></nav></section><section class="section" id="overview" aria-labelledby="heading-overview"><h2 id="heading-overview">A first example</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">error ConsoleUnavailable = { message: string }
+<p>Effective uses familiar TypeScript shapes but adds language forms. A TypeScript parser cannot parse Effective source directly.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#overview">Next section</a></nav></section><section class="section" id="overview" aria-labelledby="heading-overview"><h2 id="heading-overview">A first example</h2><figure data-ui class="code" data-tabs data-check="spec-log"><figcaption>A first example: log through a service</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">error ConsoleUnavailable = { message: string }
 
 service Console {
   print(message: string): void fails ConsoleUnavailable
@@ -18,7 +18,25 @@ service Console {
 
 export const log = (message: string): void
   fails ConsoleUnavailable
-  uses Console.print =&gt; Console.print(message)</code></pre></figure>
+  uses Console.print =&gt; Console.print(message)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-log"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Schema } from &quot;effect&quot;
+
+class ConsoleUnavailable extends Schema.TaggedError&lt;ConsoleUnavailable&gt;()(
+  &quot;ConsoleUnavailable&quot;,
+  { message: Schema.String }
+) {}
+
+class Console extends Context.Service&lt;Console, {
+  readonly print: (message: string) =&gt; Effect.Effect&lt;
+    void,
+    ConsoleUnavailable
+  &gt;
+}&gt;()(&quot;Console&quot;) {}
+
+const log = (message: string): Effect.Effect&lt;
+  void,
+  ConsoleUnavailable,
+  Console
+&gt; =&gt; Console.use((console) =&gt; console.print(message))</code></pre></div></figure>
 <p>An error declaration creates a nominal tagged error type and a constructor. Nominal identity means the declaration determines which error the value represents.</p>
 <p>A service declaration names external operations. Each service method is a capability, which is a statically tracked requirement for calling that operation.</p>
 <p>The log function returns void, can fail with ConsoleUnavailable, and requires Console.print. Its call runs in the current source execution context.</p>
@@ -32,24 +50,46 @@ export const log = (message: string): void
 <p>A newline or semicolon separates declarations, service methods, and block items. Commas separate record fields, arguments, parameters, and match arms.</p>
 <p>A newline continues an incomplete expression. It also continues a signature before fails, uses, or its final arrow, and an expression before |&gt;.</p>
 <p>The core does not apply general JavaScript semicolon insertion. Parentheses make grouping explicit when a multiline form would otherwise be unclear.</p><nav class="section-nav" aria-label="Navigation for section 3"><a href="#overview">Previous section</a><a href="#types">Next section</a></nav></section><section class="section" id="types" aria-labelledby="heading-types"><h2 id="heading-types">Data and types</h2><div class="table-wrap"><table><thead><tr><th scope="col">Source type</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>string</td><td>A string value.</td></tr><tr><td>boolean</td><td>true or false.</td></tr><tr><td>int</td><td>A finite JavaScript safe integer.</td></tr><tr><td>number</td><td>A host numeric value; source numeric literals must be finite.</td></tr><tr><td>void</td><td>The unit result of an operation.</td></tr><tr><td>never</td><td>No successful value, as with fail.</td></tr><tr><td>unknown</td><td>A value that needs a checked boundary before typed use.</td></tr><tr><td>T[]</td><td>An immutable array of T values.</td></tr><tr><td>[A, B]</td><td>An immutable tuple with the stated positions.</td></tr><tr><td>Option&lt;T&gt;</td><td>Some(value) or None.</td></tr><tr><td>A | B</td><td>A union of alternatives.</td></tr><tr><td>Brand&lt;T&gt;</td><td>A nominal type whose representation is T.</td></tr></tbody></table></div>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type User = { id: string, name: string, active: boolean }
+<figure data-ui class="code" data-tabs data-check="spec-types"><figcaption>Declarations: record, literal union, brand, and optional field</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = { id: string, name: string, active: boolean }
 type Status = &quot;pending&quot; | &quot;paid&quot;
 type UserId = Brand&lt;string&gt;
-type Profile = { name: string, nickname?: string }</code></pre></figure>
+type Profile = { name: string, nickname?: string }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-types"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const User = Schema.Struct({
+  id: Schema.String,
+  name: Schema.String,
+  active: Schema.Boolean
+})
+type User = typeof User.Type
+
+const Status = Schema.Literals([&quot;pending&quot;, &quot;paid&quot;])
+type Status = typeof Status.Type
+
+const UserId = Schema.String.pipe(Schema.brand(&quot;UserId&quot;))
+type UserId = typeof UserId.Type
+
+const Profile = Schema.Struct({
+  name: Schema.String,
+  nickname: Schema.optionalKey(Schema.String)
+})
+type Profile = typeof Profile.Type</code></pre></div></figure>
 <p>Type aliases use structural compatibility. Brands and errors retain declaration identity. The checker rejects recursive type definitions in version 0.</p>
 <p>Record fields are required unless the field name has ?. Reading an optional field returns Option&lt;T&gt;.</p>
 <p>A required field of type Option&lt;T&gt; differs from an optional field of type T. A future codec backend must preserve that difference.</p>
 <p>Record construction rejects missing required fields, duplicate fields, and unknown fields. Contextual typing preserves expected literal alternatives.</p>
 <p>Record updates construct a new value. One spread may appear first, followed by replacement fields. The original record remains unchanged.</p>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
-  ({ ...user, active: true })</code></pre></figure>
+<figure data-ui class="code" data-tabs data-check="spec-activate" data-check-requires="spec-types"><figcaption>A pure function that copies a record</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
+  ({ ...user, active: true })</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const activate = (user: User): User =&gt;
+  ({ ...user, active: true })</code></pre></div></figure>
 <p>OrderId(&quot;o1&quot;) constructs a brand value when OrderId has base type string. A brand adds identity, not an automatic validation predicate.</p>
 <p>unbrand(value) explicitly returns the base value. The checker does not silently discard nominal identity.</p>
 <p>The checker treats int as a subtype of number. Division returns number. An int result outside the safe range is a runtime defect.</p>
 <p>Equality compares compatible primitives, literal unions, and primitive brands. Comparing records requires a named comparison function.</p>
-<p>Conditions require boolean. Effective does not use JavaScript truthiness. void cannot appear in a record field, array, or tuple.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#lexical">Previous section</a><a href="#functions">Next section</a></nav></section><section class="section" id="functions" aria-labelledby="heading-functions"><h2 id="heading-functions">Functions and blocks</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
+<p>Conditions require boolean. Effective does not use JavaScript truthiness. void cannot appear in a record field, array, or tuple.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#lexical">Previous section</a><a href="#functions">Next section</a></nav></section><section class="section" id="functions" aria-labelledby="heading-functions"><h2 id="heading-functions">Functions and blocks</h2><figure data-ui class="code" data-tabs data-check="spec-functions" data-check-requires="spec-log"><figcaption>Typed functions and a deferred job</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
 const increment = (value: int): int =&gt; value + 1
-const job = () =&gt; log(&quot;ready&quot;)</code></pre></figure>
+const job = () =&gt; log(&quot;ready&quot;)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const add = (a: number, b: number): number =&gt; a + b
+const increment = (value: number): number =&gt; value + 1
+const job = () =&gt; log(&quot;ready&quot;)</code></pre></div></figure>
 <p>Every binding and aggregate value is immutable. Effective has no assignment operator, mutable let binding, implicit receiver, or source class declaration.</p>
 <p>Parameters and calls use ordinary argument lists. Effective does not insert currying, partial application, or callback execution.</p>
 <p>An arrow with one expression uses that expression as its result. A block uses its final expression as its result.</p>
@@ -62,7 +102,7 @@ const job = () =&gt; log(&quot;ready&quot;)</code></pre></figure>
 <p>For a closed contract, omitted fails means no expected failures. Omitted uses means no unprovided capability requirements.</p>
 <p>Those omissions do not assert pure execution. The checker tracks execution mode separately, including effects whose providers are already supplied.</p>
 <p>A function type without a body defaults to effect execution. Imported interfaces retain their resolved execution modes.</p>
-<p>Version 0 has no source annotation for pure callback parameters. Known pure functions and contextual inline callbacks still work with pure collection builtins.</p><nav class="section-nav" aria-label="Navigation for section 5"><a href="#types">Previous section</a><a href="#services">Next section</a></nav></section><section class="section" id="services" aria-labelledby="heading-services"><h2 id="heading-services">Services and contracts</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">error UserMissing = { id: string }
+<p>Version 0 has no source annotation for pure callback parameters. Known pure functions and contextual inline callbacks still work with pure collection builtins.</p><nav class="section-nav" aria-label="Navigation for section 5"><a href="#types">Previous section</a><a href="#services">Next section</a></nav></section><section class="section" id="services" aria-labelledby="heading-services"><h2 id="heading-services">Services and contracts</h2><figure data-ui class="code" data-tabs data-check="spec-users" data-check-requires="spec-types"><figcaption>Errors, a service, and a function that uses the service</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">error UserMissing = { id: string }
 error StoreUnavailable = { message: string }
 
 service Users {
@@ -77,7 +117,45 @@ const getUser = (id: string): User
   match Users.find(id) {
     Some(user) =&gt; user,
     None =&gt; fail(UserMissing({ id }))
-  }</code></pre></figure>
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-users"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+class UserMissing extends Schema.TaggedError&lt;UserMissing&gt;()(
+  &quot;UserMissing&quot;,
+  { id: Schema.String }
+) {}
+
+class StoreUnavailable extends Schema.TaggedError&lt;StoreUnavailable&gt;()(
+  &quot;StoreUnavailable&quot;,
+  { message: Schema.String }
+) {}
+
+class Users extends Context.Service&lt;Users, {
+  readonly find: (id: string) =&gt; Effect.Effect&lt;
+    Option.Option&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+  readonly save: (user: User) =&gt; Effect.Effect&lt;
+    void,
+    StoreUnavailable
+  &gt;
+  readonly all: () =&gt; Effect.Effect&lt;
+    ReadonlyArray&lt;User&gt;,
+    StoreUnavailable
+  &gt;
+}&gt;()(&quot;Users&quot;) {}
+
+const getUser = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt;
+  Effect.flatMap(
+    Users.use((users) =&gt; users.find(id)),
+    (found) =&gt; Option.match(found, {
+      onNone: () =&gt; Effect.fail(new UserMissing({ id })),
+      onSome: (user) =&gt; Effect.succeed(user)
+    })
+  )</code></pre></div></figure>
 <p>fails names a closed set of expected error identities. uses names a closed set of required service methods.</p>
 <p>A whole service name expands to all methods in that service. Method requirements retain resolved identities across module boundaries.</p>
 <p>A service method declaration has no uses clause. Its own invocation adds that method capability to the caller requirements.</p>
@@ -95,7 +173,7 @@ const getUser = (id: string): User
 <p>An explicit contract with nonempty sets lifts a pure body into an effectful function interface. A pure function may lift into an effectful callback interface.</p>
 <p>An effectful function cannot satisfy a pure callback requirement. Lifting wraps execution; it does not invoke a callback during construction.</p>
 <p>Recursive functions require explicit signatures. Mode inference starts pure and propagates intrinsic effects and effectful calls until the recursive group reaches a fixed point.</p>
-<p>Expected failure stops the current normal path. Defects and cancellation use separate runtime outcomes and do not enter ordinary typed recovery.</p><nav class="section-nav" aria-label="Navigation for section 7"><a href="#services">Previous section</a><a href="#pipelines">Next section</a></nav></section><section class="section" id="pipelines" aria-labelledby="heading-pipelines"><h2 id="heading-pipelines">Pipelines and collections</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type User = { name: string, active: boolean }
+<p>Expected failure stops the current normal path. Defects and cancellation use separate runtime outcomes and do not enter ordinary typed recovery.</p><nav class="section-nav" aria-label="Navigation for section 7"><a href="#services">Previous section</a><a href="#pipelines">Next section</a></nav></section><section class="section" id="pipelines" aria-labelledby="heading-pipelines"><h2 id="heading-pipelines">Pipelines and collections</h2><figure data-ui class="code" data-tabs data-check="spec-collections"><figcaption>Collection pipelines with filter, map, and fold</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = { name: string, active: boolean }
 
 export const activeNames = (users: User[]): string[] =&gt;
   users
@@ -103,10 +181,25 @@ export const activeNames = (users: User[]): string[] =&gt;
     |&gt; map((user) =&gt; user.name)
 
 export const total = (amounts: int[]): int =&gt;
-  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></figure>
+  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const User = Schema.Struct({
+  name: Schema.String,
+  active: Schema.Boolean
+})
+type User = typeof User.Type
+
+const activeNames = (
+  users: ReadonlyArray&lt;User&gt;
+): ReadonlyArray&lt;string&gt; =&gt;
+  users.filter((user) =&gt; user.active).map((user) =&gt; user.name)
+
+const total = (amounts: ReadonlyArray&lt;number&gt;): number =&gt;
+  amounts.reduce((sum, amount) =&gt; sum + amount, 0)</code></pre></div></figure>
 <p>A pipeline passes its left result as the first argument of the next stage. The stages associate from left to right.</p>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">value |&gt; transform
-value |&gt; transform(a, b)</code></pre></figure>
+<figure data-ui class="code" data-tabs data-check="spec-pipe"><figcaption>The pipe syntax with and without arguments</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">value |&gt; transform
+value |&gt; transform(a, b)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">transform(value)
+transform(value, a, b)</code></pre></div></figure>
 <p>The first form invokes transform(value). The second invokes transform(value, a, b). Neither form creates a partially applied function.</p>
 <p>Each stage first evaluates the left value once. It then evaluates the resolved callee and explicit arguments, and finally invokes the stage.</p>
 <p>A temporary binding preserves this order during lowering. Direct textual substitution into an ordinary call could change the callee evaluation order.</p>
@@ -118,42 +211,82 @@ value |&gt; transform(a, b)</code></pre></figure>
 <p>fold(items, initial, callback) invokes callback(state, item) from left to right. Its result retains the accumulator type. An empty array returns initial.</p>
 <p>Empty arrays produce empty results for map and filter. A defect stops traversal. Effectful traversal remains outside version 0.</p>
 <p>An unbodied callback parameter defaults to effect mode. It cannot pass the pure collection callback check, even when its effect sets are empty.</p>
-<p>The transpiler specializes builtin rules before IR serialization. Each distinct closed builtin type receives a unique synthetic ValueId and a closed prelude interface.</p><nav class="section-nav" aria-label="Navigation for section 8"><a href="#execution">Previous section</a><a href="#matching">Next section</a></nav></section><section class="section" id="matching" aria-labelledby="heading-matching"><h2 id="heading-matching">Pattern matching</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const label = (found: Option&lt;User&gt;): string =&gt;
+<p>The transpiler specializes builtin rules before IR serialization. Each distinct closed builtin type receives a unique synthetic ValueId and a closed prelude interface.</p><nav class="section-nav" aria-label="Navigation for section 8"><a href="#execution">Previous section</a><a href="#matching">Next section</a></nav></section><section class="section" id="matching" aria-labelledby="heading-matching"><h2 id="heading-matching">Pattern matching</h2><figure data-ui class="code" data-tabs data-check="spec-match" data-check-requires="spec-types"><figcaption>Match on an option and choose with if</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const label = (found: Option&lt;User&gt;): string =&gt;
   match found {
     Some(user) =&gt; user.name,
     None =&gt; &quot;missing&quot;
   }
 
 const category = (active: boolean): string =&gt;
-  if (active) { &quot;active&quot; } else { &quot;inactive&quot; }</code></pre></figure>
+  if (active) { &quot;active&quot; } else { &quot;inactive&quot; }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Option } from &quot;effect&quot;
+
+const label = (found: Option.Option&lt;User&gt;): string =&gt;
+  Option.match(found, {
+    onNone: () =&gt; &quot;missing&quot;,
+    onSome: (user) =&gt; user.name
+  })
+
+const category = (active: boolean): string =&gt;
+  active ? &quot;active&quot; : &quot;inactive&quot;</code></pre></div></figure>
 <p>if requires a boolean condition and an else branch. Branch results require a common result type. never fits every successful result type.</p>
 <p>Match subjects evaluate once. The checker requires complete coverage and rejects unreachable arms and constructors that do not belong to the subject type.</p>
 <p>Supported patterns include literals, _, Some(binding), None, nominal error bindings, and a string discriminator in a tagged record.</p>
 <p>Matching an unbounded primitive domain requires a final wildcard. Nested patterns are outside version 0.</p>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">type Shape = { kind: &quot;circle&quot;, radius: number } | { kind: &quot;square&quot;, side: number }
+<figure data-ui class="code" data-tabs data-check="spec-shape"><figcaption>Match on a tagged record union</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Shape = { kind: &quot;circle&quot;, radius: number } | { kind: &quot;square&quot;, side: number }
 
 const extent = (shape: Shape): number =&gt;
   match shape {
     { kind: &quot;circle&quot;, ...circle } =&gt; circle.radius,
     { kind: &quot;square&quot;, ...square } =&gt; square.side
-  }</code></pre></figure>
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const Circle = Schema.Struct({
+  kind: Schema.Literal(&quot;circle&quot;),
+  radius: Schema.Number
+})
+
+const Square = Schema.Struct({
+  kind: Schema.Literal(&quot;square&quot;),
+  side: Schema.Number
+})
+
+const Shape = Schema.Union([Circle, Square])
+type Shape = typeof Shape.Type
+
+const extent = (shape: Shape): number =&gt; {
+  switch (shape.kind) {
+    case &quot;circle&quot;:
+      return shape.radius
+    case &quot;square&quot;:
+      return shape.side
+  }
+}</code></pre></div></figure>
 <p>A spread binding in this pattern captures the whole narrowed record. It does not mean JavaScript rest destructuring.</p>
-<p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous section</a><a href="#recovery">Next section</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">Failure and recovery</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const displayName = (id: string): string
+<p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous section</a><a href="#recovery">Next section</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">Failure and recovery</h2><figure data-ui class="code" data-tabs data-check="spec-recovery" data-check-requires="spec-types spec-users"><figcaption>Recover from a typed failure with try and catch</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const displayName = (id: string): string
   fails StoreUnavailable
   uses Users.find =&gt;
   try {
     getUser(id).name
   } catch {
     UserMissing(error) =&gt; &quot;Guest&quot;
-  }</code></pre></figure>
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-recovery"><pre tabindex="0"><code class="language-typescript">const displayName = (id: string): Effect.Effect&lt;
+  string,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Effect.map(getUser(id), (user) =&gt; user.name).pipe(
+  Effect.catchTag(&quot;UserMissing&quot;, () =&gt; Effect.succeed(&quot;Guest&quot;))
+)</code></pre></div></figure>
 <p>fail(error) produces no normal value. Its success type is never, and its failure set includes the nominal error identity.</p>
 <p>catch installs handlers before evaluating the protected block. It removes handled tags and combines the handlers failures and requirements.</p>
 <p>Successful and handled paths require a common result type. Unhandled tags continue to the caller.</p>
 <p>The checker rejects duplicate handlers and handlers for tags absent from the protected failure set. It does not treat defects as typed failures.</p>
 <p>A backend may use Result data or a typed failure channel. It must not implement domain failures as untyped JavaScript exceptions.</p><nav class="section-nav" aria-label="Navigation for section 10"><a href="#matching">Previous section</a><a href="#control">Next section</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">Retry and providers</h2><p>This fragment assumes the payment module defines pay, id has type OrderId, and the host supplies AppLive. The fragment belongs inside a function.</p>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const paymentJob = () =&gt; pay(id)
+<figure data-ui class="code" data-tabs data-check="spec-deferred" data-check-requires="payment"><figcaption>Deferred control, using the payment example from the mini book</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const paymentJob = () =&gt; pay(id)
 retry(paymentJob, { times: 2 })
-provide(AppLive, () =&gt; pay(id))</code></pre></figure>
+provide(AppLive, () =&gt; pay(id))</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const paymentJob = () =&gt; pay(id)
+
+Effect.retry(Effect.suspend(paymentJob), { times: 2 })
+Effect.provide(Effect.suspend(() =&gt; pay(id)), AppLive)</code></pre></div></figure>
 <p>These control functions require a zero-argument function. They receive work that has not run yet. Ordinary expected parameter types never insert suspension.</p>
 <p>retry invokes its callback for the first attempt and again after each permitted typed failure. times counts retries after the first attempt.</p>
 <p>Version 0 requires a finite nonnegative safe integer literal for times. Defects and cancellation do not trigger typed retry.</p>
@@ -163,12 +296,19 @@ provide(AppLive, () =&gt; pay(id))</code></pre></figure>
 <p>Provision removes supplied callback requirements and adds acquisition dependencies. It preserves typed failures from both acquisition and callback execution.</p>
 <p>Provider lookup occurs at invocation time. Creating a closure does not freeze the current provider environment.</p>
 <p>retry, provide, fail, and catch have effect execution mode in the core. A provider with empty acquisition sets can still require effectful acquisition.</p>
-<p>Source layer construction, resource scopes, and concurrency need separate rules. This reference does not infer those rules from the Effect target.</p><nav class="section-nav" aria-label="Navigation for section 11"><a href="#recovery">Previous section</a><a href="#modules">Next section</a></nav></section><section class="section" id="modules" aria-labelledby="heading-modules"><h2 id="heading-modules">Modules and boundaries</h2><figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">import { displayName, StoreUnavailable } from &quot;./users.eff&quot;
+<p>Source layer construction, resource scopes, and concurrency need separate rules. This reference does not infer those rules from the Effect target.</p><nav class="section-nav" aria-label="Navigation for section 11"><a href="#recovery">Previous section</a><a href="#modules">Next section</a></nav></section><section class="section" id="modules" aria-labelledby="heading-modules"><h2 id="heading-modules">Modules and boundaries</h2><figure data-ui class="code" data-tabs data-check="spec-main" data-check-requires="spec-types spec-users spec-recovery"><figcaption>Import a function and provide a provider</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import { displayName, StoreUnavailable } from &quot;./users.eff&quot;
 import { UsersLive } from &quot;host:providers&quot;
 
 export const main = (): string
   fails StoreUnavailable =&gt;
-  provide(UsersLive, () =&gt; displayName(&quot;u1&quot;))</code></pre></figure>
+  provide(UsersLive, () =&gt; displayName(&quot;u1&quot;))</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { UsersLive } from &quot;./users-live.js&quot;
+import { displayName, StoreUnavailable } from &quot;./users.js&quot;
+
+const main = (): Effect.Effect&lt;string, StoreUnavailable&gt; =&gt;
+  Effect.provide(
+    Effect.suspend(() =&gt; displayName(&quot;u1&quot;)),
+    UsersLive
+  )</code></pre></div></figure>
 <p>This boundary imports the supplied users module. UsersLive supplies Users with no acquisition failure or additional dependency.</p>
 <p>Imports select named exports from relative files or registered host modules. Version 0 excludes default imports, namespaces, renaming, re-exports, and package resolution.</p>
 <p>Prefix export exposes a declaration by name. Interfaces also carry the complete supporting type graph, without importing private names into the local source scope.</p>
@@ -251,10 +391,12 @@ pipeStage    = QualifiedName [&quot;(&quot; arguments &quot;)&quot;]</code></pre
 <p>Binary operators within each group associate from left to right. Numeric arithmetic preserves int when both operands are int, except for division.</p>
 <p>Arithmetic with a number operand produces number. String addition performs no implicit conversion. Invalid int arithmetic produces a defect.</p><nav class="section-nav" aria-label="Navigation for section 15"><a href="#equations">Previous section</a><a href="#diagnostics">Next section</a></nav></section><section class="section" id="diagnostics" aria-labelledby="heading-diagnostics"><h2 id="heading-diagnostics">Diagnostics and conformance</h2><p>Diagnostics identify a source span, a category, and a concrete mismatch. Suggested categories include syntax, unknown-name, type-mismatch, failure-contract, requirement-contract, and execution-mode.</p>
 <p>These categories describe the proposed diagnostic contract. No delivered transpiler emits them yet.</p>
-<figure data-ui class="code source"><figcaption>Effective</figcaption><pre tabindex="0"><code class="language-effective">const broken = (id: string): User
+<figure data-ui class="code" data-tabs data-check="spec-diagnostics" data-check-requires="spec-types spec-users"><figcaption>An invalid program that the compiler rejects</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const broken = (id: string): User
   uses Users.find =&gt; getUser(id)
 
-// Invalid: getUser can fail, but the annotated failure set is empty.</code></pre></figure>
+// Invalid: getUser can fail, but the annotated failure set is empty.</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const broken = (id: string): Effect.Effect&lt;User, never, Users&gt; =&gt;
+  // @ts-expect-error Effect-TS rejects the same contract: getUser can fail.
+  getUser(id)</code></pre></div></figure>
 <p>Acceptance fixtures must check evaluation order, single evaluation, branch selection, failure propagation, explicit contracts, closure deferral, retry, and provider resolution.</p>
 <p>Pipeline fixtures must verify argument placement, stage order, short-circuiting after failure, and source locations for generated bindings.</p>
 <p>Collection fixtures must verify callback purity, order, empty arrays, and distinct closed builtin identities.</p>
