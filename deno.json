@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno serve --watch --allow-read=public --port 8000 main.ts",
+    "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
     "package": "cd public && rm -f effective-docs.zip && zip -X -r effective-docs.zip . -x effective-docs.zip '.*' '*/.*'"
   },
