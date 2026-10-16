@@ -3,7 +3,8 @@ Draft 0.1, language core version 0, October 15, 2026.
 
 Delivered content
 Two linked HTML documents contain 18 reference sections and nine book chapters.
-The documents contain 39 code blocks, eight Effect-TS targets, and seven exercises.
+The documents contain 61 code blocks, 28 Effect-TS tabs, and seven exercises.
+Each Effective example has an Effect-TS tab with a manual translation.
 Five .eff files provide canonical source examples.
 The package also includes typed-ir.ts and the manual log.ir.json fixture.
 The fixture retains log.lft as its source identity.
@@ -23,10 +24,11 @@ The reusable Users module contains no provider acquisition or application entry 
 Completed TypeScript checks
 TypeScript 7.0.2 checks typed-ir.ts and the manual fixture under strict settings.
 The settings also enable exactOptionalPropertyTypes and noUncheckedIndexedAccess.
-Eight Effect-TS comparisons pass these strict settings against Effect 4.0.5.
-Each comparison includes its stated chapter dependencies.
-The provider comparison resolves users-live.js through a declaration file.
-That declaration supplies UsersLive as Layer.Layer<Users>.
+All 28 Effect-TS tabs pass these strict settings against Effect 4.0.5.
+The three other contract explorer translations in site.js also pass.
+Each translation is checked together with the declarations it requires.
+Provider examples declare UsersLive and AppLive as Layer values in typecheck/preludes.
+An invalid example uses @ts-expect-error, so the check proves that Effect-TS rejects it.
 No provider implementation runs during the check.
 
 Completed manual fixture checks
@@ -54,8 +56,8 @@ Commands
 python3 work/check_effective.py
 python3 work/check-deliverables.py
 tsc --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --noEmit outputs/typed-ir.ts work/typecheck-fixture.ts
-python3 work/typecheck_effective.py
-tsc -p work/typecheck-effect/tsconfig.json --pretty false
+deno task typecheck
 
 The work directory contains validation scripts and intermediate data in this workspace.
+deno task typecheck runs typecheck/check.ts from the repository.
 The downloadable package contains user-facing documents, source examples, the IR model, and this report.

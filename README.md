@@ -18,6 +18,10 @@ This repository contains the Effective mini book, the language specification, an
 
 To preview the site locally, run `deno task dev` and open `http://localhost:8787`.
 
+## Check the site
+
+Each Effective example on both pages has an Effect-TS tab. Run `deno task typecheck` to check every Effect-TS translation against Effect 4.0.5 under strict settings. The check fails when an Effective example has no Effect-TS tab. Run `deno task test` to test the server in `main.ts`.
+
 ## Build the download package
 
 The "Download package" link in both documents points to `public/effective.zip`. After you change a file in `public/`, run `deno task package` to build the zip again. Commit the zip with the change.

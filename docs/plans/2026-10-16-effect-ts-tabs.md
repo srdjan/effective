@@ -40,7 +40,7 @@ The check runs from one Deno task and lives in the repository.
 | `Brand<string>` named `UserId` | `Schema.String.pipe(Schema.brand("UserId"))` and `type UserId = typeof UserId.Type` |
 | `unbrand(x)` | `x` (the brand is a subtype of string) |
 | `nickname?: string` in a record | `Schema.optionalKey(Schema.String)` |
-| `match` on an optional field | `Option.fromNullable(...)` then `Option.match` |
+| `match` on an optional field | `Option.fromUndefinedOr(...)` then `Option.match` (`fromNullable` does not exist in effect 4.0.5) |
 | `Option<T>` | `Option.Option<T>` |
 | `if (c) { a } else { b }` | `c ? a : b` |
 | `match` on a tagged record union | `switch` on the tag, or a ternary for two cases |
