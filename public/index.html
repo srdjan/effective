@@ -34,7 +34,7 @@
 <p>These facts travel through composition. A caller must account for expected failures and required capabilities. Execution mode separately records whether invocation performs effects.</p>
 <p>This book first explains values and contracts. It then develops one Users service across lookup, update, recovery, retry, and provision. A payment pipeline joins the concepts near the end.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#values">Next section</a></nav></section><section class="section" id="values" aria-labelledby="heading-values"><h2 id="heading-values">Values and types</h2><p class="lead">Every Effective binding and aggregate value is immutable.</p><p>This chapter uses a separate example module. Chapter 4 starts the shared Users domain with string identifiers.</p>
 <p>A const binding cannot change. A record update creates a new record and preserves the old value. Effective has no assignment, class inheritance, or implicit receiver.</p>
-<figure data-ui class="code source"><figcaption>Immutable values</figcaption><pre tabindex="0"><code class="language-effective">type UserId = Brand&lt;string&gt;
+<figure data-ui class="code" data-tabs data-check="book-values"><figcaption>Immutable values</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type UserId = Brand&lt;string&gt;
 
 type User = {
   id: UserId,
@@ -47,24 +47,53 @@ const activate = (user: User): User =&gt;
   ({ ...user, active: true })
 
 const displayId = (user: User): string =&gt;
-  unbrand(user.id)</code></pre></figure>
+  unbrand(user.id)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-values"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const UserId = Schema.String.pipe(Schema.brand(&quot;UserId&quot;))
+type UserId = typeof UserId.Type
+
+const User = Schema.Struct({
+  id: UserId,
+  name: Schema.String,
+  active: Schema.Boolean,
+  nickname: Schema.optionalKey(Schema.String)
+})
+type User = typeof User.Type
+
+const activate = (user: User): User =&gt;
+  ({ ...user, active: true })
+
+const displayId = (user: User): string =&gt;
+  user.id</code></pre></div></figure>
 <p>A brand gives nominal identity to a base value. UserId(&quot;u1&quot;) creates the brand, but it performs no validation. The unbrand builtin converts the value back to string.</p>
 <p>Ordinary type aliases use structural equality. Two records with equal fields are compatible. Brands and errors use declaration identity, which prevents accidental substitution.</p>
 <p>An optional field read returns Option&lt;T&gt;. Some(value) represents presence, and None represents absence. This rule prevents an absent field from becoming an unchecked undefined value.</p>
-<figure data-ui class="code source"><figcaption>Option matching</figcaption><pre tabindex="0"><code class="language-effective">const nicknameLabel = (user: User): string =&gt;
+<figure data-ui class="code" data-tabs data-check="book-option" data-check-requires="book-values"><figcaption>Option matching</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const nicknameLabel = (user: User): string =&gt;
   match user.nickname {
     Some(nickname) =&gt; nickname,
     None =&gt; user.name
-  }</code></pre></figure>
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Option } from &quot;effect&quot;
+
+const nicknameLabel = (user: User): string =&gt;
+  Option.match(Option.fromUndefinedOr(user.nickname), {
+    onNone: () =&gt; user.name,
+    onSome: (nickname) =&gt; nickname
+  })</code></pre></div></figure>
 <p>Match expressions require complete coverage. Every arm produces a compatible result type. A never branch, such as fail(error), fits any result type.</p>
 <p>The int type contains finite safe integers. Addition, subtraction, and multiplication can defect when the result is invalid. Division always returns number.</p>
 <p>Records reject missing required fields and unknown fields. A record update evaluates its base once, then evaluates update fields from left to right.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Write a pure function that changes a user&#x27;s name without changing the input record.</p><details><summary>Show the answer</summary><pre><code>const rename = (user: User, name: string): User =&gt; ({ ...user, name })</code></pre></details></aside><nav class="section-nav" aria-label="Navigation for section 2"><a href="#orientation">Previous section</a><a href="#contracts">Next section</a></nav></section><section class="section" id="contracts" aria-labelledby="heading-contracts"><h2 id="heading-contracts">Function contracts</h2><p class="lead">A function contract states its success type, expected failures, and required service methods.</p><p>The examples in this chapter use the User, StoreUnavailable, and Users declarations from chapter 4. Chapter 4 defines each shared declaration.</p>
-<figure data-ui class="code source"><figcaption>Pure and effectful contracts</figcaption><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
+<figure data-ui class="code" data-tabs data-check="book-contracts" data-check-requires="users-declarations"><figcaption>Pure and effectful contracts</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
 
 const load = (id: string): Option&lt;User&gt;
   fails StoreUnavailable
-  uses Users.find =&gt; Users.find(id)</code></pre></figure>
+  uses Users.find =&gt; Users.find(id)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const add = (a: number, b: number): number =&gt; a + b
+
+const load = (id: string): Effect.Effect&lt;
+  Option.Option&lt;User&gt;,
+  StoreUnavailable,
+  Users
+&gt; =&gt; Users.use((users) =&gt; users.find(id))</code></pre></div></figure>
 <p>The result type remains Option&lt;User&gt;. A service call performs its operation when the running function reaches the call. The source type never becomes Effect&lt;Option&lt;User&gt;, E, R&gt;.</p>
 <p>A declared failure is an expected outcome. A required capability records a call to one service method. A service name in uses expands to every method in that service.</p>
 <p>Calls propagate the declared contract of the callee. The declared sets can exceed the body sets, but they cannot omit a body effect.</p>
@@ -73,10 +102,13 @@ const load = (id: string): Option&lt;User&gt;
 <p>Execution mode is separate from failure and requirement sets. A provider can remove every requirement while the computation remains effectful. Empty sets can therefore describe either execution mode.</p>
 <p>Creating an arrow function is pure. Calling that function runs its body each time. Unbodied source function types default to effect execution in version 0.</p>
 <p>Nonempty failure or requirement sets imply effect execution. Empty sets do not imply purity. The transpiler must preserve the independently inferred execution mode.</p>
-<figure data-ui class="code source"><figcaption>Final-expression blocks</figcaption><pre tabindex="0"><code class="language-effective">const activateAndCount = (user: User): int =&gt; {
+<figure data-ui class="code" data-tabs data-check="book-blocks" data-check-requires="users-declarations"><figcaption>Final-expression blocks</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activateAndCount = (user: User): int =&gt; {
   const active = ({ ...user, active: true })
   if (active.active) { 1 } else { 0 }
-}</code></pre></figure>
+}</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const activateAndCount = (user: User): number =&gt; {
+  const active = { ...user, active: true }
+  return active.active ? 1 : 0
+}</code></pre></div></figure>
 <p>A block returns its final expression. Effective source has no return statement. Ordered expressions run from left to right, and only the selected branch runs.</p>
 <aside class="exercise"><h3>Exercise</h3><p>What do omitted fails and uses clauses mean when a function has a result annotation?</p><details><summary>Show the answer</summary><p>Both sets are empty. The body must handle failures and provide requirements before the function boundary.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 3"><a href="#values">Previous section</a><a href="#users-foundation">Next section</a></nav></section><section class="section" id="users-foundation" aria-labelledby="heading-users-foundation"><h2 id="heading-users-foundation">One domain, two languages</h2><p class="lead">The Users domain provides the shared declarations for the next four chapters.</p><p>Effective service declarations contain method signatures. Service methods have no this binding. Each method remains a distinct capability after name resolution.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Shared Users declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = {
@@ -206,8 +238,9 @@ const listActiveNames = (): Effect.Effect&lt;
 <p>Each callback must be pure and have empty failure and requirement sets. Contextual inline arrows work because the builtin supplies their parameter types. Known pure functions also work.</p>
 <p>A callback that provides its own service can still execute effects. Empty failures and requirements do not make that callback pure. Execution mode closes this loophole.</p>
 <p>The checker specializes each builtin use to a closed function type before IR serialization. Version 0 does not expose the builtin type variables to users.</p>
-<figure data-ui class="code source"><figcaption>Fold from left to right</figcaption><pre tabindex="0"><code class="language-effective">export const total = (amounts: int[]): int =&gt;
-  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></figure>
+<figure data-ui class="code" data-tabs data-check="book-fold"><figcaption>Fold from left to right</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const total = (amounts: int[]): int =&gt;
+  amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">export const total = (amounts: ReadonlyArray&lt;number&gt;): number =&gt;
+  amounts.reduce((sum, amount) =&gt; sum + amount, 0)</code></pre></div></figure>
 <aside class="exercise"><h3>Exercise</h3><p>Why can version 0 reject a callback parameter whose source type only shows empty effect sets?</p><details><summary>Show the answer</summary><p>An unbodied function type defaults to effect execution. Version 0 has no source annotation that requires pure execution.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 6"><a href="#lookup-update">Previous section</a><a href="#control">Next section</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">Recovery and provision</h2><p class="lead">Effective controls an operation through explicit syntax and deferred zero-argument functions.</p><p>A typed catch handles matching failures from its protected block. Unhandled failures continue to the caller. Catch does not intercept defects or cancellation.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Recovery using chapters 4 and 5 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const activationLabel = (id: string): string
   fails StoreUnavailable
@@ -397,7 +430,7 @@ const pay = (id: OrderId): Effect.Effect&lt;
 <p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
 <p>The Effect-TS tab uses a schema to check safe integers at a boundary. Effective separately requires its checker and runtime to preserve int arithmetic rules.</p>
 <p>The Effect-TS tab uses Effect.gen for ordered operations. Effective keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
-<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous section</a><a href="#modules-reference">Next section</a></nav></section><section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">Modules and typed IR</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure data-ui class="code source"><figcaption>Version 0 imports and exports</figcaption><pre tabindex="0"><code class="language-effective">import {
+<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous section</a><a href="#modules-reference">Next section</a></nav></section><section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">Modules and typed IR</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure data-ui class="code" data-tabs data-check="book-modules" data-check-requires="users-declarations users-lookup"><figcaption>Version 0 imports and exports</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import {
   User,
   UserMissing,
   StoreUnavailable,
@@ -407,7 +440,20 @@ const pay = (id: OrderId): Effect.Effect&lt;
 
 export const load = (id: string): User
   fails UserMissing | StoreUnavailable
-  uses Users.find =&gt; getUser(id)</code></pre></figure>
+  uses Users.find =&gt; getUser(id)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Effect } from &quot;effect&quot;
+import {
+  User,
+  UserMissing,
+  StoreUnavailable,
+  Users,
+  getUser
+} from &quot;./users.js&quot;
+
+export const load = (id: string): Effect.Effect&lt;
+  User,
+  UserMissing | StoreUnavailable,
+  Users
+&gt; =&gt; getUser(id)</code></pre></div></figure>
 <p>Version 0 permits named imports from relative .eff files and registered host modules. It excludes default imports, namespace imports, renaming, re-exports, and package resolution.</p>
 <p>Module constants require pure initializers. Imports cannot run application service operations. A host starts execution through an entry function after it supplies required providers.</p>
 <p>The transpiler will parse source, resolve identities, infer effects, check contracts, specialize builtins, and emit typed IR. Its Effect-TS backend then emits TypeScript from that IR. The current project defines these stages but supplies no transpiler.</p>
