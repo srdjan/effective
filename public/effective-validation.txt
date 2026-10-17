@@ -78,9 +78,9 @@ Draft 0.3 specification, October 17, 2026
 Language core version 1 specifies references, races, scoped fibers, borrowed handles,
 buffered and merged streams, retry schedules, pure codecs, source Layers, and a typed
 file service host adapter. The specification requires light-functional-ir version 2.
-The effective-lang compiler still implements the core 0 source subset and now emits IR version 2.
-The new core 1 example is an illustrative source/target pair; the compiler does not
-yet accept its Effective source. The strict target check covers its Effect-TS tab.
+The effective-lang compiler implements the listed core 1 extensions and emits IR version 2.
+The core 1 example is an illustrative source/target pair; the compiler also
+accepts its Effective source. The strict target check covers its Effect-TS tab.
 Historical counts and compiler checks above apply to their named drafts only.
 
 IR version 2 migration
@@ -93,7 +93,8 @@ The compiler accepts bufferStream with a positive safe integer capacity and
 mergeStreams with compatible element types. Its validator recomputes active and
 deferred channels and rejects an invalid capacity. The emitter uses Stream.buffer
 with the suspend strategy and Stream.merge. A runtime test checks deferred
-production and per-source order. Other core 1 source forms remain unimplemented.
+production and per-source order.
+The subsequent sections record the remaining core 1 implementation slices.
 
 Races
 The compiler accepts race of two compatible Effect values. The validator
@@ -145,3 +146,11 @@ handle to direct join or interrupt calls in an inline callback. The child's
 service requirements activate when it starts; its failures enter the parent
 contract when joined. A runtime test checks explicit interruption and
 finalizer completion.
+
+Borrowed opaque handles
+A host interface may declare an opaque type and borrow-qualified service
+parameters. withResource can acquire that handle. Its use and release callbacks
+may pass it directly to qualified host methods or source helpers whose own
+borrowed parameters are checked for escape. The checker and independent IR
+validator reject returning, capturing, storing, and ordinary argument passing.
+A strict host build and runtime test cover acquisition, use, and release.

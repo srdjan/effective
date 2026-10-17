@@ -31,6 +31,7 @@ export interface FunctionType {
   readonly kind: "function";
   readonly execution: Execution;
   readonly parameters: readonly Type[];
+  readonly borrows?: readonly boolean[];
   readonly result: Type;
   readonly effects: Effects;
 }
@@ -65,6 +66,7 @@ export interface Parameter {
   readonly id: LocalId;
   readonly name: string;
   readonly type: Type;
+  readonly borrow?: boolean;
   readonly span: Span;
 }
 
@@ -165,6 +167,7 @@ export interface TypeDecl {
   readonly definition:
     | { readonly kind: "alias"; readonly type: Type }
     | { readonly kind: "brand"; readonly base: Type };
+  readonly opaque?: boolean;
   readonly span: Span;
 }
 
@@ -180,6 +183,7 @@ export interface MethodDecl {
   readonly id: CapabilityId;
   readonly name: string;
   readonly type: FunctionType;
+  readonly borrows?: readonly boolean[];
   readonly span: Span;
 }
 
