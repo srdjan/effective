@@ -37,7 +37,7 @@
 
   const functions = {
     getUser: {
-      source: `export const getUser = (id: string): User
+      source: `export const getUser = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find =>
   match Users.find(id) {
@@ -49,7 +49,7 @@
       uses: "Users.find",
       description:
         "getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.",
-      effect: `const getUser = (id: string): Effect.Effect<
+      effect: `const getUser = (id: UserId): Effect.Effect<
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -63,7 +63,7 @@
   )`,
     },
     rename: {
-      source: `export const rename = (id: string, name: string): User
+      source: `export const rename = (id: UserId, name: Name): User
   fails UserMissing | StoreUnavailable
   uses Users.find | Users.save => {
   const user = getUser(id)
@@ -76,7 +76,7 @@
       uses: "Users.find | Users.save",
       description:
         "rename returns a User, has the same failures as getUser, and requires Users.find and Users.save.",
-      effect: `const rename = (id: string, name: string): Effect.Effect<
+      effect: `const rename = (id: UserId, name: Name): Effect.Effect<
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -88,7 +88,7 @@
 })`,
     },
     displayName: {
-      source: `export const displayName = (id: string): string
+      source: `export const displayName = (id: UserId): Name
   fails StoreUnavailable
   uses Users.find =>
   try {
@@ -96,13 +96,13 @@
   } catch {
     UserMissing(error) => "Guest"
   }`,
-      success: "string",
+      success: "Name",
       failures: "StoreUnavailable",
       uses: "Users.find",
       description:
-        "displayName returns a string, handles UserMissing, can fail with StoreUnavailable, and requires Users.find.",
-      effect: `const displayName = (id: string): Effect.Effect<
-  string,
+        "displayName returns a Name, handles UserMissing, can fail with StoreUnavailable, and requires Users.find.",
+      effect: `const displayName = (id: UserId): Effect.Effect<
+  Name,
   StoreUnavailable,
   Users
 > => Effect.map(getUser(id), (user) => user.name).pipe(
@@ -113,19 +113,19 @@
 )`,
     },
     activeNames: {
-      source: `export const activeNames = (): string[]
+      source: `export const activeNames = (): Name[]
   fails StoreUnavailable
   uses Users.all =>
   Users.all()
     |> filter((user) => user.active)
     |> map((user) => user.name)`,
-      success: "string[]",
+      success: "Name[]",
       failures: "StoreUnavailable",
       uses: "Users.all",
       description:
-        "activeNames returns string[], can fail with StoreUnavailable, and requires Users.all. Its collection callbacks remain pure.",
+        "activeNames returns Name[], can fail with StoreUnavailable, and requires Users.all. Its collection callbacks remain pure.",
       effect: `const activeNames = (): Effect.Effect<
-  ReadonlyArray<string>,
+  ReadonlyArray<Name>,
   StoreUnavailable,
   Users
 > => Effect.map(

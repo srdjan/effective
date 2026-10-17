@@ -59,6 +59,15 @@ The check runs from one Deno task and lives in the repository.
 | `provide(Live, () => e)` | `Effect.provide(Effect.suspend(() => e), Live)` |
 | import from `"./users.eff"` | import from `"./users.js"` |
 | import from `"host:providers"` | import from `"./users-live.js"` (same as the existing provider panel and its prose) |
+| `type Name = string` (alias of a primitive) | `type Name = string` |
+| `type Count = int` | `type Count = number` |
+| `type Account = Brand<{ ... }>` | `const Account = Schema.Struct({ ... }).pipe(Schema.brand("Account"))` and `type Account = typeof Account.Type` |
+| `Account({ ... })` | `Account.make({ ... })` |
+| `{ ...account, active: false }` on a nominal record | the same spread |
+| `type Cents = Brand<int>` | `const Cents = Int.pipe(Schema.brand("Cents"))`, with the `Int` filter of the payment panel |
+| `a + b` on two `Cents` values | `Cents.make(a + b)` |
+| `Cents(50)` | `Cents.make(50)` |
+| `a > b` on two `Cents` values | `a > b` |
 
 ## Markup (both pages)
 

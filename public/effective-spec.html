@@ -2,23 +2,28 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="This reference defines the source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective."><title>Effective - Specification</title><link rel="canonical" href="https://effective.timok.deno.net/effective-spec.html"><meta property="og:site_name" content="Effective"><meta property="og:type" content="article"><meta property="og:title" content="Effective - Specification"><meta property="og:description" content="This reference defines the source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective."><meta property="og:url" content="https://effective.timok.deno.net/effective-spec.html"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><meta property="og:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effective - Specification"><meta name="twitter:description" content="This reference defines the source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective."><meta name="twitter:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://effective.timok.deno.net/effective-spec.html#spec","headline":"Effective language specification","name":"Effective - Specification","description":"This reference defines the source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective.","url":"https://effective.timok.deno.net/effective-spec.html","image":"https://effective.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@type":"WebSite","@id":"https://effective.timok.deno.net/#website","name":"Effective","url":"https://effective.timok.deno.net/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Effective","item":"https://effective.timok.deno.net/"},{"@type":"ListItem","position":2,"name":"Specification","item":"https://effective.timok.deno.net/effective-spec.html"}]}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css?v=0.4.2"><script src="site.js?v=0.4.2" defer></script></head>
 <body id="top" class="spec-page"><a class="skip" href="#content">Skip to content</a>
 <header class="topbar"><a class="brand" href="index.html">Effective<span class="brand-period" aria-hidden="true">.</span></a><nav class="toplinks" aria-label="Documents"><a href="index.html">Mini book</a><a href="effective-spec.html" aria-current="page">Specification</a></nav></header>
-<main id="site-content"><section class="reference-hero" aria-labelledby="reference-heading"><h1 id="reference-heading">Language<br>specification.</h1><div class="reference-bottom"><p>The source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective.</p><a class="button" href="#status">Read the reference <span aria-hidden="true">↓</span></a></div><p class="edition">Language core 0. Design draft 0.1. October 17, 2026.<br>A Deno transpiler and CLI exist in the effective-lang repository. Effective uses the Effect-TS runtime.</p></section><div class="layout" id="reader"><details class="contents-menu"><summary>Chapters of the specification</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this reference</p><ol><li><a href="#status">Status and scope</a></li><li><a href="#overview">A first example</a></li><li><a href="#lexical">Source and lexical rules</a></li><li><a href="#types">Data and types</a></li><li><a href="#functions">Functions and blocks</a></li><li><a href="#services">Services and contracts</a></li><li><a href="#execution">Execution order and mode</a></li><li><a href="#pipelines">Pipelines and collections</a></li><li><a href="#matching">Pattern matching</a></li><li><a href="#recovery">Failure and recovery</a></li><li><a href="#control">Retry and providers</a></li><li><a href="#modules">Modules and boundaries</a></li><li><a href="#ir">Typed IR and backends</a></li><li><a href="#equations">Equations and validation</a></li><li><a href="#grammar">Surface grammar</a></li><li><a href="#diagnostics">Diagnostics and conformance</a></li><li><a href="#examples">Examples and deferred work</a></li><li><a href="#sources">Sources and lineage</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav></details><nav class="contents" aria-label="Contents"><p class="contents-title">In this reference</p><ol><li><a href="#status">Status and scope</a></li><li><a href="#overview">A first example</a></li><li><a href="#lexical">Source and lexical rules</a></li><li><a href="#types">Data and types</a></li><li><a href="#functions">Functions and blocks</a></li><li><a href="#services">Services and contracts</a></li><li><a href="#execution">Execution order and mode</a></li><li><a href="#pipelines">Pipelines and collections</a></li><li><a href="#matching">Pattern matching</a></li><li><a href="#recovery">Failure and recovery</a></li><li><a href="#control">Retry and providers</a></li><li><a href="#modules">Modules and boundaries</a></li><li><a href="#ir">Typed IR and backends</a></li><li><a href="#equations">Equations and validation</a></li><li><a href="#grammar">Surface grammar</a></li><li><a href="#diagnostics">Diagnostics and conformance</a></li><li><a href="#examples">Examples and deferred work</a></li><li><a href="#sources">Sources and lineage</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
+<main id="site-content"><section class="reference-hero" aria-labelledby="reference-heading"><h1 id="reference-heading">Language<br>specification.</h1><div class="reference-bottom"><p>The source syntax, type rules, execution behavior, typed intermediate representation, and Effect-TS translation for Effective.</p><a class="button" href="#status">Read the reference <span aria-hidden="true">↓</span></a></div><p class="edition">Language core 0. Design draft 0.2. October 17, 2026.<br>A Deno transpiler and CLI exist in the effective-lang repository. Effective uses the Effect-TS runtime.</p></section><div class="layout" id="reader"><details class="contents-menu"><summary>Chapters of the specification</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this reference</p><ol><li><a href="#status">Status and scope</a></li><li><a href="#overview">A first example</a></li><li><a href="#lexical">Source and lexical rules</a></li><li><a href="#types">Data and types</a></li><li><a href="#functions">Functions and blocks</a></li><li><a href="#services">Services and contracts</a></li><li><a href="#execution">Execution order and mode</a></li><li><a href="#pipelines">Pipelines and collections</a></li><li><a href="#matching">Pattern matching</a></li><li><a href="#recovery">Failure and recovery</a></li><li><a href="#control">Retry and providers</a></li><li><a href="#modules">Modules and boundaries</a></li><li><a href="#ir">Typed IR and backends</a></li><li><a href="#equations">Equations and validation</a></li><li><a href="#grammar">Surface grammar</a></li><li><a href="#diagnostics">Diagnostics and conformance</a></li><li><a href="#examples">Examples and deferred work</a></li><li><a href="#sources">Sources and lineage</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav></details><nav class="contents" aria-label="Contents"><p class="contents-title">In this reference</p><ol><li><a href="#status">Status and scope</a></li><li><a href="#overview">A first example</a></li><li><a href="#lexical">Source and lexical rules</a></li><li><a href="#types">Data and types</a></li><li><a href="#functions">Functions and blocks</a></li><li><a href="#services">Services and contracts</a></li><li><a href="#execution">Execution order and mode</a></li><li><a href="#pipelines">Pipelines and collections</a></li><li><a href="#matching">Pattern matching</a></li><li><a href="#recovery">Failure and recovery</a></li><li><a href="#control">Retry and providers</a></li><li><a href="#modules">Modules and boundaries</a></li><li><a href="#ir">Typed IR and backends</a></li><li><a href="#equations">Equations and validation</a></li><li><a href="#grammar">Surface grammar</a></li><li><a href="#diagnostics">Diagnostics and conformance</a></li><li><a href="#examples">Examples and deferred work</a></li><li><a href="#sources">Sources and lineage</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
 <article class="main" id="content"><div class="reference-links"><p>Effect-TS means the Effect library for TypeScript, version 4. The target examples use Effect 4.0.5.</p><nav aria-label="Further reading"><a href="index.html">Read the mini book</a><a href="effective-examples/main.eff">Open the application boundary</a><a href="typed-ir.ts">Inspect the typed IR model</a></nav></div><section class="section" id="status" aria-labelledby="heading-status"><h2 id="heading-status">Status and scope</h2><p>Effective is a small functional language designed to transpile to Effect-TS. Immutable values, ordinary functions, and explicit contracts define its source style.</p>
 <p>The transpiler targets the effect core modules and selected modules from the Effect ecosystem. The section on typed IR and backends names each module.</p>
-<p>This reference defines language core version 0. The documentation edition is draft 0.1, dated October 17, 2026.</p>
+<p>This reference defines language core version 0. The documentation edition is draft 0.2, dated October 17, 2026.</p>
+<p>Draft 0.2 adds three rules. A primitive type can occur only inside a type or error declaration. A brand of a record type is a nominal record. Two values of one numeric brand accept comparisons, addition, and subtraction.</p>
 <p>This site contains a specification, teaching examples, and a TypeScript model of typed intermediate representation, or IR. The site does not run the Effective compiler; a Deno transpiler and CLI exist in the effective-lang repository.</p>
 <p>Rules in this reference describe intended language behavior. The examples are manually authored. Effect-TS tabs illustrate the intended transpiler output; a transpiler did not generate them.</p>
 <p>Effective files use the .eff extension. Earlier .lft files remain provisional artifacts from the design discussion.</p>
 <p>The core covers data, functions, services, failures, pipelines, retry, providers, and named modules. Later sections identify features outside this core.</p>
-<p>Effective uses familiar TypeScript shapes but adds language forms. A TypeScript parser cannot parse Effective source directly.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#overview">Next: A first example</a></nav></section><section class="section" id="overview" aria-labelledby="heading-overview"><h2 id="heading-overview">A first example</h2><figure data-ui class="code" data-tabs data-check="spec-log"><figcaption>A first example: log through a service</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">error ConsoleUnavailable = { message: string }
+<p>Effective uses familiar TypeScript shapes but adds language forms. A TypeScript parser cannot parse Effective source directly.</p><nav class="section-nav" aria-label="Navigation for section 1"><a href="#top">Back to start</a><a href="#overview">Next: A first example</a></nav></section><section class="section" id="overview" aria-labelledby="heading-overview"><h2 id="heading-overview">A first example</h2><figure data-ui class="code" data-tabs data-check="spec-log"><figcaption>A first example: log through a service</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Message = string
+
+error ConsoleUnavailable = { message: string }
 
 service Console {
-  print(message: string): void fails ConsoleUnavailable
+  print(message: Message): void fails ConsoleUnavailable
 }
 
-export const log = (message: string): void
+export const log = (message: Message): void
   fails ConsoleUnavailable
   uses Console.print =&gt; Console.print(message)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-log"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Schema } from &quot;effect&quot;
+
+type Message = string
 
 class ConsoleUnavailable extends Schema.TaggedError&lt;ConsoleUnavailable&gt;()(
   &quot;ConsoleUnavailable&quot;,
@@ -26,13 +31,13 @@ class ConsoleUnavailable extends Schema.TaggedError&lt;ConsoleUnavailable&gt;()(
 ) {}
 
 class Console extends Context.Service&lt;Console, {
-  readonly print: (message: string) =&gt; Effect.Effect&lt;
+  readonly print: (message: Message) =&gt; Effect.Effect&lt;
     void,
     ConsoleUnavailable
   &gt;
 }&gt;()(&quot;Console&quot;) {}
 
-const log = (message: string): Effect.Effect&lt;
+const log = (message: Message): Effect.Effect&lt;
   void,
   ConsoleUnavailable,
   Console
@@ -50,10 +55,15 @@ const log = (message: string): Effect.Effect&lt;
 <p>A newline or semicolon separates declarations, service methods, and block items. Commas separate record fields, arguments, parameters, and match arms.</p>
 <p>A newline continues an incomplete expression. It also continues a signature before fails, uses, or its final arrow, and an expression before |&gt;.</p>
 <p>The core does not apply general JavaScript semicolon insertion. Parentheses make grouping explicit when a multiline form would otherwise be unclear.</p><nav class="section-nav" aria-label="Navigation for section 3"><a href="#overview">Previous: A first example</a><a href="#types">Next: Data and types</a></nav></section><section class="section" id="types" aria-labelledby="heading-types"><h2 id="heading-types">Data and types</h2><div class="table-wrap"><table><thead><tr><th scope="col">Source type</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>string</td><td>A string value.</td></tr><tr><td>boolean</td><td>true or false.</td></tr><tr><td>int</td><td>A finite JavaScript safe integer.</td></tr><tr><td>number</td><td>A host numeric value; source numeric literals must be finite.</td></tr><tr><td>void</td><td>The unit result of an operation.</td></tr><tr><td>never</td><td>No successful value, as with fail.</td></tr><tr><td>unknown</td><td>A value that needs a checked boundary before typed use.</td></tr><tr><td>T[]</td><td>An immutable array of T values.</td></tr><tr><td>[A, B]</td><td>An immutable tuple with the stated positions.</td></tr><tr><td>Option&lt;T&gt;</td><td>Some(value) or None.</td></tr><tr><td>A | B</td><td>A union of alternatives.</td></tr><tr><td>Brand&lt;T&gt;</td><td>A nominal type whose representation is T.</td></tr></tbody></table></div>
-<figure data-ui class="code" data-tabs data-check="spec-types"><figcaption>Declarations: record, literal union, brand, and optional field</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = { id: string, name: string, active: boolean }
+<figure data-ui class="code" data-tabs data-check="spec-types"><figcaption>Declarations: aliases, record, literal union, brand, and optional field</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type UserId = string
+type Name = string
+type User = { id: string, name: string, active: boolean }
 type Status = &quot;pending&quot; | &quot;paid&quot;
-type UserId = Brand&lt;string&gt;
+type OrderId = Brand&lt;string&gt;
 type Profile = { name: string, nickname?: string }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-types"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+type UserId = string
+type Name = string
 
 const User = Schema.Struct({
   id: Schema.String,
@@ -65,8 +75,8 @@ type User = typeof User.Type
 const Status = Schema.Literals([&quot;pending&quot;, &quot;paid&quot;])
 type Status = typeof Status.Type
 
-const UserId = Schema.String.pipe(Schema.brand(&quot;UserId&quot;))
-type UserId = typeof UserId.Type
+const OrderId = Schema.String.pipe(Schema.brand(&quot;OrderId&quot;))
+type OrderId = typeof OrderId.Type
 
 const Profile = Schema.Struct({
   name: Schema.String,
@@ -74,6 +84,9 @@ const Profile = Schema.Struct({
 })
 type Profile = typeof Profile.Type</code></pre></div></figure>
 <p>Type aliases use structural compatibility. Brands and errors retain declaration identity. The checker rejects recursive type definitions in version 0.</p>
+<p>A primitive type is string, int, number, boolean, or a literal type such as &quot;paid&quot; or 1. A primitive type can occur only inside the body of a type or error declaration. All other positions use declared type names. These positions include parameters, results, service methods, constant annotations, local annotations, and function types.</p>
+<p>void, never, and unknown are not primitive types for this rule. Option&lt;T&gt;, T[], tuples, records, unions, function types, Effect, Stream, and Sink stay valid in any position when their parts are declared types. The rule also applies to a host interface file (.effi), which declares the services and providers of a host. The checker reports declaration/013 for each primitive type in another position.</p>
+<p>An alias such as type Name = string satisfies the rule. An alias adds a name but not identity. Brand&lt;T&gt; adds identity.</p>
 <p>Record fields are required unless the field name has ?. Reading an optional field returns Option&lt;T&gt;.</p>
 <p>A required field of type Option&lt;T&gt; differs from an optional field of type T. A future codec backend must preserve that difference.</p>
 <p>Record construction rejects missing required fields, duplicate fields, and unknown fields. Contextual typing preserves expected literal alternatives.</p>
@@ -85,14 +98,70 @@ type Profile = typeof Profile.Type</code></pre></div></figure>
   ({ ...user, active: true })</code></pre></div></figure>
 <p>OrderId(&quot;o1&quot;) constructs a brand value when OrderId has base type string. A brand adds identity, not an automatic validation predicate.</p>
 <p>unbrand(value) explicitly returns the base value. The checker does not silently discard nominal identity.</p>
+<p>A brand of a record type is a nominal record. Account({ ... }) constructs the value and checks the record against the base type. A record literal without that call does not fit Account. A field read reads the field of the base record. A record update keeps the brand, so { ...account, active: false } has type Account.</p>
+<p>Two nominal records with identical fields are different types. Version 0 does not match a record pattern against a nominal record. It also rejects a nominal record as the operation record of withResource.</p>
+<figure data-ui class="code" data-tabs data-check="spec-account" data-check-requires="spec-types"><figcaption>A nominal record: construction, update, and field read</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Account = Brand&lt;{ id: UserId, name: Name, active: boolean }&gt;
+
+const openAccount = (id: UserId, name: Name): Account =&gt;
+  Account({ id, name, active: true })
+
+const closeAccount = (account: Account): Account =&gt;
+  ({ ...account, active: false })
+
+const accountName = (account: Account): Name =&gt; account.name</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-account"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const Account = Schema.Struct({
+  id: Schema.String,
+  name: Schema.String,
+  active: Schema.Boolean
+}).pipe(Schema.brand(&quot;Account&quot;))
+type Account = typeof Account.Type
+
+const openAccount = (id: UserId, name: Name): Account =&gt;
+  Account.make({ id, name, active: true })
+
+const closeAccount = (account: Account): Account =&gt;
+  ({ ...account, active: false })
+
+const accountName = (account: Account): Name =&gt; account.name</code></pre></div></figure>
 <p>The checker treats int as a subtype of number. Division returns number. An int result outside the safe range is a runtime defect.</p>
-<p>Equality compares compatible primitives, literal unions, and primitive brands. Comparing records requires a named comparison function.</p>
+<p>A numeric brand has the base type int or number, after aliases. The operators &lt;, &lt;=, &gt;, and &gt;= accept two values of one numeric brand. The operators + and - accept two values of one numeric brand and produce that brand. An int brand result outside the safe range is a defect, as for int.</p>
+<p>The operators * and / do not accept a brand, because the product of two amounts is not an amount. A string brand does not accept +. These operations need unbrand first. A literal operand needs the brand call, as in total + Cents(50).</p>
+<figure data-ui class="code" data-tabs data-check="spec-cents"><figcaption>Operators on a numeric brand</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Cents = Brand&lt;int&gt;
+type Exceeded = boolean
+type Share = number
+
+const sum = (a: Cents, b: Cents): Cents =&gt; a + b
+const exceeds = (total: Cents, limit: Cents): Exceeded =&gt; total &gt; limit
+const withFee = (total: Cents): Cents =&gt; total + Cents(50)
+const half = (total: Cents): Share =&gt; unbrand(total) / 2</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-cents"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+const Int = Schema.Finite.check(
+  Schema.makeFilter(
+    (value) =&gt; Number.isSafeInteger(value) || &quot;expected a safe integer&quot;
+  )
+)
+
+const Cents = Int.pipe(Schema.brand(&quot;Cents&quot;))
+type Cents = typeof Cents.Type
+type Exceeded = boolean
+type Share = number
+
+const sum = (a: Cents, b: Cents): Cents =&gt; Cents.make(a + b)
+const exceeds = (total: Cents, limit: Cents): Exceeded =&gt; total &gt; limit
+const withFee = (total: Cents): Cents =&gt; Cents.make(total + Cents.make(50))
+const half = (total: Cents): Share =&gt; total / 2</code></pre></div></figure>
+<p>Equality compares compatible primitives, literal unions, and primitive brands. Comparing records, nominal records included, requires a named comparison function.</p>
 <p>Conditions require boolean. Effective does not use JavaScript truthiness. void cannot appear in a record field, array, or tuple.</p>
 <p>Effect&lt;A, E, R&gt; is an immutable computation value. A is its successful result type. E is never or a union of nominal error names. R is never or a union of qualified service methods. Omitted E and R mean never. These channels describe deferred execution, not the effects of evaluating an expression that produces the value. Effect values may be bound, passed, and returned.</p>
-<p>Effect value compatibility checks the successful result covariantly and permits source failure and requirement sets that are subsets of the expected sets. Nominal error and method identities are retained. A value with more possible failures or requirements cannot fit a narrower declared Effect type.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#lexical">Previous: Source and lexical rules</a><a href="#functions">Next: Functions and blocks</a></nav></section><section class="section" id="functions" aria-labelledby="heading-functions"><h2 id="heading-functions">Functions and blocks</h2><figure data-ui class="code" data-tabs data-check="spec-functions" data-check-requires="spec-log"><figcaption>Typed functions and a deferred job</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const add = (a: int, b: int): int =&gt; a + b
-const increment = (value: int): int =&gt; value + 1
-const job = () =&gt; log(&quot;ready&quot;)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const add = (a: number, b: number): number =&gt; a + b
-const increment = (value: number): number =&gt; value + 1
+<p>Effect value compatibility checks the successful result covariantly and permits source failure and requirement sets that are subsets of the expected sets. Nominal error and method identities are retained. A value with more possible failures or requirements cannot fit a narrower declared Effect type.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#lexical">Previous: Source and lexical rules</a><a href="#functions">Next: Functions and blocks</a></nav></section><section class="section" id="functions" aria-labelledby="heading-functions"><h2 id="heading-functions">Functions and blocks</h2><figure data-ui class="code" data-tabs data-check="spec-functions" data-check-requires="spec-log"><figcaption>Typed functions and a deferred job</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Count = int
+
+const add = (a: Count, b: Count): Count =&gt; a + b
+const increment = (value: Count): Count =&gt; value + 1
+const job = () =&gt; log(&quot;ready&quot;)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">type Count = number
+
+const add = (a: Count, b: Count): Count =&gt; a + b
+const increment = (value: Count): Count =&gt; value + 1
 const job = () =&gt; log(&quot;ready&quot;)</code></pre></div></figure>
 <p>Every binding and aggregate value is immutable. Effective has no assignment operator, mutable let binding, implicit receiver, or source class declaration.</p>
 <p>Parameters and calls use ordinary argument lists. Effective does not insert currying, partial application, or callback execution.</p>
@@ -101,7 +170,7 @@ const job = () =&gt; log(&quot;ready&quot;)</code></pre></div></figure>
 <p>Effective has no return statement in version 0. Function blocks and other expression blocks use the same result rule.</p>
 <p>A brace after an arrow begins a block. Parentheses distinguish a returned record, as in ({ ...user, active: true }).</p>
 <p>Creating an arrow evaluates no part of its body. Calling the arrow runs the body again. Captured immutable values retain ordinary lexical scope.</p>
-<p>Exported functions require parameter and result annotations. Local parameters require annotations unless a contextual function type supplies their types.</p>
+<p>Exported functions require parameter and result annotations. Each annotation follows the rule on primitive types in Data and types. Local parameters require annotations unless a contextual function type supplies their types.</p>
 <p>A local function without a result annotation infers its result and effect sets. A result annotation creates a closed failure and requirement contract.</p>
 <p>For a closed contract, omitted fails means no expected failures. Omitted uses means no unprovided capability requirements.</p>
 <p>Those omissions do not assert pure execution. The checker tracks execution mode separately, including effects whose providers are already supplied.</p>
@@ -110,12 +179,12 @@ const job = () =&gt; log(&quot;ready&quot;)</code></pre></div></figure>
 error StoreUnavailable = { message: string }
 
 service Users {
-  find(id: string): Option&lt;User&gt; fails StoreUnavailable
+  find(id: UserId): Option&lt;User&gt; fails StoreUnavailable
   save(user: User): void fails StoreUnavailable
   all(): User[] fails StoreUnavailable
 }
 
-const getUser = (id: string): User
+const getUser = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
   match Users.find(id) {
@@ -134,7 +203,7 @@ class StoreUnavailable extends Schema.TaggedError&lt;StoreUnavailable&gt;()(
 ) {}
 
 class Users extends Context.Service&lt;Users, {
-  readonly find: (id: string) =&gt; Effect.Effect&lt;
+  readonly find: (id: UserId) =&gt; Effect.Effect&lt;
     Option.Option&lt;User&gt;,
     StoreUnavailable
   &gt;
@@ -148,7 +217,7 @@ class Users extends Context.Service&lt;Users, {
   &gt;
 }&gt;()(&quot;Users&quot;) {}
 
-const getUser = (id: string): Effect.Effect&lt;
+const getUser = (id: UserId): Effect.Effect&lt;
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -178,15 +247,21 @@ const getUser = (id: string): Effect.Effect&lt;
 <p>An effectful function cannot satisfy a pure callback requirement. Lifting wraps execution; it does not invoke a callback during construction.</p>
 <p>Recursive functions require explicit signatures. Mode inference starts pure and propagates intrinsic effects and effectful calls until the recursive group reaches a fixed point.</p>
 <p>defer(job) accepts a zero-argument function and constructs an Effect value from its invocation result, failure set, and requirement set. The job body does not run during construction. Evaluating the job expression may contribute its own active effects. run(value) accepts an Effect value and executes its deferred computation anew on every call. Its active effects combine evaluation of value with the value’s deferred failures and requirements. run has effect execution mode even when those sets are empty.</p>
-<p>Expected failure stops the current normal path. Defects and cancellation use separate runtime outcomes and do not enter ordinary typed recovery.</p><nav class="section-nav" aria-label="Navigation for section 7"><a href="#services">Previous: Services and contracts</a><a href="#pipelines">Next: Pipelines and collections</a></nav></section><section class="section" id="pipelines" aria-labelledby="heading-pipelines"><h2 id="heading-pipelines">Pipelines and collections</h2><figure data-ui class="code" data-tabs data-check="spec-collections"><figcaption>Collection pipelines with filter, map, and fold</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type User = { name: string, active: boolean }
+<p>Expected failure stops the current normal path. Defects and cancellation use separate runtime outcomes and do not enter ordinary typed recovery.</p><nav class="section-nav" aria-label="Navigation for section 7"><a href="#services">Previous: Services and contracts</a><a href="#pipelines">Next: Pipelines and collections</a></nav></section><section class="section" id="pipelines" aria-labelledby="heading-pipelines"><h2 id="heading-pipelines">Pipelines and collections</h2><figure data-ui class="code" data-tabs data-check="spec-collections"><figcaption>Collection pipelines with filter, map, and fold</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Name = string
+type Amount = int
 
-export const activeNames = (users: User[]): string[] =&gt;
+type User = { name: string, active: boolean }
+
+export const activeNames = (users: User[]): Name[] =&gt;
   users
     |&gt; filter((user) =&gt; user.active)
     |&gt; map((user) =&gt; user.name)
 
-export const total = (amounts: int[]): int =&gt;
+export const total = (amounts: Amount[]): Amount =&gt;
   amounts |&gt; fold(0, (sum, amount) =&gt; sum + amount)</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Schema } from &quot;effect&quot;
+
+type Name = string
+type Amount = number
 
 const User = Schema.Struct({
   name: Schema.String,
@@ -196,10 +271,10 @@ type User = typeof User.Type
 
 const activeNames = (
   users: ReadonlyArray&lt;User&gt;
-): ReadonlyArray&lt;string&gt; =&gt;
+): ReadonlyArray&lt;Name&gt; =&gt;
   users.filter((user) =&gt; user.active).map((user) =&gt; user.name)
 
-const total = (amounts: ReadonlyArray&lt;number&gt;): number =&gt;
+const total = (amounts: ReadonlyArray&lt;Amount&gt;): Amount =&gt;
   amounts.reduce((sum, amount) =&gt; sum + amount, 0)</code></pre></div></figure>
 <p>A pipeline passes its left result as the first argument of the next stage. The stages associate from left to right.</p>
 <figure data-ui class="code" data-tabs data-check="spec-pipe"><figcaption>The pipe syntax with and without arguments</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">value |&gt; transform
@@ -219,30 +294,35 @@ transform(value, a, b)</code></pre></div></figure>
 <p>Stream&lt;A,E,R&gt; is a deferred producer and Sink&lt;I,O,E,R&gt; is a deferred consumer. Their failure and requirement sets describe execution, not construction. unfold(seed, callback) takes an inline arrow returning Option&lt;[A, State]&gt;; None ends the stream. mapEffect(stream, callback) takes an inline effectful arrow and combines deferred channels. sinkForEach(callback) takes an inline effectful arrow with an annotated input and produces void. These operations use direct call syntax. runStream(stream, sink) activates both values and combines their channels.</p>
 <p>Stream operations use one-element pull demand without prefetch or concurrent mapping. The producer does not run until runStream starts. The next pull follows consumer completion. A producer, transform, or consumer failure stops demand and waits for scoped finalizers; interruption also waits. The backend uses Stream.unfold, Stream.mapEffect, Sink.forEach, and Stream.run.</p>
 <p>An unbodied callback parameter defaults to effect mode. It cannot pass the pure collection callback check, even when its effect sets are empty.</p>
-<p>The transpiler specializes builtin rules before IR serialization. Each distinct closed builtin type receives a unique synthetic ValueId and a closed prelude interface.</p><nav class="section-nav" aria-label="Navigation for section 8"><a href="#execution">Previous: Execution order and mode</a><a href="#matching">Next: Pattern matching</a></nav></section><section class="section" id="matching" aria-labelledby="heading-matching"><h2 id="heading-matching">Pattern matching</h2><figure data-ui class="code" data-tabs data-check="spec-match" data-check-requires="spec-types"><figcaption>Match on an option and choose with if</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const label = (found: Option&lt;User&gt;): string =&gt;
+<p>The transpiler specializes builtin rules before IR serialization. Each distinct closed builtin type receives a unique synthetic ValueId and a closed prelude interface.</p><nav class="section-nav" aria-label="Navigation for section 8"><a href="#execution">Previous: Execution order and mode</a><a href="#matching">Next: Pattern matching</a></nav></section><section class="section" id="matching" aria-labelledby="heading-matching"><h2 id="heading-matching">Pattern matching</h2><figure data-ui class="code" data-tabs data-check="spec-match" data-check-requires="spec-types"><figcaption>Match on an option and choose with if</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Label = string
+
+const label = (found: Option&lt;User&gt;): Label =&gt;
   match found {
     Some(user) =&gt; user.name,
     None =&gt; &quot;missing&quot;
   }
 
-const category = (active: boolean): string =&gt;
-  if (active) { &quot;active&quot; } else { &quot;inactive&quot; }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Option } from &quot;effect&quot;
+const category = (user: User): Label =&gt;
+  if (user.active) { &quot;active&quot; } else { &quot;inactive&quot; }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { Option } from &quot;effect&quot;
 
-const label = (found: Option.Option&lt;User&gt;): string =&gt;
+type Label = string
+
+const label = (found: Option.Option&lt;User&gt;): Label =&gt;
   Option.match(found, {
     onNone: () =&gt; &quot;missing&quot;,
     onSome: (user) =&gt; user.name
   })
 
-const category = (active: boolean): string =&gt;
-  active ? &quot;active&quot; : &quot;inactive&quot;</code></pre></div></figure>
+const category = (user: User): Label =&gt;
+  user.active ? &quot;active&quot; : &quot;inactive&quot;</code></pre></div></figure>
 <p>if requires a boolean condition and an else branch. Branch results require a common result type. never fits every successful result type.</p>
 <p>Match subjects evaluate once. The checker requires complete coverage and rejects unreachable arms and constructors that do not belong to the subject type.</p>
 <p>Supported patterns include literals, _, Some(binding), None, nominal error bindings, and a string discriminator in a tagged record.</p>
 <p>Matching an unbounded primitive domain requires a final wildcard. Nested patterns are outside version 0.</p>
 <figure data-ui class="code" data-tabs data-check="spec-shape"><figcaption>Match on a tagged record union</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Shape = { kind: &quot;circle&quot;, radius: number } | { kind: &quot;square&quot;, side: number }
+type Length = number
 
-const extent = (shape: Shape): number =&gt;
+const extent = (shape: Shape): Length =&gt;
   match shape {
     { kind: &quot;circle&quot;, ...circle } =&gt; circle.radius,
     { kind: &quot;square&quot;, ...square } =&gt; square.side
@@ -260,8 +340,9 @@ const Square = Schema.Struct({
 
 const Shape = Schema.Union([Circle, Square])
 type Shape = typeof Shape.Type
+type Length = number
 
-const extent = (shape: Shape): number =&gt; {
+const extent = (shape: Shape): Length =&gt; {
   switch (shape.kind) {
     case &quot;circle&quot;:
       return shape.radius
@@ -270,15 +351,15 @@ const extent = (shape: Shape): number =&gt; {
   }
 }</code></pre></div></figure>
 <p>A spread binding in this pattern captures the whole narrowed record. It does not mean JavaScript rest destructuring.</p>
-<p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous: Pipelines and collections</a><a href="#recovery">Next: Failure and recovery</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">Failure and recovery</h2><figure data-ui class="code" data-tabs data-check="spec-recovery" data-check-requires="spec-types spec-users"><figcaption>Recover from a typed failure with try and catch</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const displayName = (id: string): string
+<p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous: Pipelines and collections</a><a href="#recovery">Next: Failure and recovery</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">Failure and recovery</h2><figure data-ui class="code" data-tabs data-check="spec-recovery" data-check-requires="spec-types spec-users"><figcaption>Recover from a typed failure with try and catch</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const displayName = (id: UserId): Name
   fails StoreUnavailable
   uses Users.find =&gt;
   try {
     getUser(id).name
   } catch {
     UserMissing(error) =&gt; &quot;Guest&quot;
-  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-recovery"><pre tabindex="0"><code class="language-typescript">const displayName = (id: string): Effect.Effect&lt;
-  string,
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-recovery"><pre tabindex="0"><code class="language-typescript">const displayName = (id: UserId): Effect.Effect&lt;
+  Name,
   StoreUnavailable,
   Users
 &gt; =&gt; Effect.map(getUser(id), (user) =&gt; user.name).pipe(
@@ -304,15 +385,15 @@ Effect.provide(Effect.suspend(() =&gt; pay(id)), AppLive)</code></pre></div></fi
 <p>Provision removes supplied callback requirements and adds acquisition dependencies. It preserves typed failures from both acquisition and callback execution.</p>
 <p>Provider lookup occurs at invocation time. Creating a closure does not freeze the current provider environment.</p>
 <p>retry, provide, fail, and catch have effect execution mode in the core. A provider with empty acquisition sets can still require effectful acquisition.</p>
-<p>withResource(acquire, use, release) takes three inline closures. Acquisition has no parameters and returns an operation record with required function fields. Use and release each take that record as one parameter. The use result and operation arguments and results are data only: recursively no function, Effect value, provider, or unknown. Release returns void. A scoped parameter may occur only as the direct receiver of an operation call, such as file.read(); it cannot escape through a return, alias, aggregate, nested closure, or host argument. A field cannot be read as a value. Invocation failures and requirements of all three callbacks combine; execution is effectful even with empty sets. Release runs after success, failure, defect, or interruption, and its own typed failure remains in the result channel. Host adapters create operation records and remain responsible for their functions' behavior. General borrow-qualified handles, source layer construction, races, and fiber APIs need separate rules.</p><nav class="section-nav" aria-label="Navigation for section 11"><a href="#recovery">Previous: Failure and recovery</a><a href="#modules">Next: Modules and boundaries</a></nav></section><section class="section" id="modules" aria-labelledby="heading-modules"><h2 id="heading-modules">Modules and boundaries</h2><figure data-ui class="code" data-tabs data-check="spec-main" data-check-requires="spec-types spec-users spec-recovery"><figcaption>Import a function and provide a provider</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import { displayName, StoreUnavailable } from &quot;./users.eff&quot;
+<p>withResource(acquire, use, release) takes three inline closures. Acquisition has no parameters and returns an operation record with required function fields. Use and release each take that record as one parameter. The use result and operation arguments and results are data only: recursively no function, Effect value, provider, or unknown. Release returns void. A scoped parameter may occur only as the direct receiver of an operation call, such as file.read(); it cannot escape through a return, alias, aggregate, nested closure, or host argument. A field cannot be read as a value. Invocation failures and requirements of all three callbacks combine; execution is effectful even with empty sets. Release runs after success, failure, defect, or interruption, and its own typed failure remains in the result channel. Host adapters create operation records and remain responsible for their functions' behavior. General borrow-qualified handles, source layer construction, races, and fiber APIs need separate rules.</p><nav class="section-nav" aria-label="Navigation for section 11"><a href="#recovery">Previous: Failure and recovery</a><a href="#modules">Next: Modules and boundaries</a></nav></section><section class="section" id="modules" aria-labelledby="heading-modules"><h2 id="heading-modules">Modules and boundaries</h2><figure data-ui class="code" data-tabs data-check="spec-main" data-check-requires="spec-types spec-users spec-recovery"><figcaption>Import a function and provide a provider</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import { displayName, Name, StoreUnavailable } from &quot;./users.eff&quot;
 import { UsersLive } from &quot;host:providers&quot;
 
-export const main = (): string
+export const main = (): Name
   fails StoreUnavailable =&gt;
   provide(UsersLive, () =&gt; displayName(&quot;u1&quot;))</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">import { UsersLive } from &quot;./users-live.js&quot;
-import { displayName, StoreUnavailable } from &quot;./users.js&quot;
+import { displayName, Name, StoreUnavailable } from &quot;./users.js&quot;
 
-const main = (): Effect.Effect&lt;string, StoreUnavailable&gt; =&gt;
+const main = (): Effect.Effect&lt;Name, StoreUnavailable&gt; =&gt;
   Effect.provide(
     Effect.suspend(() =&gt; displayName(&quot;u1&quot;)),
     UsersLive
@@ -411,18 +492,19 @@ ifExpr       = &quot;if&quot; &quot;(&quot; expression &quot;)&quot; block &quot
 pipeExpr     = nonPipeExpr (&quot;|&gt;&quot; pipeStage)*
 pipeStage    = QualifiedName [&quot;(&quot; arguments &quot;)&quot;]</code></pre></figure>
 <p>The checker recognizes only the stated core. Unlisted JavaScript features do not become valid merely because the file resembles TypeScript.</p>
-<p>The core operators are +, -, *, /, ===, !==, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, and ||. Their operands follow the primitive typing rules.</p>
+<p>The grammar accepts a primitive type in every type position. The checker then applies the rule on primitive types in Data and types.</p>
+<p>The core operators are +, -, *, /, ===, !==, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, and ||. Their operands follow the primitive typing rules and the numeric brand rule in Data and types.</p>
 <p>Types use postfix [] for arrays and brackets for tuples. Option&lt;T&gt;, Brand&lt;T&gt;, and Effect&lt;A, E, R&gt; are builtin type applications.</p>
 <p>A brace after an arrow, if condition, else, try, or catch enters its declared control context. Returned object literals require parentheses after an arrow.</p>
 <p>The checker rejects duplicate declarations, fields, methods, match arms, and handler tags where their scopes require uniqueness.</p>
-<div class="table-wrap"><table><thead><tr><th scope="col">Operator group, highest first</th><th scope="col">Operand and result rules</th></tr></thead><tbody><tr><td>Calls and field reads</td><td>A call checks parameter types. A field read uses the declared field type.</td></tr><tr><td>* and /</td><td>Numeric operands produce a numeric result. Division produces number.</td></tr><tr><td>+ and -</td><td>Numeric operands produce a numeric result. Addition also accepts two strings and produces string.</td></tr><tr><td>&lt;, &lt;=, &gt;, &gt;=</td><td>Numeric operands produce boolean.</td></tr><tr><td>=== and !==</td><td>Compatible primitives, literal unions, or matching primitive brands produce boolean.</td></tr><tr><td>&amp;&amp;</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>||</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>|&gt;</td><td>The stage receives the left result as its first argument.</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Operator group, highest first</th><th scope="col">Operand and result rules</th></tr></thead><tbody><tr><td>Calls and field reads</td><td>A call checks parameter types. A field read uses the declared field type.</td></tr><tr><td>* and /</td><td>Numeric operands produce a numeric result. Division produces number. A brand operand needs unbrand.</td></tr><tr><td>+ and -</td><td>Numeric operands produce a numeric result. Two values of one numeric brand produce that brand. Addition also accepts two strings and produces string.</td></tr><tr><td>&lt;, &lt;=, &gt;, &gt;=</td><td>Numeric operands, or two values of one numeric brand, produce boolean.</td></tr><tr><td>=== and !==</td><td>Compatible primitives, literal unions, or matching primitive brands produce boolean.</td></tr><tr><td>&amp;&amp;</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>||</td><td>Boolean operands produce boolean, with short-circuit evaluation.</td></tr><tr><td>|&gt;</td><td>The stage receives the left result as its first argument.</td></tr></tbody></table></div>
 <p>Binary operators within each group associate from left to right. Numeric arithmetic preserves int when both operands are int, except for division.</p>
-<p>Arithmetic with a number operand produces number. String addition performs no implicit conversion. Invalid int arithmetic produces a defect.</p><nav class="section-nav" aria-label="Navigation for section 15"><a href="#equations">Previous: Equations and validation</a><a href="#diagnostics">Next: Diagnostics and conformance</a></nav></section><section class="section" id="diagnostics" aria-labelledby="heading-diagnostics"><h2 id="heading-diagnostics">Diagnostics and conformance</h2><p>Diagnostics identify a source span, a category, and a concrete mismatch. Suggested categories include syntax, unknown-name, type-mismatch, failure-contract, requirement-contract, and execution-mode.</p>
-<p>These categories describe the proposed diagnostic contract. No delivered transpiler emits them yet.</p>
-<figure data-ui class="code" data-tabs data-check="spec-diagnostics" data-check-requires="spec-types spec-users"><figcaption>An invalid program that the compiler rejects</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const broken = (id: string): User
+<p>Arithmetic with a number operand produces number. String addition performs no implicit conversion. Invalid int arithmetic produces a defect.</p><nav class="section-nav" aria-label="Navigation for section 15"><a href="#equations">Previous: Equations and validation</a><a href="#diagnostics">Next: Diagnostics and conformance</a></nav></section><section class="section" id="diagnostics" aria-labelledby="heading-diagnostics"><h2 id="heading-diagnostics">Diagnostics and conformance</h2><p>Diagnostics identify a source span, a category, and a concrete mismatch. The categories are syntax, unknown-name, declaration, type-mismatch, pattern, failure-contract, requirement-contract, execution-mode, module, host-boundary, and validation.</p>
+<p>The effective-lang compiler reports each diagnostic with a code that joins a category and a number, such as type-mismatch/003. A primitive type outside a type or error declaration gives declaration/013.</p>
+<figure data-ui class="code" data-tabs data-check="spec-diagnostics" data-check-requires="spec-types spec-users"><figcaption>An invalid program that the compiler rejects</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const broken = (id: UserId): User
   uses Users.find =&gt; getUser(id)
 
-// Invalid: getUser can fail, but the annotated failure set is empty.</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const broken = (id: string): Effect.Effect&lt;User, never, Users&gt; =&gt;
+// Invalid: getUser can fail, but the annotated failure set is empty.</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">const broken = (id: UserId): Effect.Effect&lt;User, never, Users&gt; =&gt;
   // @ts-expect-error Effect-TS rejects the same contract: getUser can fail.
   getUser(id)</code></pre></div></figure>
 <p>Acceptance fixtures must check evaluation order, single evaluation, branch selection, failure propagation, explicit contracts, closure deferral, retry, and provider resolution. Effect value fixtures must check construction without execution, repeated run, transport through bindings and functions, and failure and requirement contracts at the run boundary.</p>
@@ -431,7 +513,10 @@ pipeStage    = QualifiedName [&quot;(&quot; arguments &quot;)&quot;]</code></pre
 <p>Backend fixtures must compare values, typed failures, and operation traces. A future Effect target also requires strict TypeScript checking and runtime checks.</p>
 <p>Delivered checks cover document consistency, the manual log IR fixture, and strict TypeScript checks of every illustrative Effect-TS tab. The compiler repository checks emitted TypeScript and runtime behavior; this site checks its illustrative tabs separately.</p><nav class="section-nav" aria-label="Navigation for section 16"><a href="#grammar">Previous: Surface grammar</a><a href="#examples">Next: Examples and deferred work</a></nav></section><section class="section" id="examples" aria-labelledby="heading-examples"><h2 id="heading-examples">Examples and deferred work</h2><div class="table-wrap"><table><thead><tr><th scope="col">Example</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td><a href="effective-examples/log.eff">effective-examples/log.eff</a></td><td>A service declaration and one direct call.</td></tr><tr><td><a href="effective-examples/collections.eff">effective-examples/collections.eff</a></td><td>Pure data-first collection pipelines.</td></tr><tr><td><a href="effective-examples/pay.eff">effective-examples/pay.eff</a></td><td>A complete payment workflow with matching, retry, and immutable updates.</td></tr><tr><td><a href="effective-examples/users.eff">effective-examples/users.eff</a></td><td>Lookup, update, recovery, and collection transformation in a reusable module.</td></tr><tr><td><a href="effective-examples/main.eff">effective-examples/main.eff</a></td><td>A separate application module that provides the imported user service.</td></tr></tbody></table></div>
 <p>The two figures below show users.eff and pay.eff in full. Each Effect-TS tab translates the complete module, including its exports.</p>
-<figure data-ui class="code" data-tabs data-check="spec-example-users"><figcaption>The complete Users module <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export type User = {
+<figure data-ui class="code" data-tabs data-check="spec-example-users"><figcaption>The complete Users module <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export type UserId = string
+export type Name = string
+
+export type User = {
   id: string,
   name: string,
   active: boolean
@@ -441,12 +526,12 @@ export error UserMissing = { id: string }
 export error StoreUnavailable = { message: string }
 
 export service Users {
-  find(id: string): Option&lt;User&gt; fails StoreUnavailable
+  find(id: UserId): Option&lt;User&gt; fails StoreUnavailable
   save(user: User): void fails StoreUnavailable
   all(): User[] fails StoreUnavailable
 }
 
-export const getUser = (id: string): User
+export const getUser = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
   match Users.find(id) {
@@ -454,7 +539,7 @@ export const getUser = (id: string): User
     None =&gt; fail(UserMissing({ id }))
   }
 
-export const rename = (id: string, name: string): User
+export const rename = (id: UserId, name: Name): User
   fails UserMissing | StoreUnavailable
   uses Users.find | Users.save =&gt; {
   const user = getUser(id)
@@ -463,7 +548,7 @@ export const rename = (id: string, name: string): User
   renamed
 }
 
-export const displayName = (id: string): string
+export const displayName = (id: UserId): Name
   fails StoreUnavailable
   uses Users.find =&gt;
   try {
@@ -472,12 +557,15 @@ export const displayName = (id: string): string
     UserMissing(error) =&gt; &quot;Guest&quot;
   }
 
-export const activeNames = (): string[]
+export const activeNames = (): Name[]
   fails StoreUnavailable
   uses Users.all =&gt;
   Users.all()
     |&gt; filter((user) =&gt; user.active)
     |&gt; map((user) =&gt; user.name)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-example-users"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
+
+export type UserId = string
+export type Name = string
 
 export const User = Schema.Struct({
   id: Schema.String,
@@ -497,7 +585,7 @@ export class StoreUnavailable extends Schema.TaggedError&lt;StoreUnavailable&gt;
 ) {}
 
 export class Users extends Context.Service&lt;Users, {
-  readonly find: (id: string) =&gt; Effect.Effect&lt;
+  readonly find: (id: UserId) =&gt; Effect.Effect&lt;
     Option.Option&lt;User&gt;,
     StoreUnavailable
   &gt;
@@ -511,7 +599,7 @@ export class Users extends Context.Service&lt;Users, {
   &gt;
 }&gt;()(&quot;Users&quot;) {}
 
-export const getUser = (id: string): Effect.Effect&lt;
+export const getUser = (id: UserId): Effect.Effect&lt;
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -524,7 +612,7 @@ export const getUser = (id: string): Effect.Effect&lt;
     })
   )
 
-export const rename = (id: string, name: string): Effect.Effect&lt;
+export const rename = (id: UserId, name: Name): Effect.Effect&lt;
   User,
   UserMissing | StoreUnavailable,
   Users
@@ -535,8 +623,8 @@ export const rename = (id: string, name: string): Effect.Effect&lt;
   return renamed
 })
 
-export const displayName = (id: string): Effect.Effect&lt;
-  string,
+export const displayName = (id: UserId): Effect.Effect&lt;
+  Name,
   StoreUnavailable,
   Users
 &gt; =&gt; Effect.map(getUser(id), (user) =&gt; user.name).pipe(
@@ -547,14 +635,17 @@ export const displayName = (id: string): Effect.Effect&lt;
 )
 
 export const activeNames = (): Effect.Effect&lt;
-  ReadonlyArray&lt;string&gt;,
+  ReadonlyArray&lt;Name&gt;,
   StoreUnavailable,
   Users
 &gt; =&gt; Effect.map(
   Users.use((users) =&gt; users.all()),
   (all) =&gt; all.filter((user) =&gt; user.active).map((user) =&gt; user.name)
 )</code></pre></div></figure>
-<figure data-ui class="code" data-tabs data-check="spec-example-pay"><figcaption>The complete payment module <a href="effective-examples/pay.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type OrderId = Brand&lt;string&gt;
+<figure data-ui class="code" data-tabs data-check="spec-example-pay"><figcaption>The complete payment module <a href="effective-examples/pay.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Cents = int
+type ChargeId = string
+
+type OrderId = Brand&lt;string&gt;
 type Order = {
   id: OrderId,
   totalCents: int,
@@ -570,7 +661,7 @@ service Orders {
 }
 
 service Payments {
-  charge(amount: int): string fails PaymentDeclined
+  charge(amount: Cents): ChargeId fails PaymentDeclined
 }
 
 const findOrder = (id: OrderId): Order
@@ -606,6 +697,9 @@ export const pay = (id: OrderId): Order
     |&gt; markPaid
     |&gt; saveOrder</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="spec-example-pay"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema } from &quot;effect&quot;
 
+type Cents = number
+type ChargeId = string
+
 const OrderId = Schema.String.pipe(Schema.brand(&quot;OrderId&quot;))
 type OrderId = typeof OrderId.Type
 
@@ -638,8 +732,8 @@ class Orders extends Context.Service&lt;Orders, {
 }&gt;()(&quot;Orders&quot;) {}
 
 class Payments extends Context.Service&lt;Payments, {
-  readonly charge: (amount: number) =&gt; Effect.Effect&lt;
-    string,
+  readonly charge: (amount: Cents) =&gt; Effect.Effect&lt;
+    ChargeId,
     PaymentDeclined
   &gt;
 }&gt;()(&quot;Payments&quot;) {}
@@ -697,4 +791,4 @@ export const pay = (id: OrderId): Effect.Effect&lt;
 <p>Direct-call design reference: <a href="https://forma-lang.com/rfcs/0003-direct-style-effects">https://forma-lang.com/rfcs/0003-direct-style-effects</a>. That RFC described proposed behavior when the design research occurred.</p>
 <p>Target references: <a href="https://effect.website/docs/v4/api/effect/Context">https://effect.website/docs/v4/api/effect/Context</a> and <a href="https://effect.website/docs/v4/error-management/expected-errors">https://effect.website/docs/v4/error-management/expected-errors</a>.</p>
 <p>These references support the design lineage and target examples. They do not establish an Effective implementation.</p><nav class="section-nav" aria-label="Navigation for section 18"><a href="#examples">Previous: Examples and deferred work</a><a href="index.html">Read the mini book</a></nav></section>
-<div class="document-note"><p>Effective documentation, draft 0.1. Source examples and Effect-TS translations are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="index.html">Read the mini book</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>
+<div class="document-note"><p>Effective documentation, draft 0.2. Source examples and Effect-TS translations are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="index.html">Read the mini book</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>
