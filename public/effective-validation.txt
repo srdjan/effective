@@ -87,3 +87,10 @@ IR version 2 migration
 The effective-lang compiler and independent validator emit and accept version 2.
 Version 1 input now produces validation/008. Canonical compiler fixtures and this
 site's linked model and log fixture use version 2. The full compiler check passed.
+
+Buffered and merged streams
+The compiler accepts bufferStream with a positive safe integer capacity and
+mergeStreams with compatible element types. Its validator recomputes active and
+deferred channels and rejects an invalid capacity. The emitter uses Stream.buffer
+with the suspend strategy and Stream.merge. A runtime test checks deferred
+production and per-source order. Other core 1 source forms remain unimplemented.
