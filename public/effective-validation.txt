@@ -137,3 +137,11 @@ Both transformations must be pure, and both types must support derived
 schemas. Generated code checks inputs and transformed outputs with Effect
 Schema and returns None for invalid values. A strict target check and runtime
 test cover both directions and an invalid input.
+
+Scoped fibers
+The compiler accepts Fiber<A,E>, withFiber, joinFiber, and interruptFiber.
+withFiber starts a supervised child from an Effect value and restricts its
+handle to direct join or interrupt calls in an inline callback. The child's
+service requirements activate when it starts; its failures enter the parent
+contract when joined. A runtime test checks explicit interruption and
+finalizer completion.
