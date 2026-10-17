@@ -73,3 +73,12 @@ deno task typecheck
 
 The work directory contains validation scripts and intermediate data in this workspace.
 deno task typecheck runs typecheck/check.ts from the repository.
+
+Draft 0.3 specification, October 17, 2026
+Language core version 1 specifies references, races, scoped fibers, borrowed handles,
+buffered and merged streams, retry schedules, pure codecs, source Layers, and a typed
+file service host adapter. The specification requires light-functional-ir version 2.
+The effective-lang compiler still implements the core 0 subset and emits IR version 1.
+The new core 1 example is an illustrative source/target pair; the compiler does not
+yet accept its Effective source. The strict target check covers its Effect-TS tab.
+Historical counts and compiler checks above apply to their named drafts only.

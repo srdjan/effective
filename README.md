@@ -8,7 +8,7 @@ The transpiler targets the `effect` core modules: `Effect`, `Context`, `Layer`, 
 - `effect/sql` and the `@effect/sql-*` drivers, such as `@effect/sql-pg`
 - `@effect/opentelemetry` for traces, metrics, and logs
 
-Version 0 specifies the language and the core mapping. Bindings for the ecosystem modules need later specifications. The transpiler is not built yet. The Effect-TS examples are manually written, and they pass strict TypeScript checks against Effect 4.0.5.
+Core 1 is specified in design draft 0.3. The effective-lang repository implements the core 0 subset and tracks the remaining compiler milestones. Ecosystem packages require typed host adapters. The Effect-TS examples are manually written and pass strict TypeScript checks against Effect 4.0.5.
 
 ## This repository
 
