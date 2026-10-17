@@ -1,6 +1,6 @@
 {
   "name": "@srdjan/effective",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "exports": "./main.ts",
   "tasks": {
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",

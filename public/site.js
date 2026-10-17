@@ -618,6 +618,20 @@
       prefix.textContent = `${summary.textContent}: `;
       summary.replaceChildren(prefix, currentName);
     }
+    const menu = summary?.closest("details.contents-menu");
+    if (menu) {
+      document.addEventListener("pointerdown", (event) => {
+        if (
+          menu.open && event.target instanceof Node &&
+          !menu.contains(event.target)
+        ) menu.open = false;
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || !menu.open) return;
+        menu.open = false;
+        summary.focus();
+      });
+    }
 
     let previous = null;
     let moved = false;
