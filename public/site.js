@@ -498,6 +498,9 @@
       return sources.get(url);
     };
 
+    // Only the most recent click may fill the drawer or fall back to navigation.
+    let requestedUrl = null;
+
     links.forEach((link) => {
       link.addEventListener("click", (event) => {
         // Modified clicks keep their new-tab and download behavior.
@@ -509,7 +512,10 @@
         }
         event.preventDefault();
         const path = link.getAttribute("href");
-        loadSource(link.href).then((text) => {
+        const url = link.href;
+        requestedUrl = url;
+        loadSource(url).then((text) => {
+          if (requestedUrl !== url) return;
           title.textContent = path;
           code.textContent = text;
           highlightCode(code);
@@ -517,8 +523,8 @@
           link.closest("details.contents-menu")?.removeAttribute("open");
           if (!drawer.open) drawer.showModal();
         }).catch(() => {
-          sources.delete(link.href);
-          globalThis.location.assign(link.href);
+          sources.delete(url);
+          if (requestedUrl === url) globalThis.location.assign(url);
         });
       });
     });

@@ -137,7 +137,7 @@ pre { scrollbar-width: thin; scrollbar-color: var(--code-comment) var(--code-bg)
 .code [role="tablist"] { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px 0; }
 .code [role="tab"] { min-height: 44px; padding: 0 16px; border-bottom: 3px solid transparent; background: transparent; color: var(--code-comment); font: inherit; font-size: var(--small); line-height: 1.4; }
 .code [role="tab"][aria-selected="true"] { color: var(--code-ink); border-bottom-color: var(--accent); }
-html:has(.source-drawer[open]) { overflow: hidden; }
+html:has(.source-drawer[open]) { overflow: hidden; scrollbar-gutter: stable; }
 .source-drawer { inset: 0 0 0 auto; width: min(800px, 100%); height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--code-bg); color: var(--code-ink); transform: translateX(100%); transition: transform 360ms var(--ease-out), overlay 360ms allow-discrete, display 360ms allow-discrete; }
 .source-drawer[open] { transform: none; }
 .source-drawer::backdrop { background: rgb(20 29 52 / 0); transition: background 360ms var(--ease-out), overlay 360ms allow-discrete, display 360ms allow-discrete; }
