@@ -44,6 +44,19 @@ The final reference requires resolved identities in error tags, service keys, an
 Short keys in isolated book comparisons do not define a backend encoding policy.
 Official Effect v4 documentation supports the target API choices.
 
+Draft 0.2 checks, October 17, 2026
+Draft 0.2 adds the rule on primitive types, nominal records, and numeric brand operators.
+The strict TypeScript check passes for 29 units, with 0 Effective blocks that lack an Effect-TS tab.
+The effective-lang parser at commit fc00ef7 parses the 32 Effective blocks of both pages and the five example files.
+No block has a primitive type outside a type or error declaration.
+The two fragments for pipelines and deferred control are not modules, so they do not parse alone.
+
+Draft 0.2 compiler checks
+The effective-lang compiler builds each other figure together with the figures it requires.
+Each figure gives 0 diagnostics, except the invalid example, which gives failure-contract/001 as documented.
+The five example files equal fixtures/examples in effective-lang.
+The draft 0.1 sections above describe the earlier edition; their counts were not measured again.
+
 Limits
 This package contains no Effective parser, checker, transpiler, interpreter, or runtime.
 All source examples, target comparisons, and the IR fixture are manually authored.
