@@ -107,3 +107,11 @@ The compiler now accepts Ref<A>, makeRef, getRef, setRef, and updateRef.
 The type is invariant in A. The update callback must be pure and return a
 compatible A. A runtime test verifies atomic updates under bounded traversal.
 The combined Ref and race figure is now implemented source syntax.
+
+FileSystem host adapter
+The compiler fixture host-adapter-files declares a Files.read service and
+FileReadError. Its TypeScript host provider uses effect/FileSystem and the
+Node platform layer. The adapter checks paths and maps package failures to
+the declared error. A CLI build with --validate --tsc and a runtime read,
+missing-file case, and invalid-path case pass. Other package adapters remain
+outside the implemented subset.
