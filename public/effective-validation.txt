@@ -94,3 +94,10 @@ mergeStreams with compatible element types. Its validator recomputes active and
 deferred channels and rejects an invalid capacity. The emitter uses Stream.buffer
 with the suspend strategy and Stream.merge. A runtime test checks deferred
 production and per-source order. Other core 1 source forms remain unimplemented.
+
+Races
+The compiler accepts race of two compatible Effect values. The validator
+recomputes its deferred failure and requirement unions. The emitter calls
+Effect.race. A runtime test confirms the losing fiber is interrupted and its
+cleanup completes before the result returns. The combined Ref and race figure
+remains illustrative because the compiler does not yet accept makeRef.
