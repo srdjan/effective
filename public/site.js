@@ -228,6 +228,10 @@
     const uses = form.querySelector("#contract-uses");
     const description = form.querySelector("#contract-description");
     const message = form.querySelector("#contract-message");
+    const signal = form.querySelector(".contract-signal");
+    const readingRows = Array.from(
+      form.querySelectorAll(".contract-reading dl > div"),
+    );
     const controls = form.querySelector(".contract-controls");
     const buttons = Array.from(form.querySelectorAll("button[data-function]"));
 
@@ -243,6 +247,38 @@
     ) {
       return;
     }
+
+    let selectedName = null;
+    // An empty easing makes animate() throw, so a missing token falls back to ease-out.
+    const easing = getComputedStyle(document.documentElement)
+      .getPropertyValue("--ease-out").trim() || "ease-out";
+    const playSelectionEffect = () => {
+      if (
+        !signal?.animate ||
+        globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) return;
+
+      signal.getAnimations().forEach((animation) => animation.cancel());
+      signal.animate(
+        [
+          { transform: "scaleX(0)", opacity: 1 },
+          { transform: "scaleX(1)", opacity: 1, offset: .65 },
+          { transform: "scaleX(1)", opacity: 0 },
+        ],
+        { duration: 420, easing },
+      );
+      readingRows.forEach((row, index) => {
+        row.getAnimations().forEach((animation) => animation.cancel());
+        row.animate(
+          [
+            { transform: "translateY(8px)", opacity: .35 },
+            { transform: "translateY(0)", opacity: 1 },
+          ],
+          // Without a backwards fill, a delayed row shows at full opacity until its delay ends.
+          { duration: 360, delay: index * 55, easing, fill: "backwards" },
+        );
+      });
+    };
 
     const selectFunction = (candidate) => {
       const name = normalizeFunctionName(candidate);
@@ -269,6 +305,11 @@
           String(button.dataset.function === name),
         );
       });
+
+      // The effect runs after the state update, so an animation error cannot leave stale state.
+      const changed = selectedName !== null && selectedName !== name;
+      selectedName = name;
+      if (changed) playSelectionEffect();
       return true;
     };
 
@@ -429,6 +470,22 @@
     });
   };
 
+  const setupHeroGlow = () => {
+    const hero = document.querySelector(".hero");
+    if (!hero || !("IntersectionObserver" in globalThis)) return;
+
+    let inView = false;
+    const update = () => {
+      hero.classList.toggle("glow-visible", inView && !document.hidden);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      update();
+    });
+    observer.observe(hero);
+    document.addEventListener("visibilitychange", update);
+  };
+
   const setupEntryMotion = () => {
     if (!("IntersectionObserver" in globalThis)) return;
 
@@ -535,6 +592,7 @@
   setupContractExplorer();
   setupContents();
   setupCodeTabs();
+  setupHeroGlow();
   setupEntryMotion();
   // The drawer is added last, so the entry motion does not animate its figure.
   setupSourceDrawer();
