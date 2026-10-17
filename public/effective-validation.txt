@@ -99,5 +99,11 @@ Races
 The compiler accepts race of two compatible Effect values. The validator
 recomputes its deferred failure and requirement unions. The emitter calls
 Effect.race. A runtime test confirms the losing fiber is interrupted and its
-cleanup completes before the result returns. The combined Ref and race figure
-remains illustrative because the compiler does not yet accept makeRef.
+cleanup completes before the result returns. At this milestone, the combined
+Ref and race figure still awaited makeRef support.
+
+References
+The compiler now accepts Ref<A>, makeRef, getRef, setRef, and updateRef.
+The type is invariant in A. The update callback must be pure and return a
+compatible A. A runtime test verifies atomic updates under bounded traversal.
+The combined Ref and race figure is now implemented source syntax.
