@@ -137,6 +137,19 @@ pre { scrollbar-width: thin; scrollbar-color: var(--code-comment) var(--code-bg)
 .code [role="tablist"] { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px 0; }
 .code [role="tab"] { min-height: 44px; padding: 0 16px; border-bottom: 3px solid transparent; background: transparent; color: var(--code-comment); font: inherit; font-size: var(--small); line-height: 1.4; }
 .code [role="tab"][aria-selected="true"] { color: var(--code-ink); border-bottom-color: var(--accent); }
+html:has(.source-drawer[open]) { overflow: hidden; }
+.source-drawer { inset: 0 0 0 auto; width: min(800px, 100%); height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--code-bg); color: var(--code-ink); transform: translateX(100%); transition: transform 360ms var(--ease-out), overlay 360ms allow-discrete, display 360ms allow-discrete; }
+.source-drawer[open] { transform: none; }
+.source-drawer::backdrop { background: rgb(20 29 52 / 0); transition: background 360ms var(--ease-out), overlay 360ms allow-discrete, display 360ms allow-discrete; }
+.source-drawer[open]::backdrop { background: rgb(20 29 52 / .55); }
+@starting-style {
+  .source-drawer[open] { transform: translateX(100%); }
+  .source-drawer[open]::backdrop { background: rgb(20 29 52 / 0); }
+}
+.source-drawer .code { display: flex; flex-direction: column; height: 100%; margin: 0; }
+.source-drawer figcaption { align-items: center; padding-bottom: 6px; }
+.source-drawer figcaption button { min-height: 44px; padding: 0 16px; background: transparent; box-shadow: inset 0 0 0 2px var(--code-ink); font-size: var(--small); }
+.source-drawer .code pre { flex: 1; max-height: none; }
 .table-wrap { overflow-x: auto; margin: 32px 0; }
 table { width: 100%; border-collapse: collapse; font-size: var(--body); text-align: left; line-height: 1.5; color: var(--ink); }
 th, td { padding: 16px 20px; vertical-align: top; }
@@ -291,7 +304,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 }
 @media print {
   :root { --bg: white; --ink: black; --body: 11pt; --head: 25pt; --code-bg: #f4f4f2; --code-ink: black; --code-keyword: black; --code-string: black; --code-comment: black; }
-  .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links { display: none; }
+  .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links, .source-drawer { display: none; }
   .layout { display: block; }
   .section, .section#contracts, .section#control, .section#services, .section#ir { background: white; color: black; padding: 20pt 0; }
   .section h2 { break-after: avoid; }

@@ -462,10 +462,74 @@
     });
   };
 
+  const setupSourceDrawer = () => {
+    const links = document.querySelectorAll("a[href$='.eff']");
+    if (links.length === 0 || typeof HTMLDialogElement !== "function") return;
+
+    const drawer = document.createElement("dialog");
+    drawer.className = "source-drawer";
+    drawer.setAttribute("aria-labelledby", "source-drawer-title");
+    drawer.innerHTML =
+      '<figure class="code"><figcaption><span id="source-drawer-title"></span><button type="button" autofocus>Close</button></figcaption><pre tabindex="0"><code class="language-effective"></code></pre></figure>';
+    document.body.append(drawer);
+
+    const title = drawer.querySelector("#source-drawer-title");
+    const code = drawer.querySelector("code");
+    drawer.querySelector("button").addEventListener(
+      "click",
+      () => drawer.close(),
+    );
+    // The figure fills the drawer, so only a backdrop click targets the dialog itself.
+    drawer.addEventListener("click", (event) => {
+      if (event.target === drawer) drawer.close();
+    });
+
+    const sources = new Map();
+    const loadSource = (url) => {
+      if (!sources.has(url)) {
+        sources.set(
+          url,
+          fetch(url).then((response) => {
+            if (!response.ok) throw new Error(`${response.status} ${url}`);
+            return response.text();
+          }),
+        );
+      }
+      return sources.get(url);
+    };
+
+    links.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        // Modified clicks keep their new-tab and download behavior.
+        if (
+          event.button !== 0 || event.metaKey || event.ctrlKey ||
+          event.shiftKey || event.altKey
+        ) {
+          return;
+        }
+        event.preventDefault();
+        const path = link.getAttribute("href");
+        loadSource(link.href).then((text) => {
+          title.textContent = path;
+          code.textContent = text;
+          highlightCode(code);
+          code.parentElement.scrollTop = 0;
+          link.closest("details.contents-menu")?.removeAttribute("open");
+          if (!drawer.open) drawer.showModal();
+        }).catch(() => {
+          sources.delete(link.href);
+          globalThis.location.assign(link.href);
+        });
+      });
+    });
+  };
+
   // Both pages load this script with defer, so the document is already parsed.
   highlightAllCode();
   setupContractExplorer();
   setupContents();
   setupCodeTabs();
   setupEntryMotion();
+  // The drawer is added last, so the entry motion does not animate its figure.
+  setupSourceDrawer();
 })();
