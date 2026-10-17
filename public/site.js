@@ -210,6 +210,40 @@
     document.querySelectorAll("pre code").forEach(highlightCode);
   };
 
+  const readStored = (key) => {
+    try {
+      return globalThis.localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  };
+
+  const writeStored = (key, value) => {
+    try {
+      globalThis.localStorage.setItem(key, value);
+    } catch {
+      // Storage can be blocked, and the pages work without it.
+    }
+  };
+
+  const tabStorageKey = "effective.tab";
+  const pageName = document.body.classList.contains("book-page")
+    ? "book"
+    : document.body.classList.contains("spec-page")
+    ? "spec"
+    : null;
+  const sectionStorageKey = `effective.section.${pageName}`;
+
+  // Keeps the anchor at the same screen position while a change above it moves the page.
+  const holdPosition = (anchor, change) => {
+    const before = anchor.getBoundingClientRect().top;
+    change();
+    const delta = anchor.getBoundingClientRect().top - before;
+    if (delta !== 0) {
+      globalThis.scrollBy({ top: delta, left: 0, behavior: "instant" });
+    }
+  };
+
   const normalizeFunctionName = (value) => {
     const normalized = value.trim().replace(/\s*\(\s*\)\s*$/, "").toLowerCase();
     return functionNames.find((name) => name.toLowerCase() === normalized) ||
@@ -330,8 +364,104 @@
     if (controls) controls.hidden = false;
   };
 
+  const setupTopbarHeight = () => {
+    const topbar = document.querySelector(".topbar");
+    if (!topbar) return;
+
+    const update = () => {
+      document.documentElement.style.setProperty(
+        "--topbar-height",
+        `${topbar.getBoundingClientRect().height}px`,
+      );
+    };
+    update();
+    if ("ResizeObserver" in globalThis) {
+      new ResizeObserver(update).observe(topbar);
+    } else {
+      globalThis.addEventListener("resize", update);
+    }
+  };
+
+  const setupCaptionTitles = () => {
+    document.querySelectorAll("figure.code > figcaption").forEach(
+      (caption, index) => {
+        const text = Array.from(caption.childNodes).find((node) =>
+          node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
+        );
+        if (!text) return;
+        const title = document.createElement("span");
+        title.className = "code-title";
+        title.id = `code-title-${index + 1}`;
+        text.replaceWith(title);
+        title.append(text);
+      },
+    );
+  };
+
+  let copyStatus = null;
+  const announceCopy = (message) => {
+    if (!copyStatus) {
+      copyStatus = document.createElement("p");
+      copyStatus.className = "visually-hidden";
+      copyStatus.setAttribute("role", "status");
+      document.body.append(copyStatus);
+    }
+    copyStatus.textContent = "";
+    copyStatus.textContent = message;
+  };
+
+  const bindCopyButton = (button, getText, getTitle) => {
+    let timer = null;
+    button.addEventListener("click", async () => {
+      let label = "Copied";
+      try {
+        await navigator.clipboard.writeText(getText());
+      } catch {
+        label = "Copy failed";
+      }
+      button.textContent = label;
+      announceCopy(
+        label === "Copied" ? `Copied: ${getTitle()}` : "Copy failed",
+      );
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        button.textContent = "Copy";
+      }, 1600);
+    });
+  };
+
+  const setupCopyButtons = () => {
+    if (!navigator.clipboard) return;
+
+    document.querySelectorAll("figure.code > figcaption").forEach(
+      (caption) => {
+        const figure = caption.parentElement;
+        const title = caption.querySelector(".code-title");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "copy-code";
+        button.textContent = "Copy";
+        if (title) button.setAttribute("aria-describedby", title.id);
+
+        const actions = document.createElement("div");
+        actions.className = "code-actions";
+        actions.append(...caption.querySelectorAll("a"), button);
+        caption.append(actions);
+
+        bindCopyButton(
+          button,
+          () =>
+            (figure.querySelector(".code-panel:not([hidden]) pre code") ??
+              figure.querySelector("pre code")).textContent,
+          () => title?.textContent.trim() ?? "code",
+        );
+      },
+    );
+  };
+
   const setupCodeTabs = () => {
     const figures = document.querySelectorAll("figure[data-tabs]");
+    const groups = [];
     figures.forEach((figure, figureIndex) => {
       const panels = Array.from(
         figure.querySelectorAll(".code-panel[data-tab]"),
@@ -340,11 +470,12 @@
       if (panels.length < 2 || !caption) return;
 
       const number = figureIndex + 1;
+      const title = caption.querySelector(".code-title");
       if (!caption.id) caption.id = `tabs-${number}-caption`;
 
       const tablist = document.createElement("div");
       tablist.setAttribute("role", "tablist");
-      tablist.setAttribute("aria-labelledby", caption.id);
+      tablist.setAttribute("aria-labelledby", title?.id ?? caption.id);
 
       const tabs = panels.map((panel) => {
         const label = panel.dataset.tab;
@@ -371,8 +502,29 @@
         if (moveFocus) tabs[selected].focus();
       };
 
+      const choose = (index, moveFocus) => {
+        const label = panels[index].dataset.tab;
+        holdPosition(figure, () => {
+          activate(index, moveFocus);
+          groups.forEach((group) => {
+            if (group.figure !== figure) group.select(label);
+          });
+        });
+        writeStored(tabStorageKey, label);
+      };
+
+      groups.push({
+        figure,
+        select: (label) => {
+          const index = panels.findIndex((panel) =>
+            panel.dataset.tab === label
+          );
+          if (index !== -1) activate(index, false);
+        },
+      });
+
       tabs.forEach((tab, index) => {
-        tab.addEventListener("click", () => activate(index, false));
+        tab.addEventListener("click", () => choose(index, false));
         tab.addEventListener("keydown", (event) => {
           let target = null;
           if (event.key === "ArrowRight") target = (index + 1) % tabs.length;
@@ -382,7 +534,7 @@
           else if (event.key === "End") target = tabs.length - 1;
           if (target === null) return;
           event.preventDefault();
-          activate(target, true);
+          choose(target, true);
         });
       });
 
@@ -391,6 +543,51 @@
       activate(0, false);
       figure.classList.add("tabs-ready");
     });
+
+    const stored = readStored(tabStorageKey);
+    if (stored === null || groups.length === 0) return;
+    // A heading in the URL must stay in place when tab panels above it change height.
+    const target = globalThis.location.hash.length > 1
+      ? document.getElementById(
+        decodeURIComponent(globalThis.location.hash.slice(1)),
+      )
+      : null;
+    const applyStored = () => groups.forEach((group) => group.select(stored));
+    if (target) holdPosition(target, applyStored);
+    else applyStored();
+  };
+
+  const setupContinueReading = () => {
+    if (pageName === null || globalThis.location.hash !== "") return;
+
+    const id = readStored(sectionStorageKey);
+    const firstSection = document.querySelector(".section");
+    const section = id ? document.getElementById(id) : null;
+    const heading = id ? document.getElementById(`heading-${id}`) : null;
+    if (!section || !heading || section === firstSection) return;
+
+    const anchor = pageName === "book"
+      ? document.querySelector(".hero-actions .primary-action")
+      : document.querySelector(".reference-bottom .button");
+    if (!anchor) return;
+
+    const link = document.createElement("a");
+    link.className = "button secondary-action continue-action";
+    link.href = `#${id}`;
+    link.append(`Continue: ${heading.textContent} `);
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↓";
+    link.append(arrow);
+
+    if (pageName === "spec") {
+      const actions = document.createElement("div");
+      actions.className = "reference-actions";
+      anchor.replaceWith(actions);
+      actions.append(anchor);
+    }
+    // The link goes last, so the standard buttons keep their places for every reader.
+    anchor.parentElement.append(link);
   };
 
   const setupContents = () => {
@@ -413,12 +610,36 @@
     const sections = Array.from(linksBySection.keys());
     if (sections.length === 0) return;
 
+    const summary = document.querySelector("details.contents-menu > summary");
+    const currentName = document.createElement("span");
+    if (summary) {
+      const prefix = document.createElement("span");
+      prefix.className = "visually-hidden";
+      prefix.textContent = `${summary.textContent}: `;
+      summary.replaceChildren(prefix, currentName);
+    }
+
+    let previous = null;
+    let moved = false;
     const setCurrentSection = (section) => {
       anchors.forEach((anchor) => anchor.removeAttribute("aria-current"));
-      linksBySection
-        .get(section)
-        ?.forEach((anchor) => anchor.setAttribute("aria-current", "location"));
+      const sectionLinks = linksBySection.get(section);
+      sectionLinks?.forEach((anchor) =>
+        anchor.setAttribute("aria-current", "location")
+      );
+      currentName.textContent = sectionLinks?.[0].textContent ?? "";
+      // The first call only reads the start position, so it must not replace a stored resume point.
+      if (previous !== null && section !== previous && pageName !== null) {
+        moved = true;
+        writeStored(sectionStorageKey, section.id);
+      }
+      previous = section;
     };
+    globalThis.addEventListener("pagehide", () => {
+      if (moved && previous !== null && pageName !== null) {
+        writeStored(sectionStorageKey, previous.id);
+      }
+    });
 
     const readingLine = () => globalThis.innerHeight * 0.22;
 
@@ -520,22 +741,39 @@
   };
 
   const setupSourceDrawer = () => {
-    const links = document.querySelectorAll("a[href$='.eff']");
+    const links = Array.from(
+      document.querySelectorAll(
+        "a[href$='.eff'], a[href$='.ts'], a[href$='.json'], a[href$='.lft'], a[href$='.txt']",
+      ),
+    ).filter((link) =>
+      !link.hasAttribute("download") &&
+      !link.getAttribute("href").startsWith("fonts/")
+    );
     if (links.length === 0 || typeof HTMLDialogElement !== "function") return;
 
     const drawer = document.createElement("dialog");
     drawer.className = "source-drawer";
     drawer.setAttribute("aria-labelledby", "source-drawer-title");
     drawer.innerHTML =
-      '<figure class="code"><figcaption><span id="source-drawer-title"></span><button type="button" autofocus>Close</button></figcaption><pre tabindex="0"><code class="language-effective"></code></pre></figure>';
+      '<figure class="code"><figcaption><span id="source-drawer-title"></span><div class="code-actions"><button type="button" class="copy-code" aria-describedby="source-drawer-title">Copy</button><button type="button" class="close-drawer" autofocus>Close</button></div></figcaption><pre tabindex="0"><code class="language-effective"></code></pre></figure>';
     document.body.append(drawer);
 
     const title = drawer.querySelector("#source-drawer-title");
     const code = drawer.querySelector("code");
-    drawer.querySelector("button").addEventListener(
+    drawer.querySelector(".close-drawer").addEventListener(
       "click",
       () => drawer.close(),
     );
+    const copyButton = drawer.querySelector(".copy-code");
+    if (navigator.clipboard) {
+      bindCopyButton(
+        copyButton,
+        () => code.textContent,
+        () => title.textContent,
+      );
+    } else {
+      copyButton.remove();
+    }
     // The figure fills the drawer, so only a backdrop click targets the dialog itself.
     drawer.addEventListener("click", (event) => {
       if (event.target === drawer) drawer.close();
@@ -571,26 +809,32 @@
         const path = link.getAttribute("href");
         const url = link.href;
         requestedUrl = url;
+        link.setAttribute("aria-busy", "true");
         loadSource(url).then((text) => {
           if (requestedUrl !== url) return;
           title.textContent = path;
           code.textContent = text;
-          highlightCode(code);
+          // Plain text pages hold prose, and the keyword colors would mark ordinary words.
+          if (/\.(eff|ts|json)$/.test(path)) highlightCode(code);
           code.parentElement.scrollTop = 0;
           link.closest("details.contents-menu")?.removeAttribute("open");
           if (!drawer.open) drawer.showModal();
         }).catch(() => {
           sources.delete(url);
           if (requestedUrl === url) globalThis.location.assign(url);
-        });
+        }).finally(() => link.removeAttribute("aria-busy"));
       });
     });
   };
 
   // Both pages load this script with defer, so the document is already parsed.
   highlightAllCode();
+  setupTopbarHeight();
   setupContractExplorer();
+  setupContinueReading();
   setupContents();
+  setupCaptionTitles();
+  setupCopyButtons();
   setupCodeTabs();
   setupHeroGlow();
   setupEntryMotion();
