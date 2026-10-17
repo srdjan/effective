@@ -122,3 +122,11 @@ mergeLayers. It checks that an acquisition returns exactly the declared
 methods, preserves acquisition failures and requirements, and rejects
 overlapping services. provide accepts source Layer expressions. Runtime tests
 cover merged providers and an acquisition that needs another service.
+
+Custom retry schedules
+The compiler accepts RetrySchedule<E>, retrySchedule with a pure callback,
+and retry(job, { schedule: policy }). The independent validator checks the
+nominal error input, attempt type, optional millisecond delay, and deferred
+failure channels. The emitter uses Schedule.fromStepWithMetadata. A runtime
+test confirms one-based attempts, zero-delay retries, and propagation of the
+last typed failure when the callback returns None.
