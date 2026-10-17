@@ -130,3 +130,10 @@ nominal error input, attempt type, optional millisecond delay, and deferred
 failure channels. The emitter uses Schedule.fromStepWithMetadata. A runtime
 test confirms one-based attempts, zero-delay retries, and propagation of the
 last typed failure when the callback returns None.
+
+Pure source codecs
+The compiler accepts Codec<Decoded,Encoded>, codec, decode, and encode.
+Both transformations must be pure, and both types must support derived
+schemas. Generated code checks inputs and transformed outputs with Effect
+Schema and returns None for invalid values. A strict target check and runtime
+test cover both directions and an invalid input.
