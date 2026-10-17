@@ -8,7 +8,6 @@
     "test": "deno test --allow-read=public",
     "typecheck": "deno run --allow-read --allow-write --allow-run=deno typecheck/check.ts --strict",
     "stamp": "deno run --allow-read=public --allow-write=public stamp_assets.ts",
-    "package": "deno task stamp && cd public && rm -f effective.zip && zip -X -r effective.zip . -x effective.zip '.*' '*/.*'",
     "og-image": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --screenshot=public/og-image.png \"file://$PWD/assets/og-card.html\""
   },
   "imports": {

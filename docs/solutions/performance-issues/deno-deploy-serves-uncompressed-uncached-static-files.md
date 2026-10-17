@@ -43,7 +43,7 @@ Each experiment ran in a throwaway copy of the site. Lighthouse ran in mobile mo
 
 `main.ts` gzips text responses and sets cache lifetimes:
 
-- `COMPRESSIBLE_TYPE` (`main.ts:7`) selects text, JSON, and SVG. Fonts and `effective.zip` are already compressed, so `main.ts` leaves them unchanged.
+- `COMPRESSIBLE_TYPE` (`main.ts:7`) selects text, JSON, and SVG. Fonts are already compressed, so `main.ts` leaves them unchanged.
 - `acceptsGzip` (`main.ts:15`) honors `gzip;q=0`.
 - Only a full 200 response with a body is compressed (`main.ts:57`). Range responses (206) and 304 responses pass through unchanged. `vary: accept-encoding` is set on every compressible response.
 - `CACHE_LIFETIMES` (`main.ts:10`) gives the font 30 days and CSS and JS one hour. HTML gets no `max-age`, so a deploy reaches readers at once. After a deploy, a reader can see new HTML with the old CSS for up to one hour.

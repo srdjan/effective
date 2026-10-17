@@ -22,11 +22,9 @@ To preview the site locally, run `deno task dev` and open `http://localhost:8787
 
 Each Effective example on both pages has an Effect-TS tab. Run `deno task typecheck` to check every Effect-TS translation against Effect 4.0.5 under strict settings. The check fails when an Effective example has no Effect-TS tab. Run `deno task test` to test the server in `main.ts`.
 
-## Build the download package
+## Publish a CSS or JavaScript change
 
-The "Download package" link in both documents points to `public/effective.zip`. After you change a file in `public/`, run `deno task package` to build the zip again. Commit the zip with the change.
-
-The package task first runs `deno task stamp`. This task copies the `version` from `deno.json` into the `site.css` and `site.js` links of both pages. The server caches these assets for one hour, so a new version gives returning readers new asset URLs. To publish a CSS or JavaScript change at once, increase the version in `deno.json` and then run `deno task package`. `deno task test` fails when a page link does not match `deno.json`.
+The `deno task stamp` task copies the `version` from `deno.json` into the `site.css` and `site.js` links of both pages. The server caches these assets for one hour, so a new version gives returning readers new asset URLs. To publish a CSS or JavaScript change at once, increase the version in `deno.json` and then run `deno task stamp`. `deno task test` fails when a page link does not match `deno.json`.
 
 ## Deploy to Deno Deploy
 

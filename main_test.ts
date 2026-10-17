@@ -49,9 +49,9 @@ Deno.test("keeps the plain-text type for Effective and TypeScript sources", asyn
   await response.body?.cancel();
 });
 
-Deno.test("does not compress fonts or the zip package", async () => {
+Deno.test("does not compress fonts or images", async () => {
   for (
-    const path of ["/fonts/bricolage-grotesque-latin.woff2", "/effective.zip"]
+    const path of ["/fonts/bricolage-grotesque-latin.woff2", "/og-image.png"]
   ) {
     const response = await get(path, { "accept-encoding": "gzip" });
     assertEquals(response.headers.get("content-encoding"), null);

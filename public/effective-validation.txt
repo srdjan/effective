@@ -6,7 +6,7 @@ Two linked HTML documents contain 18 reference sections and nine book chapters.
 The documents contain 65 code blocks, 30 Effect-TS tabs, and seven exercises.
 Each Effective example has an Effect-TS tab with a manual translation.
 Five .eff files provide canonical source examples.
-The package also includes typed-ir.ts and the manual log.ir.json fixture.
+The site also includes typed-ir.ts and the manual log.ir.json fixture.
 The fixture retains log.lft as its source identity.
 The IR wire marker remains light-functional-ir, version 1.
 
@@ -60,4 +60,3 @@ deno task typecheck
 
 The work directory contains validation scripts and intermediate data in this workspace.
 deno task typecheck runs typecheck/check.ts from the repository.
-The downloadable package contains user-facing documents, source examples, the IR model, and this report.
