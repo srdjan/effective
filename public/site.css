@@ -61,8 +61,8 @@ pre { scrollbar-width: thin; scrollbar-color: var(--code-comment) var(--code-bg)
 .button span { font-size: var(--lead); line-height: 1; }
 .button:active, button:active { transform: scale(.97); }
 
-.hero { position: relative; isolation: isolate; overflow: clip; display: flex; min-height: 720px; height: calc(100svh - 84px); max-height: 900px; flex-direction: column; }
-.hero-type { flex: 1; display: grid; place-items: end center; pointer-events: none; }
+.hero { position: relative; isolation: isolate; overflow: clip; }
+.hero-type { display: grid; place-items: end center; padding-top: clamp(80px, 10vw, 168px); pointer-events: none; }
 .hero h1 { position: relative; margin-bottom: .1em; font-size: clamp(48px, 10vw, 168px); line-height: .84; letter-spacing: -.05em; text-align: center; }
 .hero h1::after { position: absolute; z-index: -1; content: ""; inset: .84em -100vmax -100vmax; background: var(--ink); }
 .hero h1 span { display: block; white-space: nowrap; }
@@ -189,7 +189,6 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   :root { --gutter: 24px; --body: 16px; --head: 44px; }
   .topbar { min-height: 76px; }
   .toplinks { gap: 20px; }
-  .hero { height: calc(90svh - 76px); min-height: 660px; }
   .hero-bottom { display: block; }
   .hero-actions { flex-direction: row; justify-content: flex-start; margin-top: 24px; }
   .argument, .showcase, .book-index { padding-block: 80px; }
@@ -219,7 +218,6 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .topbar { flex-wrap: wrap; gap: 14px; padding-block: 18px 12px; }
   .toplinks { width: 100%; justify-content: space-between; gap: 12px; }
   .toplinks a { padding-block: 4px; }
-  .hero { height: calc(100svh - 112px); min-height: 620px; max-height: 820px; }
   .hero-bottom { padding-block: 28px; }
   .subtitle { font-size: var(--body); line-height: 1.5; }
   .hero-actions { display: block; }
