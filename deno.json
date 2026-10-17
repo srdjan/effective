@@ -6,7 +6,7 @@
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
     "start": "deno serve --allow-read=public main.ts",
     "test": "deno test --allow-read=public",
-    "typecheck": "deno run --allow-read --allow-write --allow-run=deno typecheck/check.ts --strict",
+    "typecheck": "deno run --allow-read --allow-write --allow-run typecheck/check.ts --strict",
     "stamp": "deno run --allow-read=public --allow-write=public stamp_assets.ts",
     "og-image": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --screenshot=public/og-image.png \"file://$PWD/assets/og-card.html\""
   },

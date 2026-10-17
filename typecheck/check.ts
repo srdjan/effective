@@ -6,7 +6,7 @@
 // units. See docs/plans/2026-10-16-effect-ts-tabs.md for the full contract.
 //
 // Usage:
-//   deno run --allow-read --allow-write --allow-run=deno typecheck/check.ts \
+//   deno run --allow-read --allow-write --allow-run typecheck/check.ts \
 //     [--page index|spec|all] [--strict]
 
 type Result<T, E> = { readonly ok: true; readonly value: T } | {
