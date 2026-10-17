@@ -115,3 +115,10 @@ Node platform layer. The adapter checks paths and maps package failures to
 the declared error. A CLI build with --validate --tsc and a runtime read,
 missing-file case, and invalid-path case pass. Other package adapters remain
 outside the implemented subset.
+
+Source Layers
+The compiler accepts Layer<Services,E,R>, layer(Service, acquire), and
+mergeLayers. It checks that an acquisition returns exactly the declared
+methods, preserves acquisition failures and requirements, and rejects
+overlapping services. provide accepts source Layer expressions. Runtime tests
+cover merged providers and an acquisition that needs another service.
