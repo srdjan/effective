@@ -140,6 +140,8 @@ export type Expr =
   | Node<{ kind: "switch-map-streams"; stream: Expr; transform: Expr }>
   | Node<{ kind: "catch-stream"; stream: Expr; recover: Expr }>
   | Node<{ kind: "retry-stream"; stream: Expr; policy: Expr }>
+  | Node<{ kind: "debounce-stream"; stream: Expr; delayMs: number }>
+  | Node<{ kind: "throttle-stream"; stream: Expr; units: number; durationMs: number; strategy: "shape" | "enforce" }>
   | Node<{ kind: "partition-all"; jobs: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "validate-all"; jobs: Expr; onErrors: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "all-results"; jobs: Expr; concurrency: number | "unbounded" | undefined }>
