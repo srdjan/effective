@@ -148,6 +148,7 @@ export type Expr =
   | Node<{ kind: "filter-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "map-stream"; stream: Expr; transform: Expr }>
   | Node<{ kind: "scan-stream"; stream: Expr; seed: Expr; update: Expr }>
+  | Node<{ kind: "map-accum-stream"; stream: Expr; seed: Expr; update: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
