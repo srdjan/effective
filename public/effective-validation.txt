@@ -163,3 +163,12 @@ light-functional-ir remains at version 2. The runtime regression covers all
 jobs starting, input-order results, typed failure, explicit interruption,
 scoped finalizers, empty input, and traversal of first-class Effect values.
 General heterogeneous Effect.all collection remains outside this slice.
+
+Draft 0.5 heterogeneous Effect collection, October 18, 2026
+The source builtin all accepts tuples, records, and arrays whose members are
+Effect values. It preserves each result position or key and unions the latent
+failure and service sets. A heterogeneous bracket literal needs a contextual
+tuple type. The compiler independently validates the builtin type and literal
+concurrency option, then emits Effect.all. Target checks and runtime tests
+cover tuple and record results, concurrent startup, sibling interruption,
+and scoped finalizer completion. The IR wire shape remains version 2.
