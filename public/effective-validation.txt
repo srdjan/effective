@@ -154,3 +154,12 @@ may pass it directly to qualified host methods or source helpers whose own
 borrowed parameters are checked for escape. The checker and independent IR
 validator reject returning, capturing, storing, and ordinary argument passing.
 A strict host build and runtime test cover acquisition, use, and release.
+
+Draft 0.4 unbounded traversal, October 18, 2026
+The spec accepts only the literal option { concurrency: "unbounded" } or a
+positive safe integer bound. The compiler checks and independently validates
+that option, then passes it to Effect.forEach. No IR wire shape changed, so
+light-functional-ir remains at version 2. The runtime regression covers all
+jobs starting, input-order results, typed failure, explicit interruption,
+scoped finalizers, empty input, and traversal of first-class Effect values.
+General heterogeneous Effect.all collection remains outside this slice.
