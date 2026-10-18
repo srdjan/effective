@@ -354,3 +354,13 @@ contract. Strict target and runtime tests confirm deferred construction,
 repeated execution, Some for the first element, None for an empty source,
 stopping before later pulls, typed source failure before the first element,
 and completion of started pull finalizers. The IR wire shape remains version 2.
+
+Draft 0.26 terminal last-element stream consumption, October 18, 2026
+The source builtin lastStream takes a Stream and returns its final element
+as an effectful Option result after source completion. The checker and
+independent IR validator move the source's deferred failures and service
+requirements into the active contract. Strict target and runtime tests
+confirm deferred construction, repeated execution, Some for the final
+element, None for an empty source, complete pulling, typed source failure
+after earlier elements, and completion of started pull finalizers. The IR
+wire shape remains version 2.
