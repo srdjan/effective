@@ -235,3 +235,11 @@ for the collection. The checker and independent IR validator enforce shape,
 service requirements, and the literal concurrency bound. A strict target
 check and runtime test cover all three shapes and continued sibling work
 after a typed failure. The IR wire shape remains version 2.
+
+Draft 0.13 bounded stream taking, October 18, 2026
+The source builtin takeStream takes a Stream and a pure Int count. It retains
+the source's deferred element, failure, and service channels. The checker and
+independent IR validator enforce these rules. A strict target and runtime
+test confirms no pulls for nonpositive counts, a bounded prefix for a
+positive count, failure cutoff, and completion of started pull finalizers.
+The IR wire shape remains version 2.
