@@ -316,3 +316,13 @@ Strict target and runtime tests confirm a lazy seed function, zero, one, and
 many ordered outputs per input, fresh state per consumption, no seed output,
 source failure after prior outputs, and completion of started pull finalizers.
 The IR wire shape remains version 2.
+
+Draft 0.22 terminal stream folding, October 18, 2026
+The source builtin foldStream takes a Stream, a pure seed, and an inline pure
+two-argument update callback. It returns the final state as an effectful
+expression. The checker and independent IR validator enforce the update type
+and move deferred source failures and requirements into the active contract.
+Strict target and runtime tests confirm a lazy seed function, repeated
+execution from fresh state, the seed result for an empty source, typed source
+failure, and completion of started pull finalizers. The IR wire shape remains
+version 2.
