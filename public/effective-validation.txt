@@ -251,3 +251,12 @@ channels. The checker and independent IR validator enforce the signature.
 A strict target and runtime test confirms deferred construction, omission of
 the first rejected element, no later pulls, typed failure before the boundary,
 and completion of started pull finalizers. The IR wire shape remains version 2.
+
+Draft 0.15 inclusive stream taking, October 18, 2026
+The source builtin takeUntilStream takes a Stream and an inline pure boolean
+predicate. It retains the source's deferred element, failure, and service
+channels. The checker and independent IR validator enforce the signature.
+A strict target and runtime test confirms deferred construction, inclusion
+of the first matching element, full output without a match, no later pulls
+after a match, typed failure before a match, and completion of started pull
+finalizers. The IR wire shape remains version 2.
