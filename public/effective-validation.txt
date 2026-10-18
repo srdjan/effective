@@ -172,3 +172,13 @@ tuple type. The compiler independently validates the builtin type and literal
 concurrency option, then emits Effect.all. Target checks and runtime tests
 cover tuple and record results, concurrent startup, sibling interruption,
 and scoped finalizer completion. The IR wire shape remains version 2.
+
+Draft 0.6 scoped fibers, October 18, 2026
+The source builtins scoped and forkScoped add a local scope for first-class
+Effect jobs. forkScoped requires an internal Scope capability and accepts only
+jobs without typed failures. scoped removes that requirement and closes the
+scope after success, failure, defect, or interruption. The compiler checks
+and independently validates the requirement channel. A strict target check
+and runtime test confirm that a child outlives its spawning fiber while the
+local scope remains open and is interrupted when it closes. Raw Scope values
+and explicit Scope.close remain deferred. The IR wire shape remains version 2.
