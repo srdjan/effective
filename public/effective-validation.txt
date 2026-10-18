@@ -182,3 +182,12 @@ and independently validates the requirement channel. A strict target check
 and runtime test confirm that a child outlives its spawning fiber while the
 local scope remains open and is interrupted when it closes. Raw Scope values
 and explicit Scope.close remain deferred. The IR wire shape remains version 2.
+
+Draft 0.7 stream zipping, October 18, 2026
+The source builtin zipStreams pairs two Stream values, including those with
+different element types. The result carries a tuple element and both streams'
+deferred failure and requirement channels. The checker and independent IR
+validator enforce that signature. Strict target and runtime tests confirm
+deferred production, ordered pairs, shorter-input termination, and peer
+interruption with finalizer completion after failure. The IR wire shape
+remains version 2.
