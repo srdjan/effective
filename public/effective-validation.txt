@@ -297,3 +297,12 @@ the callback and result type. A strict target and runtime test confirms
 deferred construction, ordered values of a new type, source failure after
 earlier mapped values, and completion of started pull finalizers. The IR
 wire shape remains version 2.
+
+Draft 0.20 stateful stream scanning, October 18, 2026
+The source builtin scanStream takes a Stream, a pure seed, and an inline pure
+two-argument update callback. It emits the seed before pulling, then emits
+each updated state in source order. The checker and independent IR validator
+enforce the state type and preserve deferred failure and service channels.
+Strict target and runtime tests confirm a lazy seed function, fresh scan state
+per consumption, empty-source output, typed source failure after prior states,
+and completion of started pull finalizers. The IR wire shape remains version 2.
