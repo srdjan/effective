@@ -364,3 +364,12 @@ confirm deferred construction, repeated execution, Some for the final
 element, None for an empty source, complete pulling, typed source failure
 after earlier elements, and completion of started pull finalizers. The IR
 wire shape remains version 2.
+
+Draft 0.27 terminal stream draining, October 18, 2026
+The source builtin drainStream takes a Stream and runs it to completion,
+discarding emitted values and returning void. The checker and independent
+IR validator move the source's deferred failures and service requirements
+into the active contract. Strict target and runtime tests confirm deferred
+construction, repeated execution, full pulling with discarded values, void
+output, empty-source output, typed source failure after earlier pulls, and
+completion of started pull finalizers. The IR wire shape remains version 2.
