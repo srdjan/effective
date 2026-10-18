@@ -208,3 +208,13 @@ keeping construction pure. Strict target and runtime tests confirm ordered
 inner pulls, failure cutoff, and active-inner cleanup on interruption.
 Concurrent flatMap and switch behavior remain deferred. The IR wire shape
 remains version 2.
+
+Draft 0.10 collection partitioning, October 18, 2026
+The source builtin partitionAll accepts a homogeneous array of Effect values
+and returns successes and typed failures in separate input-order arrays. The
+checker removes typed failures from the active channel while retaining job
+requirements. The independent IR validator checks the result shape and
+literal concurrency bound. A strict target check and runtime test confirm
+that every job runs, both result arrays retain input order, and the bound is
+observed. Effect.validate-style accumulated failure remains deferred. The IR
+wire shape remains version 2.
