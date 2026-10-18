@@ -141,6 +141,7 @@ export type Expr =
   | Node<{ kind: "validate-all"; jobs: Expr; onErrors: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "all-results"; jobs: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "take-stream"; stream: Expr; count: Expr }>
+  | Node<{ kind: "take-while-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
