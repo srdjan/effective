@@ -279,3 +279,12 @@ of the first false element and later values even when they satisfy the
 predicate, empty output when every element satisfies it, typed failure in
 the discarded prefix, and completion of started pull finalizers. The IR
 wire shape remains version 2.
+
+Draft 0.18 stream filtering, October 18, 2026
+The source builtin filterStream takes a Stream and an inline pure boolean
+predicate. It retains the source's deferred element, failure, and service
+channels. The checker and independent IR validator enforce the signature.
+A strict target and runtime test confirms deferred construction, per-element
+selection in source order, empty output without matches, typed failure after
+rejected elements, and completion of started pull finalizers. The IR wire
+shape remains version 2.
