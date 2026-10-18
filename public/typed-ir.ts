@@ -145,7 +145,11 @@ export type Expr =
   | Node<{ kind: "take-until-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "drop-stream"; stream: Expr; count: Expr }>
   | Node<{ kind: "drop-while-stream"; stream: Expr; predicate: Expr }>
+  | Node<{ kind: "drop-while-effect-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "filter-stream"; stream: Expr; predicate: Expr }>
+  | Node<{ kind: "filter-effect-stream"; stream: Expr; predicate: Expr }>
+  | Node<{ kind: "take-while-effect-stream"; stream: Expr; predicate: Expr }>
+  | Node<{ kind: "take-until-effect-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "map-stream"; stream: Expr; transform: Expr }>
   | Node<{ kind: "scan-stream"; stream: Expr; seed: Expr; update: Expr }>
   | Node<{ kind: "map-accum-stream"; stream: Expr; seed: Expr; update: Expr }>
