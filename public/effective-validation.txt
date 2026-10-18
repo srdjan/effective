@@ -373,3 +373,13 @@ into the active contract. Strict target and runtime tests confirm deferred
 construction, repeated execution, full pulling with discarded values, void
 output, empty-source output, typed source failure after earlier pulls, and
 completion of started pull finalizers. The IR wire shape remains version 2.
+
+Draft 0.28 concurrent stream mapping, October 18, 2026
+mapEffect and flatMapStreams accept a third literal concurrency record with
+a positive safe integer bound or "unbounded". The checker and independent IR
+validator enforce the bound. The emitted target uses the corresponding
+Stream.mapEffect and Stream.flatMap options. Strict target and runtime tests
+confirm bounded active work, ordered mapEffect output, concurrent inner
+streams, failure interruption, and completion of active finalizers. The
+original two-argument sequential forms remain supported. The IR wire shape
+remains version 2.
