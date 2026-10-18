@@ -191,3 +191,11 @@ validator enforce that signature. Strict target and runtime tests confirm
 deferred production, ordered pairs, shorter-input termination, and peer
 interruption with finalizer completion after failure. The IR wire shape
 remains version 2.
+
+Draft 0.8 stream concatenation, October 18, 2026
+The source builtin concatStreams joins two Stream values sequentially. Its
+element type is the union of both inputs' element types, and its deferred
+failure and service channels are combined. The checker and independent IR
+validator enforce this signature. Strict target and runtime tests confirm
+deferred production, left-before-right order, and that a left failure skips
+the right stream. The IR wire shape remains version 2.
