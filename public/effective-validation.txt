@@ -401,3 +401,13 @@ outer and inner deferred channels. Strict target and runtime tests confirm
 deferred construction, interruption of superseded inners, latest-inner output,
 source failure propagation, and completion of active finalizers. The IR wire
 shape remains version 2.
+
+Draft 0.31 typed stream recovery, October 18, 2026
+catchStream accepts a source Stream and an inline pure error callback that
+constructs a replacement Stream. The checker and independent IR validator
+remove handled source failures and retain replacement failures and both
+service sets. Strict target and runtime tests confirm deferred construction,
+earlier values retained before recovery, repeated consumption, replacement
+failure propagation, and completion of started pull finalizers. The compiler
+gate passed: 1067 fast tests and 82 slow tests. The IR wire shape remains
+version 2.
