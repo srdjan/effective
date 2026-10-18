@@ -154,6 +154,7 @@ export type Expr =
   | Node<{ kind: "collect-stream"; stream: Expr }>
   | Node<{ kind: "head-stream"; stream: Expr }>
   | Node<{ kind: "last-stream"; stream: Expr }>
+  | Node<{ kind: "drain-stream"; stream: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
