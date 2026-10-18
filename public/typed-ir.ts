@@ -151,6 +151,7 @@ export type Expr =
   | Node<{ kind: "map-accum-stream"; stream: Expr; seed: Expr; update: Expr }>
   | Node<{ kind: "fold-stream"; stream: Expr; seed: Expr; update: Expr }>
   | Node<{ kind: "fold-effect-stream"; stream: Expr; seed: Expr; update: Expr }>
+  | Node<{ kind: "collect-stream"; stream: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
