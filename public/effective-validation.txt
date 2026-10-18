@@ -393,3 +393,11 @@ tests confirm filtering, inclusive and exclusive stopping, cessation of
 predicate calls after the drop prefix, empty input, repeated consumption,
 typed predicate failure, and completion of pull finalizers. The IR wire
 shape remains version 2.
+
+Draft 0.30 latest-inner stream switching, October 18, 2026
+switchMapStreams accepts a source Stream and an inline pure callback that
+constructs an inner Stream. The checker and independent IR validator combine
+outer and inner deferred channels. Strict target and runtime tests confirm
+deferred construction, interruption of superseded inners, latest-inner output,
+source failure propagation, and completion of active finalizers. The IR wire
+shape remains version 2.
