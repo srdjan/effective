@@ -199,3 +199,12 @@ failure and service channels are combined. The checker and independent IR
 validator enforce this signature. Strict target and runtime tests confirm
 deferred production, left-before-right order, and that a left failure skips
 the right stream. The IR wire shape remains version 2.
+
+Draft 0.9 stream flat mapping, October 18, 2026
+The source builtin flatMapStreams accepts an outer Stream and an inline pure
+callback returning an inner Stream. The checker and independent IR validator
+combine the outer and inner deferred failure and requirement channels while
+keeping construction pure. Strict target and runtime tests confirm ordered
+inner pulls, failure cutoff, and active-inner cleanup on interruption.
+Concurrent flatMap and switch behavior remain deferred. The IR wire shape
+remains version 2.
