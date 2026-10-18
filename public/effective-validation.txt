@@ -336,3 +336,12 @@ tests confirm lazy construction, sequential updates, fresh state, pure
 callback lifting, empty-source seed output, distinct source and callback
 failures, stopping later pulls, and completion of started pull finalizers.
 The IR wire shape remains version 2.
+
+Draft 0.24 terminal stream collection, October 18, 2026
+The source builtin collectStream takes a Stream and returns its elements in
+source order as an effectful array result. The checker and independent IR
+validator move the source's deferred failures and service requirements into
+the active contract. Strict target and runtime tests confirm deferred
+construction, fresh arrays on repeated execution, empty-source output, typed
+source failure without a partial result, and completion of started pull
+finalizers. The IR wire shape remains version 2.
