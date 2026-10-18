@@ -144,6 +144,7 @@ export type Expr =
   | Node<{ kind: "take-while-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "take-until-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "drop-stream"; stream: Expr; count: Expr }>
+  | Node<{ kind: "drop-while-stream"; stream: Expr; predicate: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
