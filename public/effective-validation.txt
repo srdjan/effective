@@ -411,3 +411,12 @@ earlier values retained before recovery, repeated consumption, replacement
 failure propagation, and completion of started pull finalizers. The compiler
 gate passed: 1067 fast tests and 82 slow tests. The IR wire shape remains
 version 2.
+
+Draft 0.32 scheduled stream retry, October 18, 2026
+retryStream accepts a source Stream and a compatible RetrySchedule value.
+The checker and independent IR validator retain source channels and reject
+incompatible nominal failure types. Strict target and runtime tests confirm
+deferred construction, replay of prior values after retry, schedule reset
+after the first new output, repeated consumption, and completion of pull
+finalizers. The compiler gate passed with 83 slow tests. The IR wire shape
+remains version 2.
