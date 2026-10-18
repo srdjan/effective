@@ -226,3 +226,12 @@ checker and independent IR validator enforce the callback and concurrency
 bound. A strict target check and runtime test cover the success path and
 multiple failures under bounded concurrency. The IR wire shape remains
 version 2.
+
+Draft 0.12 result collecting, October 18, 2026
+The source builtin allResults runs Effect tuples, records, and homogeneous
+arrays in Effect.all result mode. It retains each success or typed failure at
+its input position as a tagged record union, with no typed failure channel
+for the collection. The checker and independent IR validator enforce shape,
+service requirements, and the literal concurrency bound. A strict target
+check and runtime test cover all three shapes and continued sibling work
+after a typed failure. The IR wire shape remains version 2.
