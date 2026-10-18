@@ -288,3 +288,12 @@ A strict target and runtime test confirms deferred construction, per-element
 selection in source order, empty output without matches, typed failure after
 rejected elements, and completion of started pull finalizers. The IR wire
 shape remains version 2.
+
+Draft 0.19 pure stream mapping, October 18, 2026
+The source builtin mapStream takes a Stream and an inline pure one-argument
+transform. It infers a new element type while retaining the source's deferred
+failure and service channels. The checker and independent IR validator enforce
+the callback and result type. A strict target and runtime test confirms
+deferred construction, ordered values of a new type, source failure after
+earlier mapped values, and completion of started pull finalizers. The IR
+wire shape remains version 2.
