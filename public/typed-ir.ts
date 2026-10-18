@@ -129,14 +129,14 @@ export type Expr =
   | Node<{ kind: "fork-scoped"; job: Expr }>
   | Node<{ kind: "with-resource"; acquire: Expr; use: Expr; release: Expr; useBinding: LocalId; releaseBinding: LocalId }>
   | Node<{ kind: "unfold"; seed: Expr; next: Expr }>
-  | Node<{ kind: "map-effect"; stream: Expr; transform: Expr }>
+  | Node<{ kind: "map-effect"; stream: Expr; transform: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "sink-for-each"; consume: Expr }>
   | Node<{ kind: "run-stream"; stream: Expr; sink: Expr }>
   | Node<{ kind: "buffer-stream"; stream: Expr; capacity: number }>
   | Node<{ kind: "merge-streams"; left: Expr; right: Expr }>
   | Node<{ kind: "zip-streams"; left: Expr; right: Expr }>
   | Node<{ kind: "concat-streams"; left: Expr; right: Expr }>
-  | Node<{ kind: "flat-map-streams"; stream: Expr; transform: Expr }>
+  | Node<{ kind: "flat-map-streams"; stream: Expr; transform: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "partition-all"; jobs: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "validate-all"; jobs: Expr; onErrors: Expr; concurrency: number | "unbounded" | undefined }>
   | Node<{ kind: "all-results"; jobs: Expr; concurrency: number | "unbounded" | undefined }>
