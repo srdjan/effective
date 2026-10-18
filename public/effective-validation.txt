@@ -306,3 +306,13 @@ enforce the state type and preserve deferred failure and service channels.
 Strict target and runtime tests confirm a lazy seed function, fresh scan state
 per consumption, empty-source output, typed source failure after prior states,
 and completion of started pull finalizers. The IR wire shape remains version 2.
+
+Draft 0.21 stateful stream mapping, October 18, 2026
+The source builtin mapAccumStream takes a Stream, a pure seed, and an inline
+pure two-argument callback with an explicit [State, Output[]] result type.
+The checker and independent IR validator enforce the tuple state and output
+types and preserve the source's deferred failure and service channels.
+Strict target and runtime tests confirm a lazy seed function, zero, one, and
+many ordered outputs per input, fresh state per consumption, no seed output,
+source failure after prior outputs, and completion of started pull finalizers.
+The IR wire shape remains version 2.
