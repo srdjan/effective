@@ -420,3 +420,13 @@ deferred construction, replay of prior values after retry, schedule reset
 after the first new output, repeated consumption, and completion of pull
 finalizers. The compiler gate passed with 83 slow tests. The IR wire shape
 remains version 2.
+
+Draft 0.33 temporal stream controls, October 18, 2026
+debounceStream accepts a nonnegative literal delay. throttleStream accepts
+positive literal token units and duration with shape or enforce strategy.
+The checker and independent IR validator retain source channels and reject
+invalid settings. Strict target and runtime tests confirm deferred
+construction, burst coalescing, enforced drops, shaped delivery, typed source
+failure, and pull finalizers. A source checker test accepts compositions for
+runForEach, runCount, tap, and runForEachWhile without new prelude forms. The
+compiler gate passed with 84 slow tests. The IR wire shape remains version 2.
