@@ -216,5 +216,13 @@ checker removes typed failures from the active channel while retaining job
 requirements. The independent IR validator checks the result shape and
 literal concurrency bound. A strict target check and runtime test confirm
 that every job runs, both result arrays retain input order, and the bound is
-observed. Effect.validate-style accumulated failure remains deferred. The IR
-wire shape remains version 2.
+observed. The IR wire shape remains version 2.
+
+Draft 0.11 aggregate validation, October 18, 2026
+The source builtin validateAll runs every Effect job in a homogeneous array.
+All successes return in input order. On failure, a pure callback wraps every
+typed error in one nominal error for the caller's failure contract. The
+checker and independent IR validator enforce the callback and concurrency
+bound. A strict target check and runtime test cover the success path and
+multiple failures under bounded concurrency. The IR wire shape remains
+version 2.
