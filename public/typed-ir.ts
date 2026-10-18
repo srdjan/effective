@@ -136,6 +136,7 @@ export type Expr =
   | Node<{ kind: "merge-streams"; left: Expr; right: Expr }>
   | Node<{ kind: "zip-streams"; left: Expr; right: Expr }>
   | Node<{ kind: "concat-streams"; left: Expr; right: Expr }>
+  | Node<{ kind: "flat-map-streams"; stream: Expr; transform: Expr }>
   | Node<{ kind: "race"; left: Expr; right: Expr }>
   | Node<{ kind: "make-ref"; value: Expr }>
   | Node<{ kind: "get-ref"; ref: Expr }>
