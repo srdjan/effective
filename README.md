@@ -14,7 +14,7 @@ The accepted [application acceptance rule](public/effective-spec.html#applicatio
 
 The [scheduled worker](public/effective-examples/scheduled-worker/README.md) now passes with existing source forms and nine compiled runtime checks. The [service workflow](public/effective-examples/service-workflow/README.md) also passes with a registered atomic SQL adapter and fourteen compiled runtime checks. The [stream processor](public/effective-examples/stream-processor/README.md) also passes with ordered concurrent mapping, backpressure, selective fallback and thirteen runtime cases.
 
-All three application gates are complete. The accepted stopping rule selects no further automatic API additions; release acceptance remains separate work. Item 9 remains deferred.
+All three application gates are complete. The accepted stopping rule selects no further automatic API additions; release acceptance remains separate work. Item 9 remains deferred. The [remaining and deferred gaps](public/effective-spec.html#remaining-gaps) distinguish API boundaries, runtime limits and separate release acceptance.
 
 ## This repository
 

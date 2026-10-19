@@ -1271,3 +1271,23 @@ addition is selected. Editor, packaging, performance and external integration
 acceptance remain separate work. The recording drivers perform no external I/O.
 Broader package interoperability, item 9, remains deferred by user instruction.
 The language edition stays at draft 0.57 because this application adds no form.
+
+
+Remaining and deferred gap record, October 19, 2026
+The gap audit now consolidates current open API and language boundaries,
+item 9's explicit user deferral, runtime evidence limits and separate release
+acceptance. The specification mirrors that record and the mini book links to it.
+The accepted application target remains complete. This record selects no
+implementation work, priority or schedule. A new blocker does not revoke
+the user's explicit deferral of broader package interoperability.
+
+The record distinguishes native mixed-cause recovery, transaction cancellation,
+partial batches and buffering limits from absent source APIs. Editor, packaging,
+performance and external integration acceptance remain separate work.
+Historical validation entries retain their original dates and scope.
+
+This documentation change adds no language form or compiler behavior.
+The language edition remains draft 0.57. The compiler passes deno task check
+on Deno 2.9.7: 1,144 fast tests and 131 slow tests. Documentation link audits
+pass in both repositories. The website passes eleven tests and all 47 strict
+illustrative Effect-TS checks, with zero missing translations.
