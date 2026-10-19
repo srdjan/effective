@@ -178,3 +178,14 @@ export const writeWireTree = (input: Tree): WireTree fails SchemaError uses Wire
   schemaEncode(wireTree, input)
 export const constructWireTree = (input: TreeInput): Tree fails SchemaIssue =>
   schemaMake(wireTree, input)
+
+export const dualDefaultField: SchemaEncodedOptionalConstructorDefault<Int> =
+  schemaConstructorDefault(schemaDefaultKey(integer, (): Int => 8), (): Int => 4)
+export const dualDefaultScores: Schema<Required, Optional, never, never, Optional> =
+  schemaStruct({ score: dualDefaultField })
+export const optionalDefaultField: SchemaOptionalConstructorDefault<Int> =
+  schemaConstructorDefault(schemaOptionalKey(integer), (): Int => 4)
+export const optionalDefaultScores: Schema<Optional> =
+  schemaStruct({ score: optionalDefaultField })
+export const makeDualDefaults = (input: Optional): Required fails SchemaIssue =>
+  schemaMake(dualDefaultScores, input)

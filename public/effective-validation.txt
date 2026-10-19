@@ -951,3 +951,48 @@ and strict emitted TypeScript checking. All 44 illustrative Effect-TS units pass
 strict checking, with zero missing translations. The site's 11 tests pass.
 Constructor-default composition with field descriptors is next. Broader package
 interoperability, item 9, remains deferred by user instruction.
+
+Draft 0.55 constructor defaults on field descriptors, October 19, 2026
+schemaConstructorDefault now decorates SchemaOptional, SchemaEncodedOptional,
+and SchemaDecodedOptional fields while retaining D/E/M, presence flags and
+wire service channels. The explicit combined types are
+SchemaOptionalConstructorDefault, SchemaEncodedOptionalConstructorDefault and
+SchemaDecodedOptionalConstructorDefault, each with the existing five arguments.
+All flags remain invariant through annotations and imports. The containing
+struct makes the key optional in M; D and E keep their original presence.
+
+The inline zero-argument callback returns wrapped M, has no services and may
+fail only with SchemaIssue. Nested defaults may return partial M; Option fields
+still require complete Option<D> contents. Missing or raw undefined make input
+runs a fresh callback, while present values skip it and null stays present.
+Source types still reject explicit undefined. Wire defaults and getters skip
+construction; constructor defaults skip decode and encode. Encoding strategies,
+service requirements, issue paths, defects and awaited cleanup are unchanged.
+Apply field adapters first and constructor defaults last. Duplicate defaults,
+descriptor runners and subsequent adapters remain errors.
+
+Version 2 IR permits constructorDefault alongside one of the three mutually
+exclusive presence flags, with no new fields or operations. Public emitted types
+use native Schema.withConstructorDefault around the restored no-default view,
+matching the wrapper without requiring its input adapter's helper properties.
+Emission uses public Schema.make and withConstructorDefault without casts or
+private APIs. The editor grammar recognizes the three combined type names.
+
+Four pinned target probes cover every selected adapter, nested partial inputs,
+unchanged presence, independent wire defaults, Option contents, failure paths
+and awaited cleanup. Source and independent IR checks reject erased or forged
+flags, duplicate defaults, descriptor runners, subsequent adapters, callback
+services and partial Option defaults. Strict compiled execution adds imported
+descriptors, all three presence forms, separate wire traces and encoding omission,
+fresh callbacks, failures, defects and awaited cleanup. The compiler gate passes
+with 1,131 fast tests and 126 slow tests on Deno 2.9.7.
+
+Draft 0.55 code showcase, October 19, 2026
+The fifteenth Core 1 pair supplies 4 during construction and 8 when decoding a
+missing wire field, and shows an optional decoded field retaining its presence
+rule after gaining a constructor default. The full core1.eff source builds with
+zero compiler and independent validator diagnostics and strict emitted TypeScript
+checking. All 45 illustrative Effect-TS units pass strict checking, with zero
+missing translations. The site's 11 tests pass. Applying field adapters after
+constructor defaults is next. Broader package interoperability, item 9, remains
+deferred by user instruction.

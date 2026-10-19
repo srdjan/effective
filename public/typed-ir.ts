@@ -77,6 +77,7 @@ export type Type =
     readonly encodedOptionalKey?: true;
     readonly decodedOptionalKey?: true;
     readonly makeInput?: Type;
+    /** Independent of the mutually exclusive field-presence flags. */
     readonly constructorDefault?: true;
   }
   | {
