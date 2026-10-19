@@ -162,3 +162,19 @@ export const treeDefaults: Schema<Tree, Tree, never, never, TreeInput> = schemaR
 )
 export const constructTree = (input: TreeInput): Tree fails SchemaIssue =>
   schemaMake(treeDefaults, input)
+
+type WireTree = { score: Text, children: WireTree[] }
+
+export const wireTree: Schema<Tree, WireTree, Wire.parse, Wire.print, TreeInput> = schemaRecursive(
+  (self: Schema<Tree, WireTree, Wire.parse, Wire.print, TreeInput>): Schema<Tree, WireTree, Wire.parse, Wire.print, TreeInput> =>
+    schemaStruct({
+      score: schemaConstructorDefault(wireScore, (): Int => 4),
+      children: schemaConstructorDefault(schemaArray(self), (): TreeInput[] => [])
+    })
+)
+export const readWireTree = (input: unknown): Tree fails SchemaError uses Wire.parse =>
+  schemaDecode(wireTree, input)
+export const writeWireTree = (input: Tree): WireTree fails SchemaError uses Wire.print =>
+  schemaEncode(wireTree, input)
+export const constructWireTree = (input: TreeInput): Tree fails SchemaIssue =>
+  schemaMake(wireTree, input)

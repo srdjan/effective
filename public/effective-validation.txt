@@ -916,3 +916,38 @@ All 43 illustrative Effect-TS units pass strict checking, with zero missing
 translations. The site's 11 tests pass. Distinct recursive decoded and encoded
 representations are the next investigation. Broader package interoperability,
 item 9, remains deferred by user instruction.
+
+Draft 0.54 separate recursive wire types, October 19, 2026
+schemaRecursive now accepts distinct decoded D and encoded E while retaining
+independent make input M and directional RD/RE. Each recursive data alias follows
+its existing guard. The pure inline builder and every self reference retain the
+same full Schema signature, and the body must fit all axes. Only the old D=E
+restriction is removed; identity schema() still requires D=E and no services.
+
+Recursive wire fields may differ in value type and exact optional presence.
+Array, optional-key and tagged forms are supported. Tagged recursion retains
+matching literal discriminators on both sides and a self-free terminal branch.
+Decode returns D using RD, encode consumes D and returns E using RE, and make
+consumes decoded-side M without either wire service direction. Wire defaults
+still do not supply constructor keys. Nested wire failures keep field and array
+index paths in both directions; defects stay defects, and interruption awaits
+nested decoder or encoder cleanup. The existing version 2 Schema and typed
+Schema.suspend preserve all axes without new IR operations or emitter helpers.
+
+Three pinned target probes cover the separate D/E/M shapes, optional wire
+presence, all three guards, roundtrips, failures and nested cleanup. Source and
+independent IR checks reject erased or forged encoded types, incorrect self
+signatures, invalid nested wire or make data, forged directional services, and
+identity derivation for distinct D/E. Strict compiled execution adds imported
+arrays, constructor defaults, repeated runs, separate service traces, nested
+wire failures and defects, and awaited cleanup in both wire directions. The
+compiler gate passes with 1,128 fast tests and 125 slow tests on Deno 2.9.7.
+
+Draft 0.54 code showcase, October 19, 2026
+The fourteenth Core 1 pair keeps numeric decoded trees, text wire trees, and
+partial numeric make input separate through every self reference. The full
+core1.eff source builds with zero compiler and independent validator diagnostics
+and strict emitted TypeScript checking. All 44 illustrative Effect-TS units pass
+strict checking, with zero missing translations. The site's 11 tests pass.
+Constructor-default composition with field descriptors is next. Broader package
+interoperability, item 9, remains deferred by user instruction.
