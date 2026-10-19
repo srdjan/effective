@@ -806,3 +806,44 @@ metadata and a make-input shape distinct from both D and E remain open, includin
 raw replay identity; the explicit factory does not promise that aliasing.
 General constructor metadata and make-input propagation are next. Broader
 package interoperability remains deferred by user instruction.
+
+Draft 0.51 constructor metadata and make-input propagation, October 19, 2026
+Schema adds a fifth parameter M defaulting to D. M records constructor input
+independently of decoded D and encoded E. SchemaConstructorDefault and the
+schemaConstructorDefault builder attach an inline zero-argument default that
+returns M, uses no services, and may fail only with SchemaIssue. The containing
+struct makes that field optional in M while D, E and both wire service directions
+stay unchanged. Known default flags and changed make-input shapes are invariant
+and cannot be silently erased by an older Schema annotation.
+
+Make input propagates through nonrecursive structs, arrays, ordered unions,
+optional keys, and transformation targets. Nested defaults can supply partial
+make records and validate with complete field paths. schemaMake accepts M and
+constructs D without wire services. Defaults are deferred, run freshly on each
+use, and retain failure, defect, cancellation and cleanup behavior. Raw host
+makeEffect replay preserves the target's shared result identity. Source function
+evaluation rules are unchanged. Changed M is explicitly rejected by recursive
+Schema builders and optional adapters whose constructor behavior remains unprobed.
+
+Version 2 IR adds optional makeInput and constructorDefault Schema properties
+and the constructor-default operation. Missing makeInput means D. Alias/import
+handling, type depth checks and independent validation include the new axis.
+Emission uses public Schema.make to restore checked make views, then native
+withConstructorDefault; it uses no casts or private target APIs.
+
+Four target tests and a strict compiled witness cover nested defaults, arrays,
+unions, optional fields, transformation targets, cross-module composition,
+static D/E/M separation, Ref-capturing defaults, raw replay identity, constructor
+failure paths, and awaited cancellation cleanup. Source and independent IR tests
+reject erasure, duplicate defaults, bad callbacks, services, descriptor runners,
+unsupported adapters, and forged metadata. The full compiler gate passes with
+1,119 fast tests and 122 slow tests on Deno 2.9.7.
+
+Draft 0.51 code showcase, October 19, 2026
+The eleventh Core 1 pair shows reusable constructor defaults, nested partial
+make input and array propagation. The full core1.eff source builds with zero
+compiler and independent validator diagnostics and strict emitted TypeScript
+checking. All 41 illustrative Effect-TS units pass strict checking, with zero
+missing translations. The site's 11 tests pass. Constructor metadata through
+optional adapters is next, followed by recursive make-input propagation.
+Broader package interoperability remains deferred by user instruction.

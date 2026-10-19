@@ -76,6 +76,8 @@ export type Type =
     readonly optionalKey?: true;
     readonly encodedOptionalKey?: true;
     readonly decodedOptionalKey?: true;
+    readonly makeInput?: Type;
+    readonly constructorDefault?: true;
   }
   | {
     readonly kind: "fiber";
@@ -356,6 +358,7 @@ export type Expr =
         | "null-to-missing-key"
         | "option-from-optional-key"
         | "default-key"
+        | "constructor-default"
         | "default-null-key"
         | "default-encoded-key"
         | "optional-transform"

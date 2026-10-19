@@ -120,3 +120,18 @@ export const makeScore = (input: ConstructorInput): ConstructorRecord fails Sche
   const score = match input.score { Some(value) => value, None => 4 }
   schemaMake(constructorRecord, { score: score })
 }
+
+type DefaultRecord = { score: Int }
+type DefaultInput = { score?: Int }
+type NestedRecord = { settings: DefaultRecord }
+type NestedInput = { settings?: DefaultInput }
+
+export const constructorDefaults: Schema<DefaultRecord, DefaultRecord, never, never, DefaultInput> =
+  schemaStruct({ score: schemaConstructorDefault(integer, (): Int => 4) })
+export const nestedDefaults: Schema<NestedRecord, NestedRecord, never, never, NestedInput> =
+  schemaStruct({ settings: schemaConstructorDefault(constructorDefaults,
+    (): DefaultInput => ({})) })
+export const constructorDefaultsList: Schema<DefaultRecord[], DefaultRecord[], never, never, DefaultInput[]> =
+  schemaArray(constructorDefaults)
+export const constructDefaults = (input: NestedInput): NestedRecord fails SchemaIssue =>
+  schemaMake(nestedDefaults, input)
