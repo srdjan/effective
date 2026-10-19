@@ -26,14 +26,18 @@
   --small: 14px;
   --body: 18px;
   --lead: 24px;
-  --head: clamp(36px, 4.4vw, 64px);
+  --head: clamp(36px, 4.4vw, 52px);
   --gutter: 32px;
+  /* The page is a sheet of fixed maximum width. Each clamp() maximum is its vw value at this width. */
+  --page: 1200px;
+  --backdrop: #dcdad4;
+  --page-shadow: 0 0 0 1px rgb(31 43 77 / .06), 0 30px 90px -20px rgb(31 43 77 / .28), 0 8px 24px -12px rgb(31 43 77 / .18);
   --ease-out: cubic-bezier(.22, 1, .36, 1);
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 104px; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 var(--body)/1.6 var(--font); font-optical-sizing: auto; }
+html { scroll-behavior: smooth; scroll-padding-top: 104px; background: var(--backdrop); }
+body { max-width: var(--page); min-height: 100svh; margin: 0 auto; box-shadow: var(--page-shadow); background: var(--bg); color: var(--ink); font: 400 var(--body)/1.6 var(--font); font-optical-sizing: auto; }
 a { color: inherit; text-underline-offset: .22em; text-decoration-thickness: .07em; }
 button, input { font: inherit; color: inherit; }
 button, summary { cursor: pointer; }
@@ -66,9 +70,9 @@ a[aria-busy="true"] { cursor: progress; }
 
 .hero { position: relative; isolation: isolate; overflow: clip; }
 .hero::before { position: absolute; z-index: -1; top: -180px; right: -120px; width: min(720px, 72vw); aspect-ratio: 1; content: ""; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 13%, transparent), transparent 68%); pointer-events: none; }
-.hero-type { display: grid; place-items: end center; padding-top: clamp(80px, 10vw, 168px); pointer-events: none; }
-.hero-kicker { position: absolute; top: clamp(24px, 3vw, 48px); left: var(--gutter); margin: 0; color: var(--muted); font-size: var(--small); font-weight: 600; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
-.hero h1 { position: relative; margin-bottom: .1em; font-size: clamp(48px, 10vw, 168px); line-height: .84; letter-spacing: -.05em; text-align: center; }
+.hero-type { display: grid; place-items: end center; padding-top: clamp(80px, 10vw, 120px); pointer-events: none; }
+.hero-kicker { position: absolute; top: clamp(24px, 3vw, 36px); left: var(--gutter); margin: 0; color: var(--muted); font-size: var(--small); font-weight: 600; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
+.hero h1 { position: relative; margin-bottom: .1em; font-size: clamp(48px, 10vw, 120px); line-height: .84; letter-spacing: -.05em; text-align: center; }
 .hero h1::after { position: absolute; z-index: -1; content: ""; inset: .84em -100vmax -100vmax; background: var(--ink); }
 .hero h1 > span { display: block; white-space: nowrap; }
 .hero h1 > span + span { color: var(--bg); padding-top: .06em; }
@@ -90,7 +94,7 @@ a[aria-busy="true"] { cursor: progress; }
 .contract-controls { margin-top: 64px; }
 .contract-controls label { display: block; font-size: var(--small); margin-bottom: 4px; }
 .function-input { display: flex; align-items: center; gap: 16px; max-width: 100%; }
-.function-input input { min-width: 0; width: 100%; padding: 0 0 8px; border: 0; background: transparent; font-size: clamp(52px, 8vw, 116px); line-height: 1.1; font-weight: 500; letter-spacing: -.05em; border-radius: 0; }
+.function-input input { min-width: 0; width: 100%; padding: 0 0 8px; border: 0; background: transparent; font-size: clamp(52px, 8vw, 96px); line-height: 1.1; font-weight: 500; letter-spacing: -.05em; border-radius: 0; }
 /* The submit button follows the typed name, so it stays beside the field on a wide screen. */
 @supports (field-sizing: content) {
   .function-input input { field-sizing: content; width: auto; min-width: 4ch; max-width: 100%; }
@@ -123,7 +127,7 @@ a[aria-busy="true"] { cursor: progress; }
 .chapter-index a span:first-child { font-size: var(--lead); letter-spacing: -.025em; }
 .chapter-index a span:last-child { align-self: center; font-size: var(--small); }
 
-.layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); max-width: 1680px; margin-inline: auto; }
+.layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); }
 .contents { position: sticky; top: 100px; align-self: start; max-height: calc(100svh - 116px); overflow-y: auto; padding: 42px 24px 42px var(--gutter); font-size: var(--small); line-height: 1.45; scrollbar-width: thin; }
 .contents-title { font-weight: 600; margin-bottom: 20px; }
 .contents ol { list-style: none; padding: 0; margin: 0; }
@@ -205,9 +209,9 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .footer-top nav a { display: inline-flex; align-items: center; min-height: 44px; }
 .footer-note { display: flex; justify-content: space-between; gap: 32px; margin-top: 100px; font-size: var(--small); }
 .footer-note a { display: inline-flex; align-items: center; min-height: 44px; }
-.footer-name { font-size: 29vw; font-weight: 600; letter-spacing: -.05em; line-height: .85; white-space: nowrap; margin: 44px 0 -.18em -.04em; }
+.footer-name { font-size: min(29vw, 348px); font-weight: 600; letter-spacing: -.05em; line-height: .85; white-space: nowrap; margin: 44px 0 -.18em -.04em; }
 .reference-hero { padding: 70px var(--gutter) 64px; background: var(--ink); color: var(--bg); }
-.reference-hero h1 { font-size: clamp(64px, 10.1vw, 146px); }
+.reference-hero h1 { font-size: clamp(64px, 10.1vw, 121px); }
 .reference-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 72px; }
 .reference-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .reference-bottom p { font-size: var(--lead); line-height: 1.4; max-width: 39ch; }
@@ -216,7 +220,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 /* Ambient light. A rare comet crosses a decorative dark surface, and soft shadows shift as the light passes. */
 :root { --shadow: color-mix(in srgb, var(--code-bg) 70%, black); }
 .hero-bottom, .book-index, .reference-hero { position: relative; isolation: isolate; overflow: clip; }
-.comet { position: absolute; z-index: -1; width: clamp(72px, 11vw, 168px); height: 2px; border-radius: 2px; background: linear-gradient(to right, transparent, color-mix(in srgb, var(--accent) 60%, transparent) 75%, var(--bg)); opacity: 0; transform-origin: right center; pointer-events: none; }
+.comet { position: absolute; z-index: -1; width: clamp(72px, 11vw, 132px); height: 2px; border-radius: 2px; background: linear-gradient(to right, transparent, color-mix(in srgb, var(--accent) 60%, transparent) 75%, var(--bg)); opacity: 0; transform-origin: right center; pointer-events: none; }
 .comet::after { position: absolute; top: 50%; right: -2px; width: 4px; height: 4px; content: ""; border-radius: 50%; background: var(--bg); box-shadow: 0 0 10px 3px color-mix(in srgb, var(--accent) 55%, transparent); transform: translateY(-50%); }
 .section, .showcase, .footer { isolation: isolate; }
 .code, .footer-name { position: relative; }
@@ -249,9 +253,6 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .button:focus-visible span { transform: translate(3px, -3px); }
 .chapter-index a:focus-visible::before { transform: scaleX(1); }
 .chapter-index a:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
-@media (min-width: 1680px) {
-  .section { padding-inline: 88px; }
-}
 @media (max-width: 1150px) {
   .layout { grid-template-columns: 218px minmax(0, 1fr); }
   .section, .document-note, .reference-links { padding-inline: 40px; }
@@ -380,6 +381,8 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .chapter-index a::after { transform: translateY(-50%); }
 }
 @media print {
+  html { background: white; }
+  body { max-width: none; box-shadow: none; }
   :root { --bg: white; --ink: black; --body: 11pt; --head: 25pt; --code-bg: #f4f4f2; --code-ink: black; --code-keyword: black; --code-string: black; --code-comment: black; }
   .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links, .source-drawer, .comet, .code::after { display: none; }
   .layout { display: block; }
