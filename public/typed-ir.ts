@@ -369,7 +369,13 @@ export type Expr =
       arguments: readonly Expr[];
     }
   >
-  | Node<{ kind: "schema-decode" | "schema-encode"; schema: Expr; input: Expr }>
+  | Node<
+    {
+      kind: "schema-decode" | "schema-encode" | "schema-make";
+      schema: Expr;
+      input: Expr;
+    }
+  >
   | Node<{ kind: "decode"; codec: Expr; input: Expr }>
   | Node<{ kind: "encode"; codec: Expr; input: Expr }>
   | Node<{ kind: "with-fiber"; job: Expr; use: Expr; useBinding: LocalId }>

@@ -111,3 +111,12 @@ const wireScore: Schema<Int, Text, Wire.parse, Wire.print> = schemaTransform(
 export const encodedDefault: Schema<RequiredScore, WireRecord, Wire.parse, Wire.print> =
   schemaStruct({ score: schemaDefaultEncodedKey(wireScore,
     (): Text => "41", { encodingStrategy: "omit" }) })
+
+type ConstructorInput = { score?: Int }
+type ConstructorRecord = { score: Int }
+const constructorRecord: Schema<ConstructorRecord> = schemaStruct({ score: integer })
+
+export const makeScore = (input: ConstructorInput): ConstructorRecord fails SchemaIssue => {
+  const score = match input.score { Some(value) => value, None => 4 }
+  schemaMake(constructorRecord, { score: score })
+}
