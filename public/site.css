@@ -106,6 +106,7 @@ a[aria-busy="true"] { cursor: progress; }
 .contract-result { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; gap: 64px; align-items: start; margin-top: 40px; }
 .contract-signal { position: absolute; top: -17px; left: 0; width: 96px; height: 3px; background: var(--accent); opacity: 0; transform: scaleX(0); transform-origin: left; pointer-events: none; }
 .contract-result .code { margin: 0; }
+.contract-reading { padding: 32px; background: var(--surface); }
 .contract-reading dl { margin: 0; }
 .contract-reading dl > div { margin-bottom: 24px; }
 .contract-reading dt { font-size: var(--small); color: var(--muted); }
@@ -308,7 +309,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .function-choices { gap: 6px; margin-top: 16px; }
   .function-choices button { padding: 12px 15px; font-size: var(--small); }
   .contract-result { margin-top: 28px; }
-  .contract-reading { display: block; }
+  .contract-reading { display: block; padding: 24px 20px; }
   .contract-reading dl { display: grid; gap: 20px; }
   .contract-reading dl > div { margin-bottom: 0; }
   .contract-reading p { margin-top: 24px; }
