@@ -103,7 +103,7 @@ a[aria-busy="true"] { cursor: progress; }
 .function-choices button::after { position: absolute; inset: auto 0 0; height: 3px; content: ""; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
 .function-choices button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .function-choices button[aria-pressed="true"]::after { transform: scaleX(1); }
-.contract-result { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; gap: 64px; align-items: start; margin-top: 40px; }
+.contract-result { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: stretch; margin-top: 40px; }
 .contract-signal { position: absolute; top: -17px; left: 0; width: 96px; height: 3px; background: var(--accent); opacity: 0; transform: scaleX(0); transform-origin: left; pointer-events: none; }
 .contract-result .code { margin: 0; }
 .contract-reading { padding: 32px; background: var(--surface); }
