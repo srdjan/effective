@@ -430,3 +430,251 @@ construction, burst coalescing, enforced drops, shaped delivery, typed source
 failure, and pull finalizers. A source checker test accepts compositions for
 runForEach, runCount, tap, and runForEachWhile without new prelude forms. The
 compiler gate passed with 84 slow tests. The IR wire shape remains version 2.
+
+Draft 0.34 explicit shared scopes, October 18, 2026
+CloseableScope and makeScope/provideScope/addScopeFinalizer/closeScope supply
+manual shared authority across root executions and source modules. The checker
+and independent validator retain argument-construction channels, discharge only
+latent Scope requirements during provision, and preserve borrow/data-only rules.
+Strict target and runtime tests cover aliases, cached close completion and defect
+replay, interruption, late registration, registration-time service capture,
+argument order, child-owned provider lifetime, and host-wrapper compatibility.
+Close supplies Exit.void; arbitrary close Exits remain deferred. The compiler
+gate passed: 1080 fast tests and 89 slow tests. All 17 Scope audit probes pass.
+The site passes its 11 tests and 30 strict illustrative units. The IR wire shape
+remains version 2.
+
+Draft 0.35 Sink leftovers and synchronous transduction, October 18, 2026
+Sink appends a fifth leftover argument, defaulting to never without changing
+existing positions, default IR payloads, or interface hashes. takeSink requires
+an expected input type and a positive integer literal count. transduceStream
+replays leftovers compatible with sink input and retains source/sink deferred
+channels separately from construction effects. runStream discards any leftovers.
+Checker and independent validator tests cover variance, imports, recursion,
+invalid counts, forged annotations, and active/deferred channel mutations.
+Four strict target/runtime tests verify chunk replay, repeated state, final
+partial/empty results, zero-progress host sinks, service provision, failures,
+defects, yielding cleanup, interruption, and the existing typed host boundary.
+The compiler gate passed: 1088 fast tests and 93 slow tests. All 17 focused
+Sink/Stream/Schedule audit probes pass, including nine Sink contract tests.
+The site passes 11 tests and 30 strict illustrative units. The IR wire shape
+remains version 2. Async aggregation and broader package imports remain deferred.
+
+Draft 0.36 live keyed grouping, October 18, 2026
+mapGroups fuses one keyed producer with concurrent callbacks whose group Stream
+is borrowed for at most one direct terminal use. The key is a pure primitive
+class or primitive brand. Positive literal bufferSize bounds each group queue;
+it does not cap the number of keys or consumers. The callback returns data
+only, and only its Scope requirement is discharged. Source requirements remain
+deferred. The checker and independent IR validator enforce these rules,
+including forged binding, key, capacity, result, and channel mutations.
+Four strict target/runtime tests cover fresh routing, per-key order, closed-key
+discard, online later-key results, backpressure, provider rebinding, scoped
+workers, source and consumer failure, interruption, and awaited cleanup.
+The target prototype has nine passing probes. The IR wire shape remains
+version 2. The compiler gate passed with 1,095 fast tests and 97 slow tests;
+all 17 focused grouping and Stream/Schedule probes pass. The site passes its
+11 tests and 30 strict illustrative units. Async aggregation and broader
+package imports remain deferred.
+
+Draft 0.37 untimed async aggregation, October 18, 2026
+aggregateStream(source, sink) emits Stream.aggregate with the target's
+capacity-zero producer/sink handoff. Source elements and replayed Sink
+leftovers must fit Sink input. Source and Sink failures and requirements remain
+deferred; construction effects remain active. The checker, independent IR
+validator, and typed emitter preserve the channels without casts. Strict
+compiled-source tests cover single-chunk completion, repeated runs over several
+chunk sizes, provider rebinding, source and Sink failure, blocked demand,
+zero-progress host Sinks, and awaited pending-pull interruption. Rechunking
+can alter output partitions under the target's Schedule.forever handoff, so
+multi-chunk results are compared directly with the pinned target. The IR wire
+shape remains version 2. The compiler gate passed with 1,098 fast tests and 99
+slow tests; all 11 aggregation target probes and the source probe pass. The site
+passes 11 tests and 30 strict illustrative units. Timed aggregation and general
+Schedule values remain deferred; broader package interoperability remains
+deferred by user request.
+
+Draft 0.38 general Schedule values and timed aggregation, October 18, 2026
+Schedule<O,I,E,R> records output, contravariant input, typed failure, and
+service requirements. ScheduleInput, ScheduleMetadata, and ScheduleDecision
+are structural source types. scheduleFromStep allocates state per execution
+and preserves a distinct normal Done output; scheduleRecurs, scheduleSpaced,
+and scheduleMap supply the first constructor and modifier set.
+aggregateWithinStream requires source and leftovers to fit Sink input and
+Option<SinkOutput> to fit Schedule input. Schedule failure and service
+channels remain deferred in its Stream output. The checker, independent IR
+validator, and emitter implement the rule with a typed Stream.aggregateWithin
+call. Strict compiled-source tests cover repeated state, effectful factory
+and map callbacks, completion failure, virtual-time partial flushing,
+schedule stop before another upstream pull, and awaited source cleanup.
+The IR wire shape remains version 2. The compiler gate passed with 1,100 fast
+and 100 slow tests. Native max/min/concat composition, other Schedule
+consumers, Schema composition, and package interoperability remain separate
+work; package interoperability is deferred by user request.
+
+Draft 0.39 binary Schedule composition, October 18, 2026
+scheduleMax and scheduleMin run two comparable-input policies and output the
+selected delay in milliseconds, including zero on normal completion.
+scheduleConcat starts the right policy on the input that completed the left
+and unions their output types. The result input is the narrower comparable
+input; incomparable inputs remain outside the source subset until the language
+defines general intersections. Both operands' typed failures and services
+remain deferred, while argument construction effects remain active.
+The checker, independent validator, and typed emitter cover all three forms.
+Two pinned target tests verify normal completion and phase input. A compiled
+source test verifies delay sequences, phase outputs, repeated fresh execution,
+construction deferral, failure from either policy, and awaited upstream
+cleanup during failed aggregation. The IR wire shape
+remains version 2. The compiler gate passed with 1,102 fast and 101 slow tests.
+The site passes 11 tests and 30 strict illustrative units.
+
+Draft 0.40 Schema composition and guarded recursive records, October 18, 2026
+Schema<D,E,RD,RE> keeps decode and encode service requirements separate.
+Identity, array, required-record, Option transformation, and guarded-recursive
+constructors build reusable Schema values without running a parser. The two
+runners fail with reserved SchemaError and require only their direction's
+services. A single data record may refer to itself beneath arrays; the emitter
+uses Schema.suspend for each self reference. Direct and mutual cycles remain
+invalid. The checker and independent validator enforce callback directions,
+failure channels, self guards, and recorded requirements. A strict compiled
+source test covers nested decode and encode, issue paths, error recovery,
+defects, interruption, construction deferral, and repeated runs. The IR wire
+shape remains version 2. The compiler gate passed with 1,102 fast and 104
+slow tests. Optional and union Schema builders and source-authored issue trees
+remain separate design work. Package interoperability stays deferred.
+
+Draft 0.41 exact optional Schema fields, tagged unions, and issue trees, October 18, 2026
+SchemaOptional<D,E,RD,RE> marks an exact optional struct field. schemaUnion
+accepts record branches with one distinct literal tag that is unchanged in
+both directions. schemaInvalid, schemaAt, and schemaBoth build source issue
+trees; schemaTransform callbacks may fail only with SchemaIssue, and runners
+continue to fail with SchemaError. A single recursive alias can now terminate
+through an omitted optional key or a terminal tagged variant. The checker,
+independent validator, and typed emitter enforce the selected rules. Seven
+pinned target tests and a compiled source witness cover missing, present,
+and undefined fields, branch effects, separate services, authored decode and
+encode issues, finite recursion, repeated execution, defects, and interruption.
+Negative source probes and independent IR mutations reject malformed branches,
+forged optionality, and unguarded recursion. The IR wire shape remains version 2.
+The compiler gate passed with 1,102 fast and 106 slow tests. The site passes
+11 tests and 30 strict illustrative units. General union backtracking and
+optional-field transformations remain separate work. Package interoperability
+stays deferred.
+
+Draft 0.42 optional Schema transformations and defaults, October 19, 2026
+SchemaEncodedOptional<D,E,RD,RE> marks a required decoded field whose encoded
+key is exact optional. schemaOptionFromOptionalKey maps absent keys to a
+required None and omits None on encode. schemaDefaultKey calls a pure
+zero-argument decoded default on each missing-key decode and emits the field on
+encode. schemaOptionalTransform maps Option values between two exact optional
+field descriptors with pure inline directional callbacks. The checker and
+independent validator track decoded and encoded optionality separately and
+reject descriptors as runners, mismatched callbacks, and effectful defaults or
+optional getters. Seven target tests, a compiled runtime witness, negative
+source probes, and IR mutations cover the selected slice. The IR wire shape
+remains version 2. General required-to-optional getters, effectful getters and
+defaults, alternate encoding strategies, and general union backtracking need
+separate rules. Package interoperability stays deferred.
+
+Draft 0.43 effectful optional Schema callbacks, October 19, 2026
+schemaOptionalTransform accepts effectful inline directional Option getters
+whose only typed failure, if any, is SchemaIssue. Decode and encode
+callback services stay in their respective directions. schemaDefaultKey
+accepts an effectful zero-argument decoded default with decode-only services
+and either SchemaIssue or SchemaError as its sole typed failure. An authored
+SchemaIssue is wrapped as SchemaError at the emitted default boundary; an
+existing SchemaError passes through. Five pinned target tests, strict
+compiled source execution, negative source probes, and independent IR
+mutations cover missing and present keys, repeated defaults, separate
+services, issue paths, defects, and interruption. The IR wire shape remains
+version 2. Required-to-optional transformations and general union
+backtracking remain separate work. Package interoperability stays deferred.
+
+Draft 0.43 code showcase, October 19, 2026
+The mini book now pairs Effective and Effect-TS code for scoped child work,
+scheduled stream batches, and effectful optional Schema getters and defaults.
+The full effective-examples/core1.eff source has zero compiler diagnostics,
+zero independent IR diagnostics, and strict checks of emitted TypeScript
+against effect@4.0.5. The site's 33 illustrative Effect-TS units pass strict
+checks, with no Effective panel missing a translation. The site's 11 tests
+pass. These checks do not establish runtime equivalence for the illustrative
+tabs; the compiler runtime fixtures and target probes cover the selected
+behaviors separately.
+
+Draft 0.44 guarded required-to-optional Schema fields, October 19, 2026
+SchemaDecodedOptional<D,E,RD,RE> marks a struct field with an exact optional
+decoded key and a required encoded key. schemaOptionalFromRequired accepts
+pure or effectful inline directional getters that can fail only with
+SchemaIssue. It guards missing encoded keys before calling the source getter.
+Three pinned target tests expose the raw Effect 4.0.5 type/runtime mismatch
+and verify the guarded behavior and directional services. Two source-boundary
+tests and a compiled runtime/IR witness cover omission, restoration, exact
+undefined rejection, issue paths, callback requirements, defects, and
+interruption. The IR wire shape stays version 2. General Schema union
+backtracking remains the next bounded gap; package interoperability stays
+deferred.
+
+Draft 0.44 code showcase, October 19, 2026
+The Core 1 mini book adds a fourth Effective/Effect-TS pair for a required
+encoded name that can decode to an absent field. The full
+public/effective-examples/core1.eff source builds with zero compiler and
+independent validator diagnostics and strict emitted TypeScript checking.
+The site's 34 illustrative Effect-TS units pass strict type checking with
+zero Effective panels missing a translation. The site's 11 tests pass.
+Illustrative tabs are manually authored; selected runtime behavior has
+separate pinned target and compiled source witnesses.
+
+Draft 0.45 general Schema unions, October 19, 2026
+schemaUnion now accepts an inline list of at least two ordinary Schemas,
+including unlike types, overlapping records, duplicate types, and transformed
+branches. It retains source branch order and derives each direction's data
+and service requirements independently. Four pinned target tests and a strict
+compiled source witness cover primitive branches, overlapping-record order,
+transformed encoded/decoded types, decode and encode fallback after a typed
+Schema issue, separate services, defects, and interruption. Source boundaries
+reject malformed input and field descriptors. Independent IR mutations reject
+forged branch types. Recursive callbacks retain the tagged-terminal guard:
+source and IR probes reject a union that immediately tries its own self Schema.
+The existing version 2 union IR operation needs no new shape. The compiler
+check passed with 1,102 fast tests and 114 slow tests. Nullable optional keys
+remain the next bounded Schema gap; package interoperability stays deferred.
+
+Draft 0.45 code showcase, October 19, 2026
+The fifth Core 1 pair shows unlike scalar branches and a service-backed name
+transformation that can fall through to a plain string branch. The full
+public/effective-examples/core1.eff source builds with zero compiler and
+independent validator diagnostics and strict emitted TypeScript checking.
+All 35 illustrative Effect-TS units pass strict checking, with zero Effective
+panels missing a translation. The site's 11 tests pass. Illustrative tabs
+remain manually authored and have separate runtime evidence for the selected
+behaviors.
+
+Draft 0.46 nullable optional fields and null data, October 19, 2026
+The source singleton null value and type support nullable data aliases,
+finite literal matches, and comparisons with null. Primitive-position rules
+still apply through aliases such as type Nil = null. Inference retains the
+singleton. Null data is distinct from unit, arithmetic operands, and grouping
+keys. The backend emits Schema.Null, because Effect 4.0.5's literal Schema
+constructors do not accept null.
+
+Existing optional-key composition preserves a present null. The new
+schemaNullToMissingKey constructor accepts an ordinary Schema whose decoded
+and encoded sides exclude null. Its exact optional decoded field excludes
+null; its encoded field admits null and maps it to an absent key. Missing
+keys stay absent and explicit undefined fails. Directional services stay in
+the static type, while missing or null inputs skip the nonnullable branch.
+Option-from-optional-key retains None versus Some(null), and a missing-key
+default does not run for a present null. Four pinned target tests, source
+boundaries, strict compiled execution, and IR mutations cover these rules.
+The version 2 IR adds a null expression leaf and the null-to-missing-key
+Schema operation; the original literal with value null remains the unit
+marker. The compiler check passed with 1,105 fast tests and 116 slow tests.
+
+Draft 0.46 code showcase, October 19, 2026
+The sixth Core 1 pair shows preserving null and treating it as an absent key,
+with distinct source values for a missing field and a present null. The full
+public/effective-examples/core1.eff source builds with zero compiler and
+independent validator diagnostics and strict emitted TypeScript checking.
+All 36 illustrative Effect-TS units pass strict checking, with zero Effective
+panels missing a translation. The site's 11 tests pass. Alternate default
+encoding strategies are next; broader package interoperability stays deferred.

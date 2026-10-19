@@ -2,13 +2,13 @@
 
 Effective is a friendly language that transpiles to [Effect-TS](https://effect.website), version 4. Inspired by https://forma-lang.com/effect. Each function contract names its result, its expected failures, and the services that it uses. The transpiler turns that contract into an `Effect.Effect<A, E, R>` type.
 
-The transpiler targets the `effect` core modules: `Effect`, `Context`, `Layer`, `Option`, and `Schema`. It also targets selected modules from the Effect ecosystem:
+The transpiler targets selected `effect` core modules, including `Effect`, `Context`, `Layer`, `Option`, `Schema`, `Stream`, `Sink`, and `Schedule`. It also uses selected ecosystem modules through typed host adapters:
 
 - `effect/http`, `FileSystem`, and the `@effect/platform-node`, `@effect/platform-bun`, and `@effect/platform-browser` runtimes
 - `effect/sql` and the `@effect/sql-*` drivers, such as `@effect/sql-pg`
 - `@effect/opentelemetry` for traces, metrics, and logs
 
-Core 1 is specified in design draft 0.30. The effective-lang repository implements the documented core 1 subset and tracks the remaining parity gaps. Ecosystem packages require typed host adapters. The Effect-TS examples are manually written and pass strict TypeScript checks against Effect 4.0.5.
+Core 1 is specified in design draft 0.46. The effective-lang repository implements the documented core 1 subset, including four-channel Schema composition, effectful optional-field getters and defaults, guarded required-encoded to optional-decoded fields, ordered general unions, nullable optional fields with explicit null policies, and guarded recursive data records. The [Core 1 showcase](public/index.html#core1-showcase) pairs scoped concurrency, scheduled streams, and Schema field-presence source with Effect-TS translations; its [full Effective source](public/effective-examples/core1.eff) passes the compiler and strict emitted TypeScript check. The repository tracks the remaining parity gaps. Ecosystem packages require typed host adapters. The Effect-TS examples are manually written and pass strict TypeScript checks against Effect 4.0.5.
 
 ## This repository
 

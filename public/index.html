@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><title>Effective - Mini book</title><link rel="canonical" href="https://effective.timok.deno.net/"><meta property="og:site_name" content="Effective"><meta property="og:type" content="website"><meta property="og:title" content="Effective - Mini book"><meta property="og:description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><meta property="og:url" content="https://effective.timok.deno.net/"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><meta property="og:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effective - Mini book"><meta name="twitter:description" content="Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output."><meta name="twitter:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://effective.timok.deno.net/#website","name":"Effective","url":"https://effective.timok.deno.net/","description":"Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output.","inLanguage":"en"},{"@type":"TechArticle","@id":"https://effective.timok.deno.net/#book","headline":"Effective mini book","name":"Effective - Mini book","description":"Effective is a small language designed to transpile to Effect-TS. Nine chapters pair Effective source with its intended Effect-TS output.","url":"https://effective.timok.deno.net/","image":"https://effective.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@id":"https://effective.timok.deno.net/#website"}}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css?v=0.4.4"><script src="site.js?v=0.4.4" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Effective is a small language designed to transpile to Effect-TS. Ten chapters pair Effective source with its intended Effect-TS output."><title>Effective - Mini book</title><link rel="canonical" href="https://effective.timok.deno.net/"><meta property="og:site_name" content="Effective"><meta property="og:type" content="website"><meta property="og:title" content="Effective - Mini book"><meta property="og:description" content="Effective is a small language designed to transpile to Effect-TS. Ten chapters pair Effective source with its intended Effect-TS output."><meta property="og:url" content="https://effective.timok.deno.net/"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><meta property="og:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effective - Mini book"><meta name="twitter:description" content="Effective is a small language designed to transpile to Effect-TS. Ten chapters pair Effective source with its intended Effect-TS output."><meta name="twitter:image" content="https://effective.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effective. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://effective.timok.deno.net/#website","name":"Effective","url":"https://effective.timok.deno.net/","description":"Effective is a small language designed to transpile to Effect-TS. Ten chapters pair Effective source with its intended Effect-TS output.","inLanguage":"en"},{"@type":"TechArticle","@id":"https://effective.timok.deno.net/#book","headline":"Effective mini book","name":"Effective - Mini book","description":"Effective is a small language designed to transpile to Effect-TS. Ten chapters pair Effective source with its intended Effect-TS output.","url":"https://effective.timok.deno.net/","image":"https://effective.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@id":"https://effective.timok.deno.net/#website"}}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css?v=0.4.4"><script src="site.js?v=0.4.4" defer></script></head>
 <body id="top" class="book-page"><a class="skip" href="#content">Skip to content</a>
 <header class="topbar"><a class="brand" href="index.html">Effective<span class="brand-period" aria-hidden="true">.</span></a><nav class="toplinks" aria-label="Documents"><a href="index.html" aria-current="page">Mini book</a><a href="effective-spec.html">Specification</a></nav></header>
-<main id="site-content"><section class="hero" aria-labelledby="hero-heading"><div class="hero-type"><p class="hero-kicker">One contract. Three answers.</p><h1 id="hero-heading"><span>Plain code.</span><span>Typed effects.</span><i class="hero-spark" aria-hidden="true">✳︎</i></h1></div><div class="hero-bottom"><p class="subtitle">Effective is a small language designed to transpile to Effect-TS. You write direct code, and each contract becomes an <code>Effect.Effect&lt;A, E, R&gt;</code> type.</p><div class="hero-actions"><a class="button primary-action" href="#orientation">Read the book <span aria-hidden="true">↓</span></a><a class="button secondary-action" href="effective-spec.html">Read the specification <span aria-hidden="true">↗</span></a></div></div></section><section class="argument" aria-label="About Effective"><p class="argument-statement">A function tells you what it returns, how it can fail, and which services it needs.</p><div class="argument-bottom"><p>Effective keeps these facts in the contract. The body reads like direct TypeScript. The transpiler turns each contract into an Effect-TS type.</p><p>Language core 1. Design draft 0.30.<br>October 18, 2026. A Deno transpiler and CLI exist.</p></div></section><section class="showcase" id="contracts-explorer" aria-labelledby="explorer-heading"><div class="showcase-heading"><h2 id="explorer-heading">Read a contract.</h2><p>Choose a function from the Users example. This illustration shows declared contracts. It does not execute Effective.</p></div><form data-contract-explorer><div class="contract-controls" hidden><label for="contract-function">Explore a function</label><div class="function-input"><input id="contract-function" name="function" value="getUser" list="function-names" autocomplete="off" spellcheck="false" aria-describedby="contract-message"><button type="submit" aria-label="Show function contract">↵</button></div><datalist id="function-names"><option value="getUser"></option><option value="rename"></option><option value="displayName"></option><option value="activeNames"></option></datalist><div class="function-choices" aria-label="Example functions"><button type="button" data-function="getUser" aria-pressed="true">Lookup</button><button type="button" data-function="rename" aria-pressed="false">Rename</button><button type="button" data-function="displayName" aria-pressed="false">Recover</button><button type="button" data-function="activeNames" aria-pressed="false">Collect</button></div></div><div class="contract-result"><span class="contract-signal" aria-hidden="true"></span><figure class="code contract-source" data-ui data-tabs data-check="explorer-getUser" data-check-requires="users-declarations"><figcaption>Selected contract <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre id="contract-source" tabindex="0"><code class="language-effective">export const getUser = (id: UserId): User
+<main id="site-content"><section class="hero" aria-labelledby="hero-heading"><div class="hero-type"><p class="hero-kicker">One contract. Three answers.</p><h1 id="hero-heading"><span>Plain code.</span><span>Typed effects.</span><i class="hero-spark" aria-hidden="true">✳︎</i></h1></div><div class="hero-bottom"><p class="subtitle">Effective is a small language designed to transpile to Effect-TS. You write direct code, and each contract becomes an <code>Effect.Effect&lt;A, E, R&gt;</code> type.</p><div class="hero-actions"><a class="button primary-action" href="#orientation">Read the book <span aria-hidden="true">↓</span></a><a class="button secondary-action" href="effective-spec.html">Read the specification <span aria-hidden="true">↗</span></a></div></div></section><section class="argument" aria-label="About Effective"><p class="argument-statement">A function tells you what it returns, how it can fail, and which services it needs.</p><div class="argument-bottom"><p>Effective keeps these facts in the contract. The body reads like direct TypeScript. The transpiler turns each contract into an Effect-TS type.</p><p>Language core 1. Design draft 0.46.<br>October 19, 2026. A Deno transpiler and CLI exist.</p></div></section><section class="showcase" id="contracts-explorer" aria-labelledby="explorer-heading"><div class="showcase-heading"><h2 id="explorer-heading">Read a contract.</h2><p>Choose a function from the Users example. This illustration shows declared contracts. It does not execute Effective.</p></div><form data-contract-explorer><div class="contract-controls" hidden><label for="contract-function">Explore a function</label><div class="function-input"><input id="contract-function" name="function" value="getUser" list="function-names" autocomplete="off" spellcheck="false" aria-describedby="contract-message"><button type="submit" aria-label="Show function contract">↵</button></div><datalist id="function-names"><option value="getUser"></option><option value="rename"></option><option value="displayName"></option><option value="activeNames"></option></datalist><div class="function-choices" aria-label="Example functions"><button type="button" data-function="getUser" aria-pressed="true">Lookup</button><button type="button" data-function="rename" aria-pressed="false">Rename</button><button type="button" data-function="displayName" aria-pressed="false">Recover</button><button type="button" data-function="activeNames" aria-pressed="false">Collect</button></div></div><div class="contract-result"><span class="contract-signal" aria-hidden="true"></span><figure class="code contract-source" data-ui data-tabs data-check="explorer-getUser" data-check-requires="users-declarations"><figcaption>Selected contract <a href="effective-examples/users.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre id="contract-source" tabindex="0"><code class="language-effective">export const getUser = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
   match Users.find(id) {
@@ -19,7 +19,7 @@
       onNone: () =&gt; Effect.fail(new UserMissing({ id })),
       onSome: (user) =&gt; Effect.succeed(user)
     })
-  )</code></pre></div></figure><div class="contract-reading" aria-live="polite" aria-atomic="true"><dl><div><dt>Returns</dt><dd id="contract-success">User</dd></div><div><dt>Fails with</dt><dd id="contract-failures">UserMissing | StoreUnavailable</dd></div><div><dt>Uses</dt><dd id="contract-uses">Users.find</dd></div></dl><p id="contract-description">getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.</p></div></div><p id="contract-message" role="status">Showing getUser.</p></form></section><section class="book-index" id="book" aria-labelledby="book-heading"><div><h2 id="book-heading">The mini book.</h2><p>Nine chapters, from immutable values to a complete payment pipeline. Each example has an Effective tab and an Effect-TS tab that shows its intended output.</p></div><nav class="chapter-index" aria-label="Book chapters"><a href="#orientation"><span>What Effective is</span><span>The language</span></a><a href="#values"><span>Values and types</span><span>Immutable data</span></a><a href="#contracts"><span>Function contracts</span><span>Explicit effects</span></a><a href="#users-foundation"><span>One domain, two languages</span><span>Shared declarations</span></a><a href="#lookup-update"><span>Lookup and update</span><span>Service workflows</span></a><a href="#pipelines-collections"><span>Pipelines and collections</span><span>Composition</span></a><a href="#control"><span>Recovery and provision</span><span>Control</span></a><a href="#payment"><span>A payment pipeline</span><span>Complete example</span></a><a href="#modules-reference"><span>Modules and typed IR</span><span>Transpiler boundary</span></a></nav></section><div class="layout" id="reader"><details class="contents-menu"><summary>Chapters of the mini book</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav></details><nav class="contents" aria-label="Contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a></nav>
+  )</code></pre></div></figure><div class="contract-reading" aria-live="polite" aria-atomic="true"><dl><div><dt>Returns</dt><dd id="contract-success">User</dd></div><div><dt>Fails with</dt><dd id="contract-failures">UserMissing | StoreUnavailable</dd></div><div><dt>Uses</dt><dd id="contract-uses">Users.find</dd></div></dl><p id="contract-description">getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.</p></div></div><p id="contract-message" role="status">Showing getUser.</p></form></section><section class="book-index" id="book" aria-labelledby="book-heading"><div><h2 id="book-heading">The mini book.</h2><p>Ten chapters, from immutable values to scoped concurrency, streams, and Schemas. Each example has an Effective tab and an Effect-TS tab that shows its intended output.</p></div><nav class="chapter-index" aria-label="Book chapters"><a href="#orientation"><span>What Effective is</span><span>The language</span></a><a href="#values"><span>Values and types</span><span>Immutable data</span></a><a href="#contracts"><span>Function contracts</span><span>Explicit effects</span></a><a href="#users-foundation"><span>One domain, two languages</span><span>Shared declarations</span></a><a href="#lookup-update"><span>Lookup and update</span><span>Service workflows</span></a><a href="#pipelines-collections"><span>Pipelines and collections</span><span>Composition</span></a><a href="#control"><span>Recovery and provision</span><span>Control</span></a><a href="#payment"><span>A payment pipeline</span><span>Complete example</span></a><a href="#core1-showcase"><span>Core 1 in practice</span><span>Current features</span></a><a href="#modules-reference"><span>Modules and typed IR</span><span>Transpiler boundary</span></a></nav></section><div class="layout" id="reader"><details class="contents-menu"><summary>Chapters of the mini book</summary><nav class="contents mobile-contents" aria-label="Mobile contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#core1-showcase">Core 1 in practice</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a><a class="resource" href="effective-examples/core1.eff">Core 1 example</a></nav></details><nav class="contents" aria-label="Contents"><p class="contents-title">In this book</p><ol><li><a href="#orientation">What Effective is</a></li><li><a href="#values">Values and types</a></li><li><a href="#contracts">Function contracts</a></li><li><a href="#users-foundation">One domain, two languages</a></li><li><a href="#lookup-update">Lookup and update</a></li><li><a href="#pipelines-collections">Pipelines and collections</a></li><li><a href="#control">Recovery and provision</a></li><li><a href="#payment">A payment pipeline</a></li><li><a href="#core1-showcase">Core 1 in practice</a></li><li><a href="#modules-reference">Modules and typed IR</a></li></ol><p class="contents-title resources-title">Source and evidence</p><a class="resource" href="typed-ir.ts">Typed IR model</a><a class="resource" href="log.ir.json">Manual IR fixture</a><a class="resource" href="effective-validation.txt">Validation scope</a><a class="resource" href="effective-examples/users.eff">Users example</a><a class="resource" href="effective-examples/pay.eff">Payment example</a><a class="resource" href="effective-examples/core1.eff">Core 1 example</a></nav>
 <article class="main" id="content"><div class="reference-links"><p>Effect-TS means the Effect library for TypeScript, version 4. The target examples use Effect 4.0.5.</p><nav aria-label="Further reading"><a href="effective-spec.html">Read the specification</a><a href="effective-examples/main.eff">Open the application boundary</a><a href="typed-ir.ts">Inspect the typed IR model</a></nav></div><section class="section" id="orientation" aria-labelledby="heading-orientation"><h2 id="heading-orientation">What Effective is</h2><p class="lead">Effective is a small functional language designed to transpile to Effect-TS.</p><p>Effective combines immutable data, arrow functions, pattern matching, and typed service operations. A program reads like direct TypeScript, while each function contract records expected failures and required capabilities.</p>
 <p>The transpiler turns each contract into an Effect-TS type. A function that returns A, fails with E, and uses R becomes Effect.Effect&lt;A, E, R&gt;.</p>
 <p>Services become Context services, and providers become Layer values. Records, errors, and brands become Schema declarations. Options become Option values.</p>
@@ -461,7 +461,208 @@ const pay = (id: OrderId): Effect.Effect&lt;
 <p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
 <p>The Effect-TS tab uses a schema to check safe integers at a boundary. Effective separately requires its checker and runtime to preserve int arithmetic rules.</p>
 <p>The Effect-TS tab uses Effect.gen for ordered operations. Effective keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
-<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous: Recovery and provision</a><a href="#modules-reference">Next: Modules and typed IR</a></nav></section><section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">Modules and typed IR</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure data-ui class="code" data-tabs data-check="book-modules" data-check-requires="users-declarations users-lookup"><figcaption>Version 0 imports and exports</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import {
+<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous: Recovery and provision</a><a href="#core1-showcase">Next: Core 1 in practice</a></nav></section><section class="section" id="core1-showcase" aria-labelledby="heading-core1-showcase"><h2 id="heading-core1-showcase">Core 1 in practice</h2><p class="lead">Scopes supervise concurrent work, schedules shape streams, and Schemas control field presence and service-backed decoding.</p><p>These are implemented source forms. The compiler checks the <a href="effective-examples/core1.eff">full Effective example</a>; every Effect-TS tab is checked against Effect 4.0.5.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-scope"><figcaption>A scoped child closes with its parent <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Int = int
+
+export const supervised = (): Int =&gt;
+  scoped(defer(() =&gt; {
+    forkScoped(defer(() =&gt; 3))
+    3
+  }))</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-scope"><pre tabindex="0"><code class="language-typescript">import { Effect } from &quot;effect&quot;
+
+const supervised = (): Effect.Effect&lt;number&gt; =&gt;
+  Effect.scoped(Effect.gen(function* () {
+    yield* Effect.forkScoped(Effect.succeed(3))
+    return 3
+  }))</code></pre></div></figure>
+<p>The child is attached to the scope. When the scoped job ends, Effect interrupts a child that is still running and waits for its cleanup.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-stream"><figcaption>Batch a stream by size or a one-second schedule <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Int = int
+
+export const timedBatches = (source: Stream&lt;Int&gt;): Stream&lt;Int[]&gt; =&gt;
+  aggregateWithinStream(source, takeSink(2), scheduleSpaced(1000))</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-stream"><pre tabindex="0"><code class="language-typescript">import { Duration, Schedule, Sink, Stream } from &quot;effect&quot;
+
+const timedBatches = (
+  source: Stream.Stream&lt;number&gt;
+): Stream.Stream&lt;ReadonlyArray&lt;number&gt;&gt; =&gt;
+  Stream.aggregateWithin(
+    source,
+    Sink.take&lt;number&gt;(2),
+    Schedule.spaced(Duration.millis(1000))
+  )</code></pre></div></figure>
+<p>The stream stays deferred until consumed. A batch emits when the Sink fills or the schedule fires.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-schema"><figcaption>Optional getter and missing-key default with decode services <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Int = int
+type Optional = { score?: Int }
+type Required = { score: Int }
+
+service Read { next(value: Int): Int }
+service Defaults { make(): Int }
+
+const integer: Schema&lt;Int&gt; = schema()
+const optional: SchemaOptional&lt;Int&gt; = schemaOptionalKey(integer)
+const shiftedField: SchemaOptional&lt;Int, Int, Read.next&gt; =
+  schemaOptionalTransform(
+    optional,
+    optional,
+    (value: Option&lt;Int&gt;): Option&lt;Int&gt; uses Read.next =&gt;
+      match value {
+        Some(score) =&gt; Some(Read.next(score)),
+        None =&gt; None
+      },
+    (value: Option&lt;Int&gt;): Option&lt;Int&gt; =&gt; value
+  )
+const shifted: Schema&lt;Optional, Optional, Read.next&gt; =
+  schemaStruct({ score: shiftedField })
+const defaulted: Schema&lt;Required, Optional, Defaults.make&gt; =
+  schemaStruct({
+    score: schemaDefaultKey(integer, (): Int uses Defaults.make =&gt; Defaults.make())
+  })
+
+export const readShifted = (input: unknown): Optional fails SchemaError uses Read.next =&gt;
+  schemaDecode(shifted, input)
+export const readDefault = (input: unknown): Required fails SchemaError uses Defaults.make =&gt;
+  schemaDecode(defaulted, input)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-schema"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Option, Schema, SchemaGetter } from &quot;effect&quot;
+
+const Int = Schema.Finite.check(Schema.makeFilter(
+  (value) =&gt; Number.isSafeInteger(value) || &quot;expected a safe integer&quot;
+))
+type Int = typeof Int.Type
+type Optional = { readonly score?: Int }
+type Required = { readonly score: Int }
+class Read extends Context.Service&lt;Read, {
+  readonly next: (value: Int) =&gt; Effect.Effect&lt;Int&gt;
+}&gt;()(&quot;showcase#Read&quot;) {}
+class Defaults extends Context.Service&lt;Defaults, {
+  readonly make: () =&gt; Effect.Effect&lt;Int&gt;
+}&gt;()(&quot;showcase#Defaults&quot;) {}
+
+const optional = Schema.optionalKey(Int)
+const shifted = Schema.Struct({
+  score: optional.pipe(Schema.decodeTo(optional, {
+    decode: SchemaGetter.transformOptionalEffect((value) =&gt;
+      Option.isSome(value)
+        ? Read.use((service) =&gt;
+            Effect.map(service.next(value.value), Option.some))
+        : Effect.succeed(Option.none())
+    ),
+    encode: SchemaGetter.transformOptional((value) =&gt; value)
+  }))
+})
+const defaulted = Schema.Struct({
+  score: Int.pipe(Schema.withDecodingDefaultTypeKey(
+    Effect.suspend(() =&gt; Defaults.use((service) =&gt; service.make()))
+  ))
+})
+const readShifted = (input: unknown): Effect.Effect&lt;
+  Optional, Schema.SchemaError, Read
+&gt; =&gt; Schema.decodeUnknownEffect(shifted)(input)
+const readDefault = (input: unknown): Effect.Effect&lt;
+  Required, Schema.SchemaError, Defaults
+&gt; =&gt; Schema.decodeUnknownEffect(defaulted)(input)</code></pre></div></figure>
+<p>The getter sees missing and present keys. The default runs only for a missing key. Their service requirements belong to decoding; encoding needs neither service in this example.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-required-optional"><figcaption>A required encoded name may decode to an absent key <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Name = string
+type OptionalName = { name?: Name }
+type RequiredName = { name: Name }
+
+const name: Schema&lt;Name&gt; = schema()
+const optionalName: SchemaOptional&lt;Name&gt; = schemaOptionalKey(name)
+const requiredNameField: SchemaDecodedOptional&lt;Name&gt; =
+  schemaOptionalFromRequired(
+    name,
+    optionalName,
+    (value: Name): Option&lt;Name&gt; =&gt; if (value === &quot;&quot;) { None } else { Some(value) },
+    (value: Option&lt;Name&gt;): Name =&gt; match value { Some(current) =&gt; current, None =&gt; &quot;&quot; }
+  )
+export const names: Schema&lt;OptionalName, RequiredName&gt; =
+  schemaStruct({ name: requiredNameField })</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-required-optional"><pre tabindex="0"><code class="language-typescript">import { Effect, Option, Schema, SchemaGetter, SchemaIssue } from &quot;effect&quot;
+
+const Names = Schema.Struct({
+  name: Schema.String.pipe(Schema.decodeTo(Schema.optionalKey(Schema.String), {
+    decode: SchemaGetter.transformOptionalEffect((value) =&gt;
+      Option.isNone(value)
+        ? Effect.fail(new SchemaIssue.InvalidValue({ message: &quot;required name is missing&quot; }))
+        : Effect.succeed(value.value === &quot;&quot; ? Option.none() : value)
+    ),
+    encode: SchemaGetter.transformOptional((value) =&gt;
+      Option.some(Option.getOrElse(value, () =&gt; &quot;&quot;))
+    )
+  }))
+})
+const decoded: typeof Names.Type = {}
+const encoded: typeof Names.Encoded = { name: &quot;&quot; }
+void decoded
+void encoded</code></pre></div></figure>
+<p>The encoded record must have a name. Decoding an empty name omits it; encoding an absent name writes an empty string. The getter rejects a missing encoded key before it runs the user transformation.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-general-union"><figcaption>Combine unlike branches or fall through after a Schema issue <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Name = string
+type Int = int
+type Scalar = Name | Int
+const name: Schema&lt;Name&gt; = schema()
+const integer: Schema&lt;Int&gt; = schema()
+export const scalar: Schema&lt;Scalar&gt; = schemaUnion([name, integer])
+
+service Validation { accept(value: Name): Name fails SchemaIssue }
+
+const checkedName: Schema&lt;Name, Name, Validation.accept&gt; =
+  schemaTransform(
+    name,
+    name,
+    (value: Name): Name fails SchemaIssue uses Validation.accept =&gt; Validation.accept(value),
+    (value: Name): Option&lt;Name&gt; =&gt; Some(value)
+  )
+export const fallbackName: Schema&lt;Name, Name, Validation.accept&gt; =
+  schemaUnion([checkedName, name])</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-general-union"><pre tabindex="0"><code class="language-typescript">import { Context, Effect, Schema, SchemaIssue, SchemaTransformation } from &quot;effect&quot;
+
+const Int = Schema.Finite.check(Schema.makeFilter(
+  (value) =&gt; Number.isSafeInteger(value) || &quot;expected a safe integer&quot;
+))
+const Scalar = Schema.Union([Schema.String, Int])
+
+class Validation extends Context.Service&lt;Validation, {
+  readonly accept: (value: string) =&gt; Effect.Effect&lt;string, SchemaIssue.Issue&gt;
+}&gt;()(&quot;showcase#Validation&quot;) {}
+
+const checkedName = Schema.String.pipe(Schema.decodeTo(
+  Schema.String,
+  SchemaTransformation.transformEffect({
+    decode: (value) =&gt; Validation.use((service) =&gt; service.accept(value)),
+    encode: Effect.succeed
+  })
+))
+const FallbackName = Schema.Union([checkedName, Schema.String])</code></pre></div></figure>
+<p>The scalar Schema accepts a string or safe integer. The name union first tries the service-backed transformation. A Schema issue lets the plain string branch succeed; a successful first transformation wins. Decoding still requires the Validation service. Defects and interruption propagate.</p>
+<figure data-ui class="code" data-tabs data-check="book-core1-nullable"><figcaption>Choose whether a nullable optional field preserves null <a href="effective-examples/core1.eff">View Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Name = string
+type Nil = null
+type Nullable = Name | Nil
+type NullableRecord = { name?: Nullable }
+type OptionalName = { name?: Name }
+const name: Schema&lt;Name&gt; = schema()
+const nil: Schema&lt;Nil&gt; = schema()
+const nullable: Schema&lt;Nullable&gt; = schemaUnion([name, nil])
+export const preserveNull: Schema&lt;NullableRecord&gt; =
+  schemaStruct({ name: schemaOptionalKey(nullable) })
+export const omitNull: Schema&lt;OptionalName, NullableRecord&gt; =
+  schemaStruct({ name: schemaNullToMissingKey(name) })
+export const missingName = (): NullableRecord =&gt; ({})
+export const clearedName = (): NullableRecord =&gt; ({ name: null })</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-core1-nullable"><pre tabindex="0"><code class="language-typescript">import { Option, Schema, SchemaGetter } from &quot;effect&quot;
+
+const Nullable = Schema.Union([Schema.String, Schema.Null])
+const PreserveNull = Schema.Struct({
+  name: Schema.optionalKey(Nullable)
+})
+const OmitNull = Schema.Struct({
+  name: Schema.optionalKey(Nullable).pipe(Schema.decodeTo(
+    Schema.optionalKey(Schema.String),
+    {
+      decode: SchemaGetter.transformOptional(
+        Option.filter((value) =&gt; value !== null)
+      ),
+      encode: SchemaGetter.transformOptional((value) =&gt; value)
+    }
+  ))
+})
+const missingName = (): typeof PreserveNull.Type =&gt; ({})
+const clearedName = (): typeof PreserveNull.Type =&gt; ({ name: null })</code></pre></div></figure>
+<p>With preserveNull, an absent key stays absent and a present null stays present. With omitNull, null decodes to an absent key. Encoding an absent key omits it in both cases. Explicit undefined fails either Schema.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#payment">Previous: A payment pipeline</a><a href="#modules-reference">Next: Modules and typed IR</a></nav></section>
+<section class="section" id="modules-reference" aria-labelledby="heading-modules-reference"><h2 id="heading-modules-reference">Modules and typed IR</h2><p class="lead">Modules expose named declarations and keep host integration behind typed interfaces.</p><figure data-ui class="code" data-tabs data-check="book-modules" data-check-requires="users-declarations users-lookup"><figcaption>Version 0 imports and exports</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import {
   User,
   UserId,
   UserMissing,
@@ -489,16 +690,16 @@ export const load = (id: UserId): Effect.Effect&lt;
 &gt; =&gt; getUser(id)</code></pre></div></figure>
 <p>Version 0 permits named imports from relative .eff files and registered host modules. It excludes default imports, namespace imports, renaming, re-exports, and package resolution.</p>
 <p>Module constants require pure initializers. Imports cannot run application service operations. A host starts execution through an entry function after it supplies required providers.</p>
-<p>The transpiler will parse source, resolve identities, infer effects, check contracts, specialize builtins, and emit typed IR. Its Effect-TS backend then emits TypeScript from that IR. The current project defines these stages but supplies no transpiler.</p>
+<p>The transpiler parses source, resolves identities, infers effects, checks contracts, specializes builtins, and emits typed IR. Its Effect-TS backend emits TypeScript from checked IR.</p>
 <p>Resolution assigns stable identities to types, errors, services, capabilities, values, and locals. Equal names in different modules do not identify the same declaration.</p>
 <div class="table-wrap"><table><thead><tr><th scope="col">Source form</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>A fails E uses R</td><td>A function succeeds with A, can fail with E, and requires R.</td></tr><tr><td>fail(ErrorName({ fields }))</td><td>End the normal path with one declared error value.</td></tr><tr><td>match value { Some(x) =&gt; ..., None =&gt; ... }</td><td>Inspect an option with complete coverage.</td></tr><tr><td>try { expression } catch { ErrorName(e) =&gt; ... }</td><td>Handle matching typed failures from one protected expression.</td></tr><tr><td>value |&gt; f(a)</td><td>Evaluate value once, then call f(value, a).</td></tr><tr><td>retry(() =&gt; op(), { times: 2 })</td><td>Run one attempt and permit two additional attempts.</td></tr><tr><td>provide(P, () =&gt; op())</td><td>Run op with capabilities supplied by provider P.</td></tr><tr><td>({ ...record, field: value })</td><td>Create a record with one immutable update.</td></tr><tr><td>unbrand(value)</td><td>Convert a branded value to its base value.</td></tr><tr><td>map, filter, fold</td><td>Traverse arrays from left to right with pure callbacks.</td></tr></tbody></table></div>
 <p>The IR resolves every reference to a stable identity. It separates ordinary calls from service operations. It preserves retry, provide, catch, brands, and source positions as explicit nodes.</p>
 <p>A pipeline needs no IR node. Lowering creates fresh bindings and ordinary call or service-operation nodes. This preserves single evaluation, stage order, and useful diagnostic positions.</p>
 <p>Acceptance fixtures must cover evaluation order, branch selection, failure propagation, contract rejection, closure deferral, retry, and provider resolution. Pipeline fixtures must also check stage identity.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Why must a future validator recompute types and effects instead of trusting serialized annotations?</p><details><summary>Show the answer</summary><p>A payload can contain inconsistent annotations. Recalculation confirms reference, type, execution, failure, requirement, and source-position rules.</p></details></aside>
-<p>The effective-lang repository now has a parser, checker, typed IR validator, transpiler, CLI, and runtime fixtures for the implemented core 0 subset. The specification defines core 1 extensions for subsequent compiler milestones.</p>
+<p>The effective-lang repository has a parser, checker, independent typed IR validator, transpiler, CLI, and runtime fixtures for the implemented core 1 subset. The specification records the supported forms and remaining boundaries.</p>
 <p>The Effect-TS tabs use the official Effect v4 documentation. Every Effect-TS tab passes strict TypeScript checks against Effect 4.0.5, with its chapter dependencies.</p>
 <p>Target references: <a href="https://effect.website/docs/v4/data-types/option">https://effect.website/docs/v4/data-types/option</a> and <a href="https://effect.website/docs/v4/schema/basic-usage">https://effect.website/docs/v4/schema/basic-usage</a>.</p>
 <p>Schema filter reference: <a href="https://effect.website/docs/v4/schema/filters">https://effect.website/docs/v4/schema/filters</a>. Brand reference: <a href="https://effect.website/docs/v4/schema/advanced-usage">https://effect.website/docs/v4/schema/advanced-usage</a>.</p>
-<p>The provider check uses a declared adapter interface, without a provider implementation. The checks do not execute Effective or prove translation equivalence.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#payment">Previous: A payment pipeline</a><a href="effective-spec.html">Read the specification</a></nav></section>
-<div class="document-note"><p>Effective documentation, draft 0.30. Source examples and Effect-TS translations are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="effective-spec.html">Read the specification</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>
+<p>The provider check uses a declared adapter interface, without a provider implementation. The Core 1 showcase source passes the compiler, independent IR validator, and strict checking of emitted TypeScript; these checks do not prove runtime equivalence.</p><nav class="section-nav" aria-label="Navigation for section 10"><a href="#core1-showcase">Previous: Core 1 in practice</a><a href="effective-spec.html">Read the specification</a></nav></section>
+<div class="document-note"><p>Effective documentation, draft 0.46. Source examples and Effect-TS translations are manually authored.</p><p>The validation report states each completed check and its limits.</p></div></article></div></main><footer class="footer"><div class="footer-top"><div><h2>Keep the contract.</h2><a class="button" href="effective-spec.html">Read the specification</a></div><nav aria-label="Source files"><a href="typed-ir.ts">Typed IR model</a><a href="effective-validation.txt">Validation scope</a><a href="#top">Back to top</a></nav></div><div class="footer-note"><p>A language design. Every example is manually authored.</p><a href="fonts/OFL.txt">Bricolage Grotesque font license</a></div><div class="footer-name" aria-hidden="true">Effective.</div></footer></body></html>
