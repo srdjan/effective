@@ -1108,3 +1108,47 @@ The compiler documentation commit passes deno task check on Deno 2.9.7:
 of all 47 illustrative Effect-TS units, with zero missing translations. These
 checks preserve the existing implementation baseline; application gates remain
 pending.
+
+
+Scheduled-worker application gate, October 19, 2026
+The scheduled worker now passes the accepted application gate with existing
+Effective forms. Source owns policy validation, repetition, transient retry
+selection, progress and per-attempt resource release. The driver supplies
+recording in-memory job operations and primitive waits. The runtime entry point
+supplies whole-worker interruption for shutdown. No new language form, builtin,
+IR operation or compiler behavior is selected.
+
+Policy fields are safe nonnegative integers. Validation precedes even the
+zero-job branch. runs counts successful jobs; retries counts additional attempts
+per job. The first job starts immediately. Each acquired attempt finishes release
+before a retry or a repetition delay starts. A single nominal JobFailure retains
+a Transient or Fatal kind field; source retries only Transient. Each job receives
+a fresh retry budget. Replaying the same returned Effect resets progress.
+
+The source checks enforce result, failure and service contracts and retain
+separate diagnostics for opaque general Schedule retry and repetition consumers.
+Those API gaps remain open. A concrete source-authored policy is sufficient for
+this application. The native reference comparison covers the selected fixed
+policy, timing and results, not all opaque Schedule behavior.
+
+Nine compiled runtime checks cover matching virtual-time job starts at 0, 5, 25
+and 30 milliseconds, Effect replay, zero work, validation precedence, zero
+retries, exhaustion, permanent failure, acquisition failure, execution and release
+defects, and cancellation during work, repetition waits and native retry waits.
+A blocked release holds interruption pending and prevents a later attempt.
+Assertions that inspect blocked release always open their release gate, including
+on assertion failure. The native clock observer forwards time reads and replaces
+sleep with a synchronized pending operation for the retry cancellation check.
+
+The compiler gate passes with 1,140 fast tests and 129 slow tests on Deno 2.9.7.
+The site passes 11 tests and strict checking of all 47 existing illustrative
+Effect-TS units, with zero missing translations. A fresh copy of the downloadable
+application builds with zero diagnostics, passes independent IR and strict
+emitted TypeScript checks, passes its nine runtime cases, and runs its entry
+point to completion. Its explicit checks.ts file runs after compilation.
+
+One of the three application gates is complete. The service workflow and stream
+processor remain pending; the service workflow baseline is next. The driver
+performs no external I/O, so this establishes no external integration coverage.
+Gap item 9 remains deferred by user instruction. The language edition stays
+at draft 0.57 because this application adds no source forms.
