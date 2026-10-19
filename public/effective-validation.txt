@@ -1041,3 +1041,46 @@ validator diagnostics and strict emitted TypeScript checking. All 46 illustrativ
 Effect-TS units pass strict checking, with zero missing translations. The site's
 11 tests pass. Guarded recursive self use through field adapters is next. Broader
 package interoperability, item 9, remains deferred by user instruction.
+
+Draft 0.57 guarded recursive field adapters, October 19, 2026
+schemaRecursive now follows guarded self through schemaDefaultKey,
+schemaDefaultNullKey, schemaDefaultEncodedKey, schemaOptionalTransform and
+schemaOptionalFromRequired. Defaults traverse their wrapped Schema only.
+Bridges traverse their source and target Schema arguments. Default callbacks,
+both directional getters, and options cannot capture self. Capture checks use
+binding identity and reject discarded captures. Source calls must resolve to
+actual builtins; a shadowed name does not prove a structural guard.
+
+schemaNullToMissingKey supplies an optional-key guard. Unions beneath an
+established array, optional-key or terminal-tagged data guard retain that guard
+through every member. This permits exact optional nullable recursive wire links.
+Unguarded nested unions still fail. Each D/E/M alias keeps an independent guard,
+and root unions still need distinct literal tags and a self-free terminal branch.
+Recursive Option data, arbitrary self-bearing ordinary transformations, mutual
+recursion and arbitrary AST construction remain outside this slice.
+
+No syntax, type names, IR properties or emission paths are added. Independent
+validation preserves named recursive identity before unfolding a matching union
+member. Imported recursive aliases use the same guard rules and stay distinct.
+Construction retains target M and defaults, skips wire getters, and needs no
+wire services. Decode and encode retain directional services, encoding
+strategies, nested paths, defects and awaited cleanup.
+
+Three pinned Effect 4.0.5 probes cover recursive wire defaults, nullable links
+and optional bridges. Source and independent IR boundaries reject callback
+captures, wrong axes, unsupported self paths and unguarded aliases. Strict
+compiled execution covers every new adapter, nullable imports, distinct recursive
+aliases, nested partial M, target-only bridge construction, required wire guards,
+wire services, encoded omission with retained encoder work, repeated defaults,
+failures, defects and awaited cleanup on interruption. The compiler gate passes
+with 1,137 fast tests and 128 slow tests on Deno 2.9.7.
+
+Draft 0.57 code showcase, October 19, 2026
+The seventeenth Core 1 pair carries a recursive array through constructor and
+wire-default adapters. Construction fills nested partial input with constructor
+defaults. Wire decoding uses a separate decoded default and requires score.
+The full core1.eff source builds with zero compiler and independent validator
+diagnostics and strict emitted TypeScript checking. All 47 illustrative
+Effect-TS units pass strict checking, with zero missing translations. The site's
+11 tests pass. Recursive Option data is next. Broader package interoperability,
+item 9, remains deferred by user instruction.

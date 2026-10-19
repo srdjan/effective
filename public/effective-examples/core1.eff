@@ -203,3 +203,18 @@ export const makeAdapterAfterDefault = (input: Optional): Required fails SchemaI
   schemaMake(adapterAfterDefaults, input)
 export const makeAdaptedOption = (input: OptionScores): OptionScores fails SchemaIssue =>
   schemaMake(optionAfterDefaults, input)
+
+type DefaultWireTree = { score: Int, children?: DefaultWireTree[] }
+export const defaultedTree: Schema<Tree,DefaultWireTree,never,never,TreeInput> = schemaRecursive(
+  (self: Schema<Tree,DefaultWireTree,never,never,TreeInput>): Schema<Tree,DefaultWireTree,never,never,TreeInput> =>
+    schemaStruct({
+      score: schemaConstructorDefault(integer, (): Int => 4),
+      children: schemaDefaultKey(
+        schemaConstructorDefault(schemaArray(self), (): TreeInput[] => []),
+        (): Tree[] => [{ score: 8, children: [] }])
+    })
+)
+export const makeDefaultedTree = (input: TreeInput): Tree fails SchemaIssue =>
+  schemaMake(defaultedTree, input)
+export const readDefaultedTree = (input: unknown): Tree fails SchemaError =>
+  schemaDecode(defaultedTree, input)
