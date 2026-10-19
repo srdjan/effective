@@ -847,3 +847,36 @@ checking. All 41 illustrative Effect-TS units pass strict checking, with zero
 missing translations. The site's 11 tests pass. Constructor metadata through
 optional adapters is next, followed by recursive make-input propagation.
 Broader package interoperability remains deferred by user instruction.
+
+Draft 0.52 optional-adapter constructor inputs, October 19, 2026
+All existing optional Schema adapters now accept distinct constructor make inputs.
+Null-as-missing and decoding-default adapters retain wrapped M. Optional
+transformations, including required-encoded fields, use the decoded target's M.
+Source make inputs do not enter that target shape. D/E, directional wire services,
+callback contracts, and encoding strategies retain their existing meanings.
+
+Decoding defaults leave constructor fields required and do not execute during
+schemaMake. Present partial nested inputs run their constructor defaults instead.
+Decoded/encoded fallback callbacks still return complete D/E. Null-as-missing
+remains a wire policy. Option fields explicitly require complete Option<D>,
+without nested constructor defaults, and remain required during construction.
+The independent validator recomputes each adapter's M; emission restores changed
+make views through public Schema.make, with no new IR operations or casts.
+
+Three pinned target tests cover default strategies, nested construction, skipped
+wire callbacks, and Option's complete-data boundary. Source and independent IR
+tests reject erased and forged M, missing constructor fields, partial Option
+contents, and partial wire defaults. Strict compiled execution covers every
+adapter, imported descriptors, target selection, nested issue paths, and wire
+effect traces. The compiler gate passes with 1,122 fast tests and 123 slow tests
+on Deno 2.9.7.
+
+Draft 0.52 code showcase, October 19, 2026
+The twelfth Core 1 pair contrasts a wire default with a nested constructor
+default and shows null-as-missing retaining a partial make input. The full
+core1.eff source builds with zero compiler and independent validator diagnostics
+and strict emitted TypeScript checking. All 42 illustrative Effect-TS units pass
+strict checking, with zero missing translations. The site's 11 tests pass after
+regenerating asset links for the existing package version. Recursive make-input
+propagation is next. Broader package interoperability remains deferred by user
+instruction.

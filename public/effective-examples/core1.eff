@@ -135,3 +135,17 @@ export const constructorDefaultsList: Schema<DefaultRecord[], DefaultRecord[], n
   schemaArray(constructorDefaults)
 export const constructDefaults = (input: NestedInput): NestedRecord fails SchemaIssue =>
   schemaMake(nestedDefaults, input)
+
+type SettingsRecord = { settings: DefaultRecord }
+type SettingsWire = { settings?: DefaultRecord }
+type SettingsInput = { settings: DefaultInput }
+type OptionalSettingsInput = { settings?: DefaultInput }
+type NullableSettingsWire = { settings?: DefaultRecord | null }
+
+export const wireDefaultSettings: Schema<SettingsRecord, SettingsWire, never, never, SettingsInput> =
+  schemaStruct({ settings: schemaDefaultKey(constructorDefaults,
+    (): DefaultRecord => ({ score: 8 })) })
+export const optionalSettings: Schema<SettingsWire, NullableSettingsWire, never, never, OptionalSettingsInput> =
+  schemaStruct({ settings: schemaNullToMissingKey(constructorDefaults) })
+export const constructSettings = (input: SettingsInput): SettingsRecord fails SchemaIssue =>
+  schemaMake(wireDefaultSettings, input)
