@@ -144,6 +144,24 @@
     fragment.append(span);
   };
 
+  // The gutter is a sibling of the code, so Copy and textContent never include the numbers.
+  const numberLines = (code) => {
+    const pre = code.parentElement;
+    if (!pre?.closest("figure.code")) return;
+    const lineCount = code.textContent.replace(/\n$/, "").split("\n").length;
+    let gutter = pre.querySelector(":scope > .line-numbers");
+    if (!gutter) {
+      gutter = document.createElement("span");
+      gutter.className = "line-numbers";
+      gutter.setAttribute("aria-hidden", "true");
+      pre.prepend(gutter);
+    }
+    gutter.textContent = Array.from(
+      { length: lineCount },
+      (_, index) => index + 1,
+    ).join("\n");
+  };
+
   const highlightCode = (code) => {
     const source = code.textContent;
     const fragment = document.createDocumentFragment();
@@ -204,6 +222,7 @@
 
     appendPlainText(source.length);
     code.replaceChildren(fragment);
+    numberLines(code);
   };
 
   const highlightAllCode = () => {
@@ -899,6 +918,7 @@
           code.textContent = text;
           // Plain text pages hold prose, and the keyword colors would mark ordinary words.
           if (/\.(eff|ts|json)$/.test(path)) highlightCode(code);
+          else numberLines(code);
           code.parentElement.scrollTop = 0;
           link.closest("details.contents-menu")?.removeAttribute("open");
           if (!drawer.open) drawer.showModal();

@@ -156,6 +156,9 @@ a[aria-busy="true"] { cursor: progress; }
 .copy-code:focus-visible { color: var(--code-ink); }
 .code pre { margin: 0; padding: 24px; max-height: 700px; overflow: auto; font-size: var(--small); line-height: 1.75; tab-size: 2; }
 .code pre code { font: inherit; white-space: pre; }
+.code pre:has(> .line-numbers) { display: grid; grid-template-columns: auto 1fr; padding-left: 0; }
+/* The gutter sticks to the left edge and covers code that scrolls under it. */
+.line-numbers { position: sticky; z-index: 1; left: 0; padding: 0 16px 0 24px; background: var(--code-bg); color: color-mix(in srgb, var(--code-comment) 62%, transparent); text-align: right; white-space: pre; user-select: none; }
 .syntax-keyword { color: var(--code-keyword); }
 .syntax-string { color: var(--code-string); }
 .syntax-comment { color: var(--code-comment); }
@@ -327,6 +330,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .code [role="tablist"] { padding-inline: 0; }
   .code-panel::before { padding: 16px 16px 0; }
   .code pre { padding: 20px 16px; }
+  .line-numbers { padding: 0 12px 0 16px; }
   .exercise { padding: 24px; }
   th, td { padding: 12px; font-size: var(--small); }
   .footer { padding-top: 64px; }
@@ -384,6 +388,8 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .section p { max-width: none; }
   .code pre { overflow: visible; max-height: none; font-size: 9pt; white-space: pre-wrap; }
   .code pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .line-numbers { display: none; }
+  .code pre:has(> .line-numbers) { display: block; padding-left: 24px; }
   .code [role="tablist"] { display: none; }
   .code-panel[hidden] { display: block !important; }
   .tabs-ready .code-panel::before { display: block; }
