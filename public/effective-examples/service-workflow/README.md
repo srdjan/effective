@@ -41,8 +41,8 @@ retain cleanup defects and prevent retry. Body interruption rolls back and
 awaits release. Interruption after COMMIT starts waits for commit and release;
 a committed row can remain. The application promises no exactly-once submission.
 
-The service workflow gate passes with a typed transaction adapter. The stream
-processor gate remains pending. These recording drivers perform no external I/O.
+The service workflow gate passes with a typed transaction adapter. All three
+application gates now pass using existing forms. These recording drivers perform no external I/O.
 The simulated COMMIT error precedes committed-state mutation and proves no retry.
 It does not establish actual ambiguous-commit behavior or external integration.
 Gap item 9 remains deferred.

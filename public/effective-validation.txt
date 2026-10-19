@@ -1207,3 +1207,67 @@ mutation, so that case proves no retry, not actual ambiguous-commit behavior.
 These checks establish no external database integration or source transaction
 callbacks. Gap item 9 remains deferred. The language edition stays at draft
 0.57 because this application adds no source form.
+
+
+Stream processor application gate, October 19, 2026
+The stream processor now passes the accepted application gate with existing
+Effective forms. Source owns nested session brackets, live input pulls,
+buffering, ordered concurrent mapping, selected fallbacks, batching and terminal
+consumption. The recording driver supplies primitive operations only.
+The source contract retains InputFailure, TransformFailure and OutputFailure,
+plus all seven declared service operations. Source checks independently reject
+erased failures, erased requirements and an incorrect result contract.
+
+Thirteen compiled runtime cases cover deferred construction, ordered full and
+partial batches, empty input, exact batch multiples, Effect replay, live arrivals,
+out-of-order transformation completion, backpressure, recovery, failure,
+acquisition errors, defects and awaited cancellation cleanup. Forced completion
+order [2,1] preserves output order with at most two active transformations.
+Normal input produces batches [1,2], [3,4] and [5]. Source suppresses native
+transduction's empty terminal batch. Replaying the same Effect resets source
+progress and opens fresh sessions.
+
+The input buffer has capacity two and suspends production under backpressure.
+With the first output blocked, scheduler quiescence leaves pull indices zero
+through six. Repeated quiescence makes no further pull. Resumed demand consumes
+all one hundred input items and reaches end-of-input. This pinned trace
+includes work in progress and establishes no global memory bound.
+
+Recoverable transformation failures become marked original-value fallbacks.
+Recovery does not retry writes or restart input. Fatal transformations and
+output failures cancel pending peer work before closing sessions. A later
+input failure propagates while preserving earlier writes. Native transduction
+can emit a partial batch before propagating its saved upstream failure.
+The application promises no rollback or exactly-once delivery.
+
+Input opens before output; output closes before input. Cancellation of pending
+input or output waits for pipeline work and both session finalizers. The
+checks block each finalizer separately and verify that interruption stays
+pending. Gate release protects the entire shutdown handshake before either
+child fiber starts. A separate temporary injected handshake defect returns
+promptly instead of waiting forever on its blocked finalizer.
+Execution and session cleanup defects remain defects, and remaining session
+finalizers are attempted.
+
+Item recovery follows the pinned native catchTags behavior. A direct mixed-cause
+comparison confirms that a matching typed reason can hide an accompanying
+defect from an arbitrary transformation cause. The normal primitive
+transformation cleanup cannot fail. Session finalizers run outside item recovery.
+These checks do not establish arbitrary mixed-cause preservation.
+
+The compiler passes deno task check on Deno 2.9.7: 1,144 fast tests and 131
+slow tests. The application harness validates linked IR, strictly checks emitted
+TypeScript, runs thirteen runtime cases and executes the entry point.
+The website passes eleven tests and strict checking of all 47 illustrative
+Effect-TS units, with zero missing translations. A fresh downloadable project
+builds two modules with zero diagnostics using --validate --tsc, passes all
+thirteen checks.ts cases and runs main.ts with the expected three batches and
+no active session. Its seven published application files match the fixture;
+runtime_test.ts is published as checks.ts and runs explicitly after compilation.
+
+All three accepted application gates are complete using existing language
+forms. The language stopping rule is satisfied; no further automatic API
+addition is selected. Editor, packaging, performance and external integration
+acceptance remain separate work. The recording drivers perform no external I/O.
+Broader package interoperability, item 9, remains deferred by user instruction.
+The language edition stays at draft 0.57 because this application adds no form.

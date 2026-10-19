@@ -34,7 +34,6 @@ The runtime entry point may interrupt the worker to shut down. Tests verify
 completed cleanup during active work, repetition waits and native retry waits.
 Replaying one returned Effect resets source progress and retry budgets.
 
-The scheduled-worker and service workflow application gates pass. The stream
-processor gate remains pending. These recording drivers do not establish
+All three application gates now pass with existing forms. These recording drivers do not establish
 external integration coverage or general opaque Schedule consumer support.
 Gap item 9 remains deferred.
