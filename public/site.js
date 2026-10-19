@@ -721,6 +721,75 @@
     document.addEventListener("visibilitychange", update);
   };
 
+  // A rare comet crosses a decorative dark surface. Reading sections never get one.
+  const setupComets = () => {
+    const surfaces = Array.from(
+      document.querySelectorAll(".hero-bottom, .book-index, .reference-hero"),
+    );
+    if (
+      surfaces.length === 0 || !("IntersectionObserver" in globalThis) ||
+      !Element.prototype.animate
+    ) return;
+
+    const reduceMotion = globalThis.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    const visible = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      });
+    }, { threshold: 0.5 });
+    surfaces.forEach((surface) => observer.observe(surface));
+
+    const between = (min, max) => min + Math.random() * (max - min);
+
+    const launch = () => {
+      const candidates = Array.from(visible);
+      if (
+        reduceMotion.matches || document.visibilityState !== "visible" ||
+        candidates.length === 0
+      ) return;
+
+      const surface = candidates[Math.floor(Math.random() * candidates.length)];
+      const { width, height } = surface.getBoundingClientRect();
+      const comet = document.createElement("span");
+      comet.className = "comet";
+      comet.setAttribute("aria-hidden", "true");
+      comet.style.left = `${between(-0.15, 0.45) * width}px`;
+      comet.style.top = `${between(0.08, 0.4) * height}px`;
+      surface.append(comet);
+
+      const angle = `rotate(${between(8, 18)}deg)`;
+      const distance = between(0.35, 0.6) * width;
+      const animation = comet.animate(
+        [
+          { transform: `${angle} translateX(0)`, opacity: 0 },
+          { opacity: 1, offset: 0.2 },
+          { opacity: 0.9, offset: 0.7 },
+          { transform: `${angle} translateX(${distance}px)`, opacity: 0 },
+        ],
+        { duration: between(1100, 1700), easing: "cubic-bezier(.3, .1, .4, 1)" },
+      );
+      const remove = () => comet.remove();
+      animation.addEventListener("finish", remove);
+      animation.addEventListener("cancel", remove);
+      // A reader who turns on reduced motion mid-flight loses the comet at once.
+      reduceMotion.addEventListener("change", () => animation.cancel(), {
+        once: true,
+      });
+    };
+
+    const schedule = (delay) => {
+      setTimeout(() => {
+        launch();
+        schedule(between(22000, 48000));
+      }, delay);
+    };
+    schedule(between(7000, 14000));
+  };
+
   const setupEntryMotion = () => {
     if (!("IntersectionObserver" in globalThis)) return;
 
@@ -851,6 +920,7 @@
   setupCopyButtons();
   setupCodeTabs();
   setupHeroGlow();
+  setupComets();
   setupEntryMotion();
   // The drawer is added last, so the entry motion does not animate its figure.
   setupSourceDrawer();

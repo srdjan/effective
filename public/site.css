@@ -209,6 +209,28 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .reference-bottom p { font-size: var(--lead); line-height: 1.4; max-width: 39ch; }
 .edition { font-size: var(--small); margin-top: 48px; }
 
+/* Ambient light. A rare comet crosses a decorative dark surface, and soft shadows shift as the light passes. */
+:root { --shadow: color-mix(in srgb, var(--code-bg) 70%, black); }
+.hero-bottom, .book-index, .reference-hero { position: relative; isolation: isolate; overflow: clip; }
+.comet { position: absolute; z-index: -1; width: clamp(72px, 11vw, 168px); height: 2px; border-radius: 2px; background: linear-gradient(to right, transparent, color-mix(in srgb, var(--accent) 60%, transparent) 75%, var(--bg)); opacity: 0; transform-origin: right center; pointer-events: none; }
+.comet::after { position: absolute; top: 50%; right: -2px; width: 4px; height: 4px; content: ""; border-radius: 50%; background: var(--bg); box-shadow: 0 0 10px 3px color-mix(in srgb, var(--accent) 55%, transparent); transform: translateY(-50%); }
+.section, .showcase, .footer { isolation: isolate; }
+.code, .footer-name { position: relative; }
+.source-drawer .code { position: static; }
+.code::after { position: absolute; z-index: -1; inset: 16px 12px 0; content: ""; box-shadow: 0 22px 44px -10px var(--shadow); opacity: .22; pointer-events: none; }
+.source-drawer .code::after { display: none; }
+.footer-name::before { position: absolute; z-index: -1; inset: 0; content: "Effective." / ""; color: color-mix(in srgb, var(--ink) 9%, transparent); transform: translate(.03em, .04em); pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .code::after { animation: light-pass linear both; animation-timeline: view(); }
+    /* The wordmark sits at the page end, so the shadow follows the footer and settles before the last scroll. */
+    .footer { view-timeline: --footer block; }
+    .footer-name::before { animation: shadow-settle linear both; animation-timeline: --footer; animation-range: entry 0% entry 85%; }
+    @keyframes light-pass { from { transform: translate(28px, 18px); opacity: .1; } 50% { transform: translate(0, 4px); opacity: .34; } to { transform: translate(-28px, 18px); opacity: .1; } }
+    @keyframes shadow-settle { from { transform: translate(.12em, .1em); opacity: 0; } to { transform: translate(.03em, .04em); opacity: 1; } }
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .button:hover { transform: translateY(-3px); }
   .button:hover span { transform: translate(3px, -3px); }
@@ -354,7 +376,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 }
 @media print {
   :root { --bg: white; --ink: black; --body: 11pt; --head: 25pt; --code-bg: #f4f4f2; --code-ink: black; --code-keyword: black; --code-string: black; --code-comment: black; }
-  .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links, .source-drawer { display: none; }
+  .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links, .source-drawer, .comet, .code::after { display: none; }
   .layout { display: block; }
   .section, .section#contracts, .section#control, .section#services, .section#ir { background: white; color: black; padding: 20pt 0; }
   .section h2 { break-after: avoid; }
