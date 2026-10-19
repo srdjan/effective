@@ -678,3 +678,96 @@ independent validator diagnostics and strict emitted TypeScript checking.
 All 36 illustrative Effect-TS units pass strict checking, with zero Effective
 panels missing a translation. The site's 11 tests pass. Alternate default
 encoding strategies are next; broader package interoperability stays deferred.
+
+Draft 0.47 default encoding strategies, October 19, 2026
+schemaDefaultKey accepts an optional third inline record with one literal
+encodingStrategy field: "passthrough" or "omit". The two-argument form stays
+passthrough. Both strategies retain required decoded and exact optional
+encoded fields and the same directional service requirements. Missing-key
+decoding and default callback failure rules are unchanged. Omit drops every
+valid value, including non-default and nullable values, skips the wrapped
+encoder and its services, and never evaluates or compares with a default on
+encode. Present decoded values still validate. Static encoder requirements
+remain conservative, matching Effect 4.0.5.
+
+Four pinned target tests, source acceptance and rejection tests, strict
+compiled execution, and independent IR mutations cover omission, explicit
+and implicit passthrough, repeated defaults, skipped encoder calls, retained
+validation, authored issues, and defects. Unknown strategies and erased
+static encoder requirements fail independent validation. The existing
+version 2 default-key Schema operation accepts two or three argument
+expressions; no new type or field descriptor is needed. The compiler check
+passed with 1,107 fast tests and 118 slow tests.
+
+Draft 0.47 code showcase, October 19, 2026
+The seventh Core 1 pair shows unconditional omission versus passthrough for a
+defaulted name. The full public/effective-examples/core1.eff source builds
+with zero compiler and independent validator diagnostics and strict emitted
+TypeScript checking. All 37 illustrative Effect-TS units pass strict checking,
+with zero Effective panels missing a translation. The site's 11 tests pass.
+Defaults for missing-or-null keys are next; broader package interoperability
+stays deferred.
+
+Draft 0.48 defaults for missing or null keys, October 19, 2026
+schemaDefaultNullKey accepts a nonnullable ordinary Schema, an inline decoded
+default callback, and the existing optional literal encodingStrategy record.
+It returns a required nonnullable decoded field and an exact optional encoded
+field that admits null. Each missing-or-null decode runs a fresh default;
+present values run the wrapped decoder instead. Explicit undefined and invalid
+values fail without running the default. Passthrough runs the encoder; omit
+drops every valid value while retaining static encoder requirements. Neither
+strategy evaluates the default on encode. Services and callback failures follow
+the existing directional default rule, including SchemaIssue and SchemaError
+paths, defects, and awaited interruption cleanup.
+
+Five Effect 4.0.5 target probes, source boundary checks, independent IR mutations,
+and a strict compiled runtime witness cover the selected contract. A raw target
+unit probe additionally confirms that the getter preserves Some(undefined)
+rather than treating it as absent; unit remains outside source Schema data.
+Version 2 IR adds the default-null-key Schema operation with two or three
+arguments and uses the existing encoded-only optional descriptor. The full
+compiler check passed with 1,110 fast tests and 119 slow tests on Deno 2.9.7.
+
+Draft 0.48 code showcase, October 19, 2026
+The eighth Core 1 pair shows missing and null names receiving the same required
+decoded default. The full public/effective-examples/core1.eff source builds with
+zero compiler and independent validator diagnostics and strict emitted
+TypeScript checking. All 38 illustrative Effect-TS units pass strict checking,
+with zero Effective panels missing a translation. The site's 11 tests pass.
+Encoded-value defaults are next; broader package interoperability stays deferred.
+
+Draft 0.49 encoded-value defaults, October 19, 2026
+schemaDefaultEncodedKey accepts an ordinary Schema, an inline zero-argument
+encoded-value callback, and the existing literal encodingStrategy options.
+The decoded field remains required and the encoded field becomes exact optional.
+Missing-key decoding generates E, validates it, and runs the wrapped decoder to
+produce D. Present values skip the default, including null where E admits null.
+Invalid present values and explicit undefined fail without running the default.
+Default services join decode requirements; callbacks may have no typed failure,
+exactly SchemaIssue, or exactly SchemaError. Encoding uses only encoder services.
+
+Under omit, encoded defaults still run the encoder and validate its E before
+discarding the successful result. Encoder failures, defects and interruption
+cleanup remain observable. Decoded-default omission skips that encoder instead;
+this distinction selects the new reusable field constructor. Passthrough writes
+the encoded result. Neither encoding strategy evaluates the default.
+
+Six pinned Effect 4.0.5 target tests, source acceptance and rejection cases,
+independent IR mutations, and strict compiled execution cover fresh defaults,
+wrapped decoding, exact presence, nullable values, refined E validation,
+directional services, issue paths, omitted encoder work, and awaited cleanup
+in default generation, decoding and encoding. Version 2 IR adds the
+default-encoded-key operation with two or three arguments and no new type.
+The existing TypeScript descriptor leaves its intermediate encoding unknown
+while preserving precise public decoded and encoded types and service channels.
+The full compiler check passes with 1,113 fast tests and 120 slow tests on
+Deno 2.9.7.
+
+Draft 0.49 code showcase, October 19, 2026
+The ninth Core 1 pair shows an encoded text default passing through a
+service-backed integer decoder, and explains why omission still calls the
+encoder. The full public/effective-examples/core1.eff source builds with zero
+compiler and independent validator diagnostics and strict emitted TypeScript
+checking. All 39 illustrative Effect-TS units pass strict checking, with zero
+Effective panels missing a translation. The site's 11 tests pass. Schema
+construction defaults are next; broader package interoperability stays deferred.

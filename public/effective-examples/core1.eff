@@ -81,3 +81,33 @@ export const omitNull: Schema<OptionalName, NullableRecord> =
   schemaStruct({ name: schemaNullToMissingKey(name) })
 export const missingName = (): NullableRecord => ({})
 export const clearedName = (): NullableRecord => ({ name: null })
+
+export const omittedDefault: Schema<RequiredName, OptionalName> = schemaStruct({
+  name: schemaDefaultKey(name, (): Name => "Anonymous", { encodingStrategy: "omit" })
+})
+export const passedDefault: Schema<RequiredName, OptionalName> = schemaStruct({
+  name: schemaDefaultKey(name, (): Name => "Anonymous", { encodingStrategy: "passthrough" })
+})
+
+export const defaultedNull: Schema<RequiredName, NullableRecord> = schemaStruct({
+  name: schemaDefaultNullKey(name, (): Name => "Anonymous")
+})
+export const readMissingName = (): RequiredName fails SchemaError => schemaDecode(defaultedNull, {})
+export const readClearedName = (): RequiredName fails SchemaError => schemaDecode(defaultedNull, { name: null })
+
+type Text = string
+type RequiredScore = { score: Int }
+type WireRecord = { score?: Text }
+service Wire {
+  parse(value: Text): Int fails SchemaIssue
+  print(value: Int): Text fails SchemaIssue
+}
+const wireText: Schema<Text> = schema()
+const wireScore: Schema<Int, Text, Wire.parse, Wire.print> = schemaTransform(
+  wireText, integer,
+  (value: Text): Int fails SchemaIssue uses Wire.parse => Wire.parse(value),
+  (value: Int): Text fails SchemaIssue uses Wire.print => Wire.print(value)
+)
+export const encodedDefault: Schema<RequiredScore, WireRecord, Wire.parse, Wire.print> =
+  schemaStruct({ score: schemaDefaultEncodedKey(wireScore,
+    (): Text => "41", { encodingStrategy: "omit" }) })
