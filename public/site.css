@@ -202,14 +202,15 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .document-note { padding: 48px 64px; font-size: var(--small); background: var(--surface); }
 .document-note p + p { margin-top: 8px; }
 .contents-menu { display: none; }
-.footer { padding: 88px var(--gutter) 0; background: var(--field-light); overflow: hidden; }
+.footer { container-type: inline-size; padding: 88px var(--gutter) 0; background: var(--field-light); overflow: hidden; }
 .footer-top { display: flex; justify-content: space-between; gap: 64px; }
 .footer-top h2 { margin-bottom: 32px; }
 .footer-top nav { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--body); }
 .footer-top nav a { display: inline-flex; align-items: center; min-height: 44px; }
 .footer-note { display: flex; justify-content: space-between; gap: 32px; margin-top: 100px; font-size: var(--small); }
 .footer-note a { display: inline-flex; align-items: center; min-height: 44px; }
-.footer-name { font-size: min(29vw, 348px); font-weight: 600; letter-spacing: -.05em; line-height: .85; white-space: nowrap; margin: 44px 0 -.18em -.04em; }
+/* The wordmark is about 3.5em wide, so it fills the footer content box from gutter to gutter. */
+.footer-name { font-size: calc(100cqi / 3.56); font-weight: 600; letter-spacing: -.05em; line-height: .85; white-space: nowrap; margin: 44px 0 -.18em -.04em; }
 .reference-hero { padding: 70px var(--gutter) 64px; background: var(--ink); color: var(--bg); }
 .reference-hero h1 { font-size: clamp(64px, 10.1vw, 121px); }
 .reference-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 72px; }
