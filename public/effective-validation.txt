@@ -1084,3 +1084,27 @@ diagnostics and strict emitted TypeScript checking. All 47 illustrative
 Effect-TS units pass strict checking, with zero missing translations. The site's
 11 tests pass. Recursive Option data is next. Broader package interoperability,
 item 9, remains deferred by user instruction.
+
+
+Accepted application acceptance rule, October 19, 2026
+The user accepted an application-based stopping rule after draft 0.57. Three
+complete applications must compile with precise contracts and pass failure,
+cancellation, and cleanup checks: a service workflow, a scheduled worker, and
+a stream processor. Application orchestration stays in Effective. Typed host
+adapters may supply drivers and the runtime entry point. All three application
+gates are pending; existing operator tests and adapter probes do not complete them.
+
+The scheduled worker baseline and general Schedule consumers lead the next
+investigation. New features require a demonstrated application blocker after
+checking equivalent existing source compositions. Time control and user generics
+are subsequent candidates, not mandatory additions. This decision supersedes
+the earlier statement that recursive Option data is next. Further Schema
+expansion has no automatic priority. Broader package interoperability, item 9,
+remains deferred. This decision changes no language form, runtime behavior,
+compiler implementation, or checked code example.
+
+The compiler documentation commit passes deno task check on Deno 2.9.7:
+1,137 fast tests and 128 slow tests. The site passes 11 tests and strict checking
+of all 47 illustrative Effect-TS units, with zero missing translations. These
+checks preserve the existing implementation baseline; application gates remain
+pending.
