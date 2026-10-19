@@ -1152,3 +1152,58 @@ processor remain pending; the service workflow baseline is next. The driver
 performs no external I/O, so this establishes no external integration coverage.
 Gap item 9 remains deferred by user instruction. The language edition stays
 at draft 0.57 because this application adds no source forms.
+
+
+Service workflow application gate, October 19, 2026
+The service workflow now passes the accepted application gate with existing
+Effective forms. Source validates unknown input, applies business rules,
+obtains a catalog price, calculates a bounded integer total and selects
+transient storage retries. Its exported contract retains SchemaError,
+InvalidOrder, CatalogFailure and StoreFailure, plus Catalog.price and
+Runtime.database requirements. The registered provider discharges Store.save.
+
+The typed StoreLive adapter owns one atomic save through the pinned native
+SqlClient transaction wrapper. It uses a parameterized insert and validates
+receipt rows before commit. Statement-local classification makes only
+retryable body failures Transient. Provider, lease, BEGIN and COMMIT failures
+remain Permanent, including misleading COMMIT operation metadata. Cause.map
+inside catchCause preserves cleanup defects alongside typed failures; such
+mixed causes prevent retry.
+
+Fourteen compiled runtime cases cover successful commit, input and price
+rejection, transient retry, exhaustion, permanent failure, provider and lease
+failure, BEGIN failure, invalid receipt rows, COMMIT failure, execution and
+cleanup defects, and cancellation. Virtual-time attempts occur at 0, 5 and 15
+milliseconds. Replaying the same Effect starts a fresh workflow and retry budget
+at 100, 105 and 115. Catalog and provider acquisition occur once per workflow.
+Each failed attempt rolls back and releases before another lease.
+
+Body interruption waits for blocked rollback or release and commits no staged
+rows. Cancellation during either retry delay prevents a later transaction.
+Interruption after COMMIT starts waits for commit and release; a committed row
+can remain. The application does not promise rollback for every cancellation
+or exactly-once submission.
+
+The compiler gate passes deno task check on Deno 2.9.7: 1,142 fast tests and
+130 slow tests. The application harness checks linked IR, strict emitted
+TypeScript and registered host assertions, runs fourteen runtime cases and
+executes the standalone entry point. Negative source checks reject every
+erased failure channel, retained service requirement and incorrect result.
+Type-only imports in the recording drivers and native worker reference also
+satisfy the repository lint gate without changing behavior.
+
+The site passes eleven tests and strict checking of all 47 illustrative
+Effect-TS units, with zero missing translations. A fresh copy of the public
+service project builds two modules with zero diagnostics using --validate
+--tsc, passes all fourteen checks.ts cases and runs main.ts. The entry point
+returns the expected receipt, stores one committed row and leaves no active
+connection. Published source, configuration and host files match the fixture;
+runtime_test.ts is published as checks.ts and runs explicitly after compilation.
+
+Two of three application gates are complete. The stream processor remains
+pending and is next. The recording driver performs no external I/O and
+recognizes one insert shape. Its simulated COMMIT error precedes committed-state
+mutation, so that case proves no retry, not actual ambiguous-commit behavior.
+These checks establish no external database integration or source transaction
+callbacks. Gap item 9 remains deferred. The language edition stays at draft
+0.57 because this application adds no source form.
