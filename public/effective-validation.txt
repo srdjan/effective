@@ -996,3 +996,48 @@ checking. All 45 illustrative Effect-TS units pass strict checking, with zero
 missing translations. The site's 11 tests pass. Applying field adapters after
 constructor defaults is next. Broader package interoperability, item 9, remains
 deferred by user instruction.
+
+Draft 0.56 field adapters after constructor defaults, October 19, 2026
+Unary presence and wire-default builders now accept SchemaConstructorDefault
+while retaining their existing input-presence restrictions. schemaOptionalKey,
+schemaNullToMissingKey, schemaDefaultKey, schemaDefaultNullKey and
+schemaDefaultEncodedKey retain the input's root default and M. Optional bridges
+also accept decorated optional positions, and the required source of
+schemaOptionalFromRequired may carry a constructor default. Both bridges select
+only the decoded target's default and M; source defaults do not become result
+defaults. Wire getters and constructor defaults remain independent.
+
+schemaOptionFromOptionalKey explicitly resets the root default and produces
+required Option<D> constructor input, with complete D inside Some. A missing
+constructor key fails after that reset. A new Option-valued default can then be
+attached; a second default remains an error after an adapter that retained it.
+Assignment flags stay invariant. Incompatible input presence, descriptor runners,
+arrays, unions and arbitrary self-bearing adapter paths remain rejected.
+
+No syntax, type names, IR fields or operations are added. The checker and
+independent validator recompute retained, target-selected and reset flags.
+Emitted field types use structural Schema.Codec views with checked make input,
+decoded and encoded optionality, and constructor-default metadata. Public
+Schema.make restores the view from each composed AST without relying on any
+particular adapter's helper properties. It evaluates each Schema argument once
+and uses no casts, private APIs or extra runtime helpers. Native callback timing,
+service directions, encoding strategies, failure paths, defects and awaited
+cleanup are retained.
+
+Three pinned target probes cover retained unary defaults, wire independence and
+encoding strategies, target-only bridge defaults, and Option reset and renewed
+defaults. Source and linked IR mutations reject false flags, lost retained
+defaults, duplicate defaults, incompatible presence and incomplete Option data.
+Strict compiled execution adds imported target defaults, nested partial M,
+precise public flags, wire traces, omission, fresh defaults, failures, defects and
+awaited cleanup. The compiler gate passes with 1,134 fast tests and 127 slow tests
+on Deno 2.9.7.
+
+Draft 0.56 code showcase, October 19, 2026
+The sixteenth Core 1 pair applies a wire-default adapter after a constructor
+default and contrasts that retained default with Option adaptation's explicit
+reset. The full core1.eff source builds with zero compiler and independent
+validator diagnostics and strict emitted TypeScript checking. All 46 illustrative
+Effect-TS units pass strict checking, with zero missing translations. The site's
+11 tests pass. Guarded recursive self use through field adapters is next. Broader
+package interoperability, item 9, remains deferred by user instruction.

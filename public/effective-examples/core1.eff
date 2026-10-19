@@ -189,3 +189,17 @@ export const optionalDefaultScores: Schema<Optional> =
   schemaStruct({ score: optionalDefaultField })
 export const makeDualDefaults = (input: Optional): Required fails SchemaIssue =>
   schemaMake(dualDefaultScores, input)
+
+type OptionScores = { score: Option<Int> }
+const constructorFirst: SchemaConstructorDefault<Int> =
+  schemaConstructorDefault(integer, (): Int => 4)
+export const adapterAfterDefault: SchemaEncodedOptionalConstructorDefault<Int> =
+  schemaDefaultKey(constructorFirst, (): Int => 8)
+export const adapterAfterDefaults: Schema<Required, Optional, never, never, Optional> =
+  schemaStruct({ score: adapterAfterDefault })
+export const optionAfterDefaults: Schema<OptionScores, Optional> =
+  schemaStruct({ score: schemaOptionFromOptionalKey(constructorFirst) })
+export const makeAdapterAfterDefault = (input: Optional): Required fails SchemaIssue =>
+  schemaMake(adapterAfterDefaults, input)
+export const makeAdaptedOption = (input: OptionScores): OptionScores fails SchemaIssue =>
+  schemaMake(optionAfterDefaults, input)
