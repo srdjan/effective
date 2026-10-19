@@ -880,3 +880,39 @@ strict checking, with zero missing translations. The site's 11 tests pass after
 regenerating asset links for the existing package version. Recursive make-input
 propagation is next. Broader package interoperability remains deferred by user
 instruction.
+
+Draft 0.53 recursive constructor inputs, October 19, 2026
+schemaRecursive now retains a distinct recursive make input M in its expected
+Schema, callback signature, and every guarded self reference. D/E remain equal.
+M is data-only and follows its own existing finite-data guard. Structs, arrays,
+optional keys, terminal tagged unions, and constructor-default wrappers compose
+that input. Constructor wrappers preserve a guard; they do not create one.
+Default callbacks cannot capture or invoke self. Capture checks follow binding
+identities, so an unrelated local named self remains valid. Self-free checked
+Schema leaves may include inline transformations.
+
+Nested partial input constructs complete decoded trees, chains and tagged values.
+Defaults run freshly for each missing field without wire services. Wire decode
+and encode keep complete data and their directional services. Recursive issue
+paths include fields and array indices; defects retain their channel, and
+interruption awaits nested default cleanup. The existing typed Schema.suspend
+and composite make views retain M without new IR operations, casts, or emitter
+helpers. Finite data guards do not prove termination of user default effects or
+defaults that continue generating more constructor input.
+
+Three pinned target probes cover all three guards, fresh defaults, complete
+wire data, nested validation and interruption cleanup. Source and independent IR
+checks reject make-input erasure, wrong self signatures, missing metadata,
+unguarded recursion, invalid nested values, and default callbacks that capture
+self. Strict compiled execution adds imported arrays and outer defaults, wire
+service traces, default failures, defects, and awaited nested cleanup. The full
+compiler gate passes with 1,125 fast tests and 124 slow tests on Deno 2.9.7.
+
+Draft 0.53 code showcase, October 19, 2026
+The thirteenth Core 1 pair constructs a recursive tree from partial inputs at
+multiple levels. The full core1.eff source builds with zero compiler and
+independent validator diagnostics and strict emitted TypeScript checking.
+All 43 illustrative Effect-TS units pass strict checking, with zero missing
+translations. The site's 11 tests pass. Distinct recursive decoded and encoded
+representations are the next investigation. Broader package interoperability,
+item 9, remains deferred by user instruction.

@@ -149,3 +149,16 @@ export const optionalSettings: Schema<SettingsWire, NullableSettingsWire, never,
   schemaStruct({ settings: schemaNullToMissingKey(constructorDefaults) })
 export const constructSettings = (input: SettingsInput): SettingsRecord fails SchemaIssue =>
   schemaMake(wireDefaultSettings, input)
+
+type Tree = { score: Int, children: Tree[] }
+type TreeInput = { score?: Int, children?: TreeInput[] }
+
+export const treeDefaults: Schema<Tree, Tree, never, never, TreeInput> = schemaRecursive(
+  (self: Schema<Tree, Tree, never, never, TreeInput>): Schema<Tree, Tree, never, never, TreeInput> =>
+    schemaStruct({
+      score: schemaConstructorDefault(integer, (): Int => 4),
+      children: schemaConstructorDefault(schemaArray(self), (): TreeInput[] => [])
+    })
+)
+export const constructTree = (input: TreeInput): Tree fails SchemaIssue =>
+  schemaMake(treeDefaults, input)
