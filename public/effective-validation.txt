@@ -771,3 +771,38 @@ compiler and independent validator diagnostics and strict emitted TypeScript
 checking. All 39 illustrative Effect-TS units pass strict checking, with zero
 Effective panels missing a translation. The site's 11 tests pass. Schema
 construction defaults are next; broader package interoperability stays deferred.
+
+Draft 0.50 type-side construction and explicit defaults, October 19, 2026
+schemaMake validates a complete decoded D through Schema.makeEffect and fails
+with structured SchemaIssue. It runs neither wire decoder nor encoder and
+requires neither RD nor RE; active effects needed to evaluate its Schema and
+input arguments still propagate in source order. Field descriptors, incomplete
+records, encoded-only values and unknown inputs are rejected. Ordinary source
+factories supply their own optional input types and fill defaults before making
+a complete D, preserving the original decoded and wire field contracts.
+
+SchemaIssue catches and error matches use predicate dispatch for Effect's
+multi-variant issue family. Nested factories can catch a child issue and attach
+the parent path with schemaAt. A mixed catch clause cannot recatch errors raised
+by one of its own handlers. Version 2 IR adds the schema-make runner with schema
+and input children; no Schema type parameter or field-presence flag is added.
+
+Six pinned target tests distinguish construction from decoding and encoding,
+compare selected explicit default factories, preserve structured issue paths,
+and record nested make-input shapes and raw constructor replay aliasing.
+Three fast tests and one strict compiled runtime witness cover source contracts,
+independent IR mutations, nested factory paths, wire-service independence,
+active argument effects and order, defects, and mixed issue catches and matches.
+The full compiler gate passes with 1,116 fast tests and 121 slow tests on
+Deno 2.9.7.
+
+Draft 0.50 code showcase, October 19, 2026
+The tenth Core 1 pair fills a missing score in a source factory, then validates
+the complete decoded record with schemaMake. The full core1.eff source builds
+with zero compiler and independent validator diagnostics and strict emitted
+TypeScript checking. All 40 illustrative Effect-TS units pass strict checking,
+with zero missing translations. The site's 11 tests pass. Native constructor
+metadata and a make-input shape distinct from both D and E remain open, including
+raw replay identity; the explicit factory does not promise that aliasing.
+General constructor metadata and make-input propagation are next. Broader
+package interoperability remains deferred by user instruction.
