@@ -1330,3 +1330,28 @@ edition remains draft 0.57.
 Chrome checks at widths 1280 and 390 confirm that both tabs of the new example
 show one selected panel. The page has no horizontal overflow or uncaught
 JavaScript exceptions. The local HTML link and anchor check passes 227 targets.
+
+
+Extreme identifier formatting, October 20, 2026
+The compiler resolves the six recorded exceptions for very long identifiers:
+error type arguments, struct fields, function names, member accesses, service
+bindings and parameter annotations. Related checks include optional fields,
+brand and Schema constructors, zero-argument arrows and nested member reads.
+
+A permanent regression checks 274 generated modules at wrapping boundaries.
+Deno 2.9.7 leaves their emitted TypeScript unchanged. The modules pass strict
+TypeScript checking and runtime checks. The test verifies source tokens after
+new line breaks and confirms that an effectful member base runs exactly once.
+A separate probe passes 567 comparisons for identifier lengths 30 through 110.
+The width at which a line breaks depends on the surrounding code as well as
+the identifier length.
+
+The emitter retains source identifiers and records mappings during layout.
+It does not run an external formatter. Later document groups are measured
+again after every line break. The existing reduce fixture checks the combined
+layout of a function type and callback. This change adds no source form.
+
+The full compiler check passes on Deno 2.9.7: formatting, lint, type checking,
+1,676 fast tests and 152 slow tests. The website passes eleven server tests
+and all 48 strict illustrative Effect-TS check units, with no missing
+translations. The website Markdown link audit passes.

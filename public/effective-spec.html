@@ -452,6 +452,7 @@ const main = (): Effect.Effect&lt;Name, StoreUnavailable&gt; =&gt;
 <p>References use resolved identities. Service operations use perform nodes; ordinary function invocations use call nodes.</p>
 <p>Pipelines lower through fresh block bindings and existing calls. A generated binding uses the left expression span; calls retain the corresponding stage span.</p>
 <p>Diagnostics refer to source expressions and hide temporary names. Source positions count UTF-16 units, with the end position excluded.</p>
+<p>The compiler prints TypeScript with one fixed style and a target width of 80 columns. Formatting checks cover long identifiers in type arguments, fields, function declarations, member accesses, service bindings, and parameter annotations. An unbroken identifier can exceed the target width. The emitter records source mappings during layout.</p>
 <p>The IR retains explicit retry, provide, catch, brand, and unbrand operations. A backend must not replace deferred control with eager helper calls.</p>
 <p>Pure exports return ordinary target values. Effectful exports return target computations, even when their error and requirement sets are both empty.</p>
 <p>The Effect-TS backend uses Effect.Effect&lt;A, E, R&gt;, Context services, and typed failures. Its R parameter groups requirements by service rather than individual method.</p>
