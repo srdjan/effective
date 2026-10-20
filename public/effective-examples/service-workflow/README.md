@@ -12,7 +12,7 @@ Files in this directory:
 - [adapter.ts](adapter.ts): atomic SQL save and receipt validation.
 - [driver.ts](driver.ts): recording SQL connections and catalog driver.
 - [main.ts](main.ts): runnable entry point.
-- [checks.ts](checks.ts): fourteen compiled application checks.
+- [checks.ts](checks.ts): fifteen compiled application checks.
 - [effective.json](effective.json): registered host configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 

@@ -11,7 +11,7 @@ Files in this directory:
 - [driver.ts](driver.ts): recording job and clock drivers.
 - [main.ts](main.ts): runnable entry point.
 - [reference.ts](reference.ts): pinned native repetition and retry reference.
-- [checks.ts](checks.ts): nine compiled application checks.
+- [checks.ts](checks.ts): ten compiled application checks.
 - [effective.json](effective.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
