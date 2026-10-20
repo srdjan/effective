@@ -37,30 +37,14 @@
 
   const functions = {
     getUser: {
-      source: `export const getUser = (id: UserId): User
-  fails UserMissing | StoreUnavailable
-  uses Users.find =>
-  match Users.find(id) {
-    Some(user) => user,
-    None => fail(UserMissing({ id }))
-  }`,
+      // Static HTML owns the initial example and provides the no-JavaScript fallback.
+      source: document.querySelector("#contract-source > code")?.textContent,
       success: "User",
       failures: "UserMissing | StoreUnavailable",
       uses: "Users.find",
       description:
         "getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.",
-      effect: `const getUser = (id: UserId): Effect.Effect<
-  User,
-  UserMissing | StoreUnavailable,
-  Users
-> =>
-  Effect.flatMap(
-    Users.use((users) => users.find(id)),
-    (found) => Option.match(found, {
-      onNone: () => Effect.fail(new UserMissing({ id })),
-      onSome: (user) => Effect.succeed(user)
-    })
-  )`,
+      effect: document.querySelector("#contract-effect > code")?.textContent,
     },
     rename: {
       source: `export const rename = (id: UserId, name: Name): User
@@ -789,7 +773,10 @@
           { opacity: 0.9, offset: 0.7 },
           { transform: `${angle} translateX(${distance}px)`, opacity: 0 },
         ],
-        { duration: between(1100, 1700), easing: "cubic-bezier(.3, .1, .4, 1)" },
+        {
+          duration: between(1100, 1700),
+          easing: "cubic-bezier(.3, .1, .4, 1)",
+        },
       );
       const remove = () => comet.remove();
       animation.addEventListener("finish", remove);

@@ -41,7 +41,7 @@ type Unit = {
 };
 
 type Loaded = {
-  readonly panels: readonly Panel[];
+  readonly byId: ReadonlyMap<string, Panel>;
   readonly units: readonly Unit[];
   readonly missing: readonly MissingBlock[];
 };
@@ -52,10 +52,9 @@ const rootPath = (relative: string): string =>
 
 const namePattern = /^[A-Za-z0-9-]+$/;
 
-// Requirements of each contract explorer function in public/site.js. The
-// getUser entry also names the static panel in index.html: the two must match.
+// Requirements of the contract explorer functions with literals in public/site.js.
+// The HTML default is compiled as a normal panel.
 const explorerRequires: ReadonlyMap<string, readonly string[]> = new Map([
-  ["getUser", ["users-declarations"]],
   ["rename", ["users-declarations", "explorer-getUser"]],
   ["displayName", ["users-declarations", "explorer-getUser"]],
   ["activeNames", ["users-declarations"]],
@@ -193,15 +192,12 @@ const scanExplorer = (
   return entries;
 };
 
-const readText = async (relative: string): Promise<string> =>
-  await Deno.readTextFile(rootPath(relative));
-
 const load = async (): Promise<Result<Loaded, string[]>> => {
   const errors: string[] = [];
   const [indexHtml, specHtml, siteJs] = await Promise.all([
-    readText("public/index.html"),
-    readText("public/effective-spec.html"),
-    readText("public/site.js"),
+    Deno.readTextFile(rootPath("public/index.html")),
+    Deno.readTextFile(rootPath("public/effective-spec.html")),
+    Deno.readTextFile(rootPath("public/site.js")),
   ]);
   const index = scanPage("index", "public/index.html", indexHtml, errors);
   const spec = scanPage("spec", "public/effective-spec.html", specHtml, errors);
@@ -215,24 +211,17 @@ const load = async (): Promise<Result<Loaded, string[]>> => {
   }
 
   const htmlExplorer = panels.find((panel) => panel.id === "explorer-getUser");
+  if (htmlExplorer === undefined) {
+    errors.push("public/index.html: panel explorer-getUser is missing");
+  }
+  const wanted = "users-declarations";
+  const actual = (requiresByUnit.get("explorer-getUser") ?? []).join(" ");
+  if (wanted !== actual) {
+    errors.push(
+      `public/index.html: explorer-getUser requires [${actual}], expected [${wanted}]`,
+    );
+  }
   for (const entry of scanExplorer(siteJs, errors)) {
-    if (entry.name === "getUser") {
-      if (htmlExplorer === undefined) {
-        errors.push("public/index.html: panel explorer-getUser is missing");
-      } else if (htmlExplorer.code.trim() !== entry.effect.trim()) {
-        errors.push(
-          "public/site.js: functions.getUser.effect differs from the static panel explorer-getUser in public/index.html",
-        );
-      }
-      const wanted = (explorerRequires.get("getUser") ?? []).join(" ");
-      const actual = (requiresByUnit.get("explorer-getUser") ?? []).join(" ");
-      if (wanted !== actual) {
-        errors.push(
-          `public/index.html: explorer-getUser requires [${actual}], expected [${wanted}]`,
-        );
-      }
-      continue;
-    }
     const unit = `explorer-${entry.name}`;
     panels.push({
       id: unit,
@@ -286,7 +275,7 @@ const load = async (): Promise<Result<Loaded, string[]>> => {
 
   if (errors.length > 0) return fail(errors);
   return ok({
-    panels,
+    byId,
     units: [...units.values()],
     missing: [...index.missing, ...spec.missing],
   });
@@ -400,11 +389,6 @@ const main = async (): Promise<number> => {
     for (const error of loaded.error) console.error(`error: ${error}`);
     return 1;
   }
-  const byId = new Map<string, Panel>();
-  for (const panel of loaded.value.panels) {
-    if (panel.id !== null) byId.set(panel.id, panel);
-  }
-
   const units = loaded.value.units.filter((unit) =>
     page === "all" || unit.page === page
   );
@@ -417,7 +401,7 @@ const main = async (): Promise<number> => {
   try {
     const files: string[] = [];
     for (const unit of units) {
-      const built = await buildUnit(unit, byId);
+      const built = await buildUnit(unit, loaded.value.byId);
       if (!built.ok) {
         for (const error of built.error) console.error(`error: ${error}`);
         failed = true;
