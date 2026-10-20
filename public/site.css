@@ -36,7 +36,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 104px; background: var(--backdrop); }
+html { scroll-behavior: smooth; scroll-padding-top: 104px; background: var(--backdrop); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { max-width: var(--page); min-height: 100svh; margin: 0 auto; box-shadow: var(--page-shadow); background: var(--bg); color: var(--ink); font: 400 var(--body)/1.6 var(--font); font-optical-sizing: auto; }
 a { color: inherit; text-underline-offset: .22em; text-decoration-thickness: .07em; }
 button, input { font: inherit; color: inherit; }
