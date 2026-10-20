@@ -1355,3 +1355,42 @@ The full compiler check passes on Deno 2.9.7: formatting, lint, type checking,
 1,676 fast tests and 152 slow tests. The website passes eleven server tests
 and all 48 strict illustrative Effect-TS check units, with no missing
 translations. The website Markdown link audit passes.
+
+Draft 0.58 language surface pruning, October 20, 2026
+The compiler removes seven prelude names and keeps every behavior. The pure
+stream predicates takeWhileStream, takeUntilStream, dropWhileStream and
+filterStream, and the pure mapStream, are removed. The effect forms
+takeWhileEffectStream, takeUntilEffectStream, dropWhileEffectStream,
+filterEffectStream and mapEffect accept a callback that is pure with empty
+failure and requirement sets. With such a callback, the checker records the
+pure operation, so the general form compiles to Stream.takeWhile,
+Stream.takeUntil, Stream.dropWhile, Stream.filter and Stream.map. A pure
+predicate keeps the stream type, so a stream alias survives. A concurrency
+option keeps mapEffect as Stream.mapEffect. A removed name gives the ordinary
+unknown-name diagnostic.
+
+schemaDefaultNullKey and schemaDefaultEncodedKey are merged into
+schemaDefaultKey. Its options record gains the on option, which is the literal
+"missing", "null" or "encoded" and defaults to "missing". A call without on
+keeps its meaning. The checker reads on first and then applies the rules of the
+selected operation. Lowering maps on to the existing IR operation and rebuilds
+the options record without on. The three adapters schemaOptionalFromRequired,
+schemaNullToMissingKey and schemaOptionFromOptionalKey keep their names. The
+earlier entries of this file describe the removed names and stay as history.
+
+No IR shape, fact kind, validator rule or emitter row changes. A script compiles
+each changed test source and fixture in its old form with the compiler before
+the change, and in its new form with the compiler after the change. For 52
+sources and probes, the emitted TypeScript, the serialized IR without spans, the
+interface and its hash, and the hover text are identical. Those include the six
+changed schema fixtures, the four predicates over a stream alias, mapStream
+against the new pure mapEffect, and mapEffect with a concurrency option. One
+difference is intended: a pure mapEffect without options now emits Stream.map,
+as mapStream did, and no longer emits Stream.mapEffect. The committed golden
+files do not change.
+
+The compiler passes deno task check on Deno 2.9.7: formatting, lint, type
+checking, 1,676 fast tests and 151 slow tests. The Core 1 showcase source builds
+with --validate --tsc: six modules and zero diagnostics, and its emitted
+TypeScript is byte-identical to the build with the old names. The edition
+advances to draft 0.58 because this change removes source forms.

@@ -90,7 +90,7 @@ export const passedDefault: Schema<RequiredName, OptionalName> = schemaStruct({
 })
 
 export const defaultedNull: Schema<RequiredName, NullableRecord> = schemaStruct({
-  name: schemaDefaultNullKey(name, (): Name => "Anonymous")
+  name: schemaDefaultKey(name, (): Name => "Anonymous", { on: "null" })
 })
 export const readMissingName = (): RequiredName fails SchemaError => schemaDecode(defaultedNull, {})
 export const readClearedName = (): RequiredName fails SchemaError => schemaDecode(defaultedNull, { name: null })
@@ -109,8 +109,8 @@ const wireScore: Schema<Int, Text, Wire.parse, Wire.print> = schemaTransform(
   (value: Int): Text fails SchemaIssue uses Wire.print => Wire.print(value)
 )
 export const encodedDefault: Schema<RequiredScore, WireRecord, Wire.parse, Wire.print> =
-  schemaStruct({ score: schemaDefaultEncodedKey(wireScore,
-    (): Text => "41", { encodingStrategy: "omit" }) })
+  schemaStruct({ score: schemaDefaultKey(wireScore,
+    (): Text => "41", { on: "encoded", encodingStrategy: "omit" }) })
 
 type ConstructorInput = { score?: Int }
 type ConstructorRecord = { score: Int }
