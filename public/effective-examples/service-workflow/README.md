@@ -40,6 +40,8 @@ Provider, lease, BEGIN and COMMIT failures remain Permanent. Mixed causes
 retain cleanup defects and prevent retry. Body interruption rolls back and
 awaits release. Interruption after COMMIT starts waits for commit and release;
 a committed row can remain. The application promises no exactly-once submission.
+The tests also inject assertion failures during cleanup.
+Cleanup still unblocks rollback, commit and release before the parent joins child fibers.
 
 The service workflow gate passes with a typed transaction adapter. All three
 application gates now pass using existing forms. These recording drivers perform no external I/O.

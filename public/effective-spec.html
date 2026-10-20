@@ -91,7 +91,7 @@ type Profile = typeof Profile.Type</code></pre></div></figure>
 <p>An alias such as type Name = string satisfies the rule. An alias adds a name but not identity. Brand&lt;T&gt; adds identity.</p>
 <p>Record fields are required unless the field name has ?. Reading an optional field returns Option&lt;T&gt;.</p>
 <p>A required field of type Option&lt;T&gt; differs from an optional field of type T. A future codec backend must preserve that difference.</p>
-<p>Record construction rejects missing required fields, duplicate fields, and unknown fields. Contextual typing preserves expected literal alternatives.</p>
+<p>Record construction rejects missing required fields, duplicate fields, and unknown fields. For a record literal with an expected union type, field names and known literal values select compatible members before field checking. This includes aliases of literal tag types. Members with the same field names can therefore use different tag and payload types. Field expressions still evaluate once in source order.</p>
 <p>Record updates construct a new value. One spread may appear first, followed by replacement fields. The original record remains unchanged.</p>
 <p>A bracket expression constructs an immutable list. An expected tuple type requires the exact element count and checks each element against its position. Otherwise an expected array type checks every element against its element type. Without an expected type, a nonempty homogeneous list infers an array after literal widening. An empty list or elements without a common array element type require a contextual type. A trailing comma is allowed.</p>
 <p>List elements evaluate once from left to right. A failed element stops evaluation. Their active failures and requirements combine in the list expression. The typed IR retains whether the expression is an array or tuple; the Effect backend emits a JavaScript array for either shape.</p>
@@ -324,7 +324,7 @@ const category = (user: User): Label =&gt;
 <p>if requires a boolean condition and an else branch. Branch results require a common result type. never fits every successful result type.</p>
 <p>Match subjects evaluate once. The checker requires complete coverage and rejects unreachable arms and constructors that do not belong to the subject type.</p>
 <p>Supported patterns include literals, _, Some(binding), None, nominal error bindings, and a string discriminator in a tagged record.</p>
-<p>Matching an unbounded primitive domain requires a final wildcard. Nested patterns are outside version 0.</p>
+<p>Matching an unbounded primitive domain requires a final wildcard. A record match also requires a final wildcard when a member lacks the selected tag field or makes that field optional. An open-ended tag also requires the wildcard. Enumerating the known tags does not cover those members. Nested patterns are outside version 0.</p>
 <figure data-ui class="code" data-tabs data-check="spec-shape"><figcaption>Match on a tagged record union</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Shape = { kind: &quot;circle&quot;, radius: number } | { kind: &quot;square&quot;, side: number }
 type Length = number
 
@@ -356,7 +356,35 @@ const extent = (shape: Shape): Length =&gt; {
       return shape.side
   }
 }</code></pre></div></figure>
-<p>A spread binding in this pattern captures the whole narrowed record. It does not mean JavaScript rest destructuring.</p>
+<p>A spread binding in this pattern captures the whole narrowed record. It does not mean JavaScript rest destructuring. The binding retains every union member whose tag can equal the pattern at runtime, including overlapping open or optional fields. Primitive brands use their erased base values for this comparison, and an unknown tag may match any literal. These matching rules do not change nominal assignment or make unknown a top type.</p>
+<figure data-ui class="code" data-tabs data-check="spec-record-union"><figcaption>Construct a tagged member and match an open record union</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Count = int
+type Text = string
+type Reading = { kind: &quot;count&quot;, value: Count } | { kind: &quot;text&quot;, value: Text }
+
+const reading: Reading = { kind: &quot;text&quot;, value: &quot;ready&quot; }
+
+type Incoming = Reading | { kind: Text, value: Text } | { other: Text }
+
+const read = (input: Incoming): Count | Text =&gt;
+  match input {
+    { kind: &quot;count&quot;, ...record } =&gt; record.value,
+    _ =&gt; &quot;unclassified&quot;
+  }</code></pre></div><div class="code-panel" data-tab="Effect-TS"><pre tabindex="0"><code class="language-typescript">type Count = number
+type Text = string
+type Reading = { readonly kind: &quot;count&quot;, readonly value: Count }
+  | { readonly kind: &quot;text&quot;, readonly value: Text }
+
+const reading: Reading = { kind: &quot;text&quot;, value: &quot;ready&quot; }
+
+type Incoming = Reading
+  | { readonly kind: Text, readonly value: Text }
+  | { readonly other: Text }
+
+const read = (input: Incoming): Count | Text =&gt;
+  &quot;kind&quot; in input &amp;&amp; input.kind === &quot;count&quot;
+    ? input.value
+    : &quot;unclassified&quot;</code></pre></div></figure>
+<p>The count arm can receive a record from the open Text-tagged member, whose value is Text. Its result is therefore Count | Text. The wildcard handles other tags and the member without kind.</p>
 <p>A tagged pattern without a binding lowers with a null binding. Pattern-bound values remain immutable and local to their arm.</p><nav class="section-nav" aria-label="Navigation for section 9"><a href="#pipelines">Previous: Pipelines and collections</a><a href="#recovery">Next: Failure and recovery</a></nav></section><section class="section" id="recovery" aria-labelledby="heading-recovery"><h2 id="heading-recovery">Failure and recovery</h2><figure data-ui class="code" data-tabs data-check="spec-recovery" data-check-requires="spec-types spec-users"><figcaption>Recover from a typed failure with try and catch</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const displayName = (id: UserId): Name
   fails StoreUnavailable
   uses Users.find =&gt;
@@ -463,7 +491,7 @@ provide:              construction sets union provider acquisition sets,
 <p>Execution mode combines the modes of evaluated children, branches, and invocations. Nonempty sets require effect mode. Empty sets do not establish purity.</p>
 <p>A semantic validator must recompute annotations and reject disagreements. TypeScript checks payload shape but cannot prove the semantic equations.</p>
 <p>The validator receives immutable source texts keyed by source identifiers. It uses those texts to check source positions.</p>
-<div class="table-wrap"><table><thead><tr><th scope="col">Validation area</th><th scope="col">Required check</th></tr></thead><tbody><tr><td>Identity</td><td>References, imports, exports, and capabilities resolve in their scopes.</td></tr><tr><td>Types</td><td>Arguments, fields, branches, and function results match their checked types.</td></tr><tr><td>Contracts</td><td>Function bodies fit declared failures and requirements.</td></tr><tr><td>Execution</td><td>Modes preserve invocation effects, closure deferral, and provider acquisition.</td></tr><tr><td>Recovery</td><td>Handlers select possible tags and return compatible results.</td></tr><tr><td>Control</td><td>Retry jobs and provider jobs are zero-argument functions. Counts satisfy the literal constraint.</td></tr><tr><td>Initialization</td><td>Module constants have pure active execution and empty active sets.</td></tr><tr><td>Serialization</td><td>Sets are sorted and unique. Literals are finite. Source spans refer to supplied text.</td></tr></tbody></table></div><nav class="section-nav" aria-label="Navigation for section 14"><a href="#ir">Previous: Typed IR and backends</a><a href="#grammar">Next: Surface grammar</a></nav></section><section class="section" id="grammar" aria-labelledby="heading-grammar"><h2 id="heading-grammar">Surface grammar</h2><p>This grammar summarizes the named extensions. The lexical rules and type rules above constrain the terminal forms. It is not a generated parser.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Validation area</th><th scope="col">Required check</th></tr></thead><tbody><tr><td>Identity</td><td>References, imports, exports, and capabilities resolve in their scopes.</td></tr><tr><td>Types</td><td>Arguments, fields, branches, and function results match their checked types.</td></tr><tr><td>Contracts</td><td>Function bodies fit declared failures and requirements.</td></tr><tr><td>Execution</td><td>Modes preserve invocation effects, closure deferral, and provider acquisition.</td></tr><tr><td>Recovery</td><td>Handlers select possible tags and return compatible results.</td></tr><tr><td>Control</td><td>Retry jobs and provider jobs are zero-argument functions. Counts satisfy the literal constraint.</td></tr><tr><td>Initialization</td><td>Module constants have pure active execution and empty active sets.</td></tr><tr><td>Serialization</td><td>Sets are sorted and unique, including Schema decodeRequirements and encodeRequirements. The serializer and independent validator both check this ordering. Literals are finite. Source spans refer to supplied text.</td></tr></tbody></table></div><nav class="section-nav" aria-label="Navigation for section 14"><a href="#ir">Previous: Typed IR and backends</a><a href="#grammar">Next: Surface grammar</a></nav></section><section class="section" id="grammar" aria-labelledby="heading-grammar"><h2 id="heading-grammar">Surface grammar</h2><p>This grammar summarizes the named extensions. The lexical rules and type rules above constrain the terminal forms. It is not a generated parser.</p>
 <figure data-ui class="code neutral"><figcaption>Grammar summary</figcaption><pre tabindex="0"><code class="language-text">module       = (importDecl | declaration)*
 importDecl   = &quot;import&quot; &quot;{&quot; Name (&quot;,&quot; Name)* [&quot;,&quot;] &quot;}&quot; &quot;from&quot; String
 declaration = [&quot;export&quot;] (typeDecl | errorDecl | serviceDecl | binding)

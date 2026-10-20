@@ -33,6 +33,8 @@ another attempt or a repetition delay starts.
 The runtime entry point may interrupt the worker to shut down. Tests verify
 completed cleanup during active work, repetition waits and native retry waits.
 Replaying one returned Effect resets source progress and retry budgets.
+The tests also inject assertion failures during cleanup.
+Cleanup still opens the release gate before the parent joins child fibers.
 
 All three application gates now pass with existing forms. These recording drivers do not establish
 external integration coverage or general opaque Schedule consumer support.

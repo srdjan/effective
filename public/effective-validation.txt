@@ -1291,3 +1291,42 @@ The language edition remains draft 0.57. The compiler passes deno task check
 on Deno 2.9.7: 1,144 fast tests and 131 slow tests. Documentation link audits
 pass in both repositories. The website passes eleven tests and all 47 strict
 illustrative Effect-TS checks, with zero missing translations.
+
+
+Compiler hardening and application checks, October 20, 2026
+The specification now explains how known literal fields select contextual
+record-union constructors. Record matches require a wildcard when a selected
+tag is absent, optional or open-ended. A binding keeps every member whose tag
+can equal the literal at runtime, including primitive brand bases and unknown
+tags. Nominal assignment and unknown compatibility retain their existing rules.
+The new paired example constructs the second same-shape union member and
+matches an open record union without discarding a possible Text payload.
+
+The serialization requirements explicitly include sorted, unique Schema
+decodeRequirements and encodeRequirements. Both the compiler serializer and
+independent validator enforce these sets.
+
+The downloadable worker and service checks now open cleanup gates around the
+whole parent handshake and include injected assertion failures. Their deadline
+harnesses also release gates before joining children. The worker has ten runtime
+checks; the service workflow has fifteen. The stream suite now asserts the
+exact pinned blocked-output pull trace [0, 1, 2, 3, 4, 5, 6], matching the
+existing explanation, instead of a weaker range and a debugging print.
+All three public checks.ts files match the compiler runtime_test.ts fixtures.
+
+On Deno 2.9.7, the website passes deno task test (eleven tests) and deno task
+typecheck (48 strict illustrative Effect-TS units, no missing translations).
+The new Effective example builds with --validate --tsc: one module and zero
+diagnostics. Fresh copies of all three downloadable projects build with those
+same options, pass their checks.ts suites (10 worker, 15 service, 13 stream)
+and run main.ts to completion. The Markdown link audit passes.
+
+The compiler also passes deno task check on Deno 2.9.7: formatting, lint,
+type checking, 1,687 fast tests and 151 slow tests. This website update changes
+no compiler code. Existing external integration and release-acceptance limits
+remain in force. These corrections add no source forms, so the language
+edition remains draft 0.57.
+
+Chrome checks at widths 1280 and 390 confirm that both tabs of the new example
+show one selected panel. The page has no horizontal overflow or uncaught
+JavaScript exceptions. The local HTML link and anchor check passes 227 targets.

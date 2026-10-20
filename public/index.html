@@ -84,7 +84,7 @@ const nicknameLabel = (user: User): Label =&gt;
     onNone: () =&gt; user.name,
     onSome: (nickname) =&gt; nickname
   })</code></pre></div></figure>
-<p>Match expressions require complete coverage. Every arm produces a compatible result type. A never branch, such as fail(error), fits any result type.</p>
+<p>Match expressions require complete coverage. Record unions need a final wildcard if a tag is missing, optional, or open-ended. A tag arm retains every member that can match at runtime. The <a href="effective-spec.html#matching">pattern matching reference</a> shows an overlapping-tag example. Every arm produces a compatible result type. A never branch, such as fail(error), fits any result type.</p>
 <p>The int type contains finite safe integers. Addition, subtraction, and multiplication can defect when the result is invalid. Division always returns number.</p>
 <p>Records reject missing required fields and unknown fields. A record update evaluates its base once, then evaluates update fields from left to right.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Write a pure function that changes a user&#x27;s name without changing the input record.</p><details><summary>Show the answer</summary><pre><code>type Name = string

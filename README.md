@@ -12,7 +12,7 @@ Core 1 is specified in design draft 0.57. The effective-lang repository implemen
 
 The accepted [application acceptance rule](public/effective-spec.html#application-acceptance) bounds further additions. A service workflow, a scheduled worker, and a stream processor must compile with precise contracts and pass failure, cancellation, and cleanup checks.
 
-The [scheduled worker](public/effective-examples/scheduled-worker/README.md) now passes with existing source forms and nine compiled runtime checks. The [service workflow](public/effective-examples/service-workflow/README.md) also passes with a registered atomic SQL adapter and fourteen compiled runtime checks. The [stream processor](public/effective-examples/stream-processor/README.md) also passes with ordered concurrent mapping, backpressure, selective fallback and thirteen runtime cases.
+The [scheduled worker](public/effective-examples/scheduled-worker/README.md) now passes with existing source forms and ten compiled runtime checks. The [service workflow](public/effective-examples/service-workflow/README.md) also passes with a registered atomic SQL adapter and fifteen compiled runtime checks. The [stream processor](public/effective-examples/stream-processor/README.md) also passes with ordered concurrent mapping, backpressure, selective fallback and thirteen runtime cases.
 
 All three application gates are complete. The accepted stopping rule selects no further automatic API additions; release acceptance remains separate work. Item 9 remains deferred. The [remaining and deferred gaps](public/effective-spec.html#remaining-gaps) distinguish API boundaries, runtime limits and separate release acceptance.
 
