@@ -415,6 +415,10 @@
 
   const bindCopyButton = (button, getText, getTitle) => {
     let timer = null;
+    const feedback = document.createElement("span");
+    feedback.hidden = true;
+    feedback.textContent = "Copy failed. Select the code and copy it manually.";
+    button.parentElement.append(feedback);
     button.addEventListener("click", async () => {
       let label = "Copied";
       try {
@@ -423,8 +427,9 @@
         label = "Copy failed";
       }
       button.textContent = label;
+      feedback.hidden = label === "Copied";
       announceCopy(
-        label === "Copied" ? `Copied: ${getTitle()}` : "Copy failed",
+        label === "Copied" ? `Copied: ${getTitle()}` : feedback.textContent,
       );
       clearTimeout(timer);
       timer = setTimeout(() => {
