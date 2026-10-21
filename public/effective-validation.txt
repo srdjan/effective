@@ -1453,3 +1453,29 @@ type checking, 1,786 fast tests and 174 slow tests. This website's deno task tes
 passes 11 tests and deno task typecheck checks 48 strict snippet units. Asset
 query stamps match the site's existing version 0.5.10. The specification stays
 at draft 0.58 because these changes add no source forms.
+
+
+October 21, 2026: bounded architectural cleanup
+
+The compiler's R15a and C10 refactor moves shared syntax queries into a module
+that depends only on the lexer and lossless tree. Lowering no longer imports
+syntax helpers from the expression checker. The builtin-change checklist in
+the compiler repository's docs/builtin-changes.md completes A6.
+
+The entry/result portion of R13 CHK-13 now uses tagged function and constant
+entries paired with their matching body-check results. Two signature casts and
+positional result pairing are removed. The SCC solver and shared mode map keep
+their existing behavior; the mode-map remainder and the other R13 state work
+remain open. R15b is outside this batch. No source form, public core export,
+IR shape, independent-validator policy or language stopping rule changes.
+
+Both source units pass the compiler's deno task check: formatting, lint, type
+checking, 1,786 fast tests and 174 slow tests. TypeScript also rejects both
+deliberately mismatched entry/result pairs in a separate type check.
+
+Each unit's behavior comparison has 8,218 identical records, zero missing and
+zero new. Instrumented cold children received write access only to the capture
+record file in both exported revisions; repository test inputs, assertions and
+permissions stay unchanged. The capture solution and evidence ledger in the
+compiler repository document this verification-only overlay. Website checks
+pass 11 tests and 48 strict snippet units.
