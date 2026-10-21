@@ -1499,3 +1499,26 @@ type checking, 1,816 fast tests and 176 slow tests. The behavior comparison
 against bdf81d0 has 8,970 records on each side, zero missing and zero new, using
 the same documented capture-only record-file permission overlay in both trees.
 Website checks pass 11 tests and 48 strict snippet units.
+
+
+October 21, 2026: Codec and Ref family cleanup
+
+The next two R15b units move Codec and Ref checking into separate family
+modules. Codec adds only isError and widen to BuiltinContext; Ref reuses that
+same ten-member interface. Prelude dispatch, argument evaluation, lowering
+facts, data-only rules and independent validation keep their existing owners.
+Codec transformations keep their purity and input/output type checks, and Ref
+operations retain their effect mode and pure update callbacks.
+
+Across the two units the body checker shrinks from 6,750 to 6,627 raw lines.
+Imports and contracts add 17 filtered lines overall, with no branch change.
+All three handler bodies have identical tokens after receiver normalization.
+Schedule, Codec and Ref extraction is complete; other R15b families remain
+open. No source form, public core export or application boundary changes.
+
+Each unit passes the compiler's deno task check: formatting, lint, strict type
+checking, 1,816 fast tests and 176 slow tests. Each behavior comparison has
+8,970 identical records, zero missing and zero new, with the documented
+capture-only record-file permission overlay. Full gates and capture run
+serially because benchmark cleanup assertions observe shared temporary
+directories. Website checks pass 11 tests and 48 strict snippet units.
