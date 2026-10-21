@@ -1394,3 +1394,62 @@ checking, 1,676 fast tests and 151 slow tests. The Core 1 showcase source builds
 with --validate --tsc: six modules and zero diagnostics, and its emitted
 TypeScript is byte-identical to the build with the old names. The edition
 advances to draft 0.58 because this change removes source forms.
+
+
+October 21, 2026: correctness, editor and local release checks
+
+The compiler implements the FX correctness plan and ER editor/release plan.
+Target-check subprocesses use the permitted PATH Deno executable. Emitted
+records, schemas and nominal errors preserve prototype-sensitive own fields.
+Watch target checking responds to local host and configuration changes without
+claiming that unchanged Effective modules were rechecked. No source form or
+package-interoperability deferral changes.
+
+Editor references, prepare-rename and validated versioned rename, scoped
+completion, full semantic tokens and checked-effect contract quick fixes are
+automated. Local release artifacts contain a standalone CLI and a complete
+VSIX with its bundled server and locked client runtime. Portable installation
+checks verify reproducible archives and offline empty-cache startup outside a
+checkout. The final VSIX passed an isolated installed VS Code run covering the
+new providers, generated output, save, error recovery and a new-process restart.
+The final local archive matches the installed archive byte for byte.
+
+The service-workflow source still owns orchestration. Seven separate integration
+checks use actual loopback HTTP and a temporary file-backed SQLite database,
+covering persistence, rejected input, malformed and unsuccessful HTTP, permanent
+database failure, rollback, synchronized cancellation and connection close.
+These checks establish neither distributed transactions, ambiguous-commit
+recovery nor exactly-once delivery. The public fixture copies match the compiler
+fixture. They build with --validate --tsc, then pass all seven integration checks.
+
+The full benchmark command is deno task bench --full m1 m3 m4. The compiler
+repository retains the raw JSON, complete report and analysis in
+docs/release-measurements-2026-10-21.json,
+docs/release-measurements-2026-10-21.txt and docs/release-measurements.md.
+On Deno 2.9.7, macOS arm64, 14 logical cores, unpinned single-thread servers,
+all four large synthetic diagnostic cases meet the existing 100 ms p90 budget.
+The slowest is alias edit: 73.923 ms p90, 200 timed samples pooled from paired
+servers, with a 22.2 percent row noise floor. This is a local measurement, not
+a performance comparison or a guarantee for other machines.
+
+Two medium-project sessions each completed 10,000 distinct edits across three
+concurrently open documents. Type-table size went from 174 to 176 on each.
+Step-end RSS peaks were 216.4 and 228.0 MiB; final RSS was 200.1 and 205.3 MiB.
+Raw heap and type-table samples are retained alongside RSS. Step-end sampling
+cannot observe within-step peaks, and these finite runs establish no memory
+bound. M3 records one parsed module per edit, one checked module for body
+edits, and 26 for large header, alias and mode changes, with no lowering or
+emission in those editor updates.
+
+The final playground build passed automated browser and screenshot review at
+375, 720 and 1280 CSS pixels, including keyboard navigation, type and syntax
+error recovery, retained stale output and read-only generated text. Browser
+behavior and artifact hashes are recorded in the compiler release evidence.
+The user's manual editor and playground acceptance remains pending. Nothing
+was published by these local checks.
+
+Verification: the compiler's deno task check passes formatting, lint, strict
+type checking, 1,786 fast tests and 174 slow tests. This website's deno task test
+passes 11 tests and deno task typecheck checks 48 strict snippet units. Asset
+query stamps match the site's existing version 0.5.10. The specification stays
+at draft 0.58 because these changes add no source forms.

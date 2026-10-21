@@ -48,3 +48,23 @@ application gates now pass using existing forms. These recording drivers perform
 The simulated COMMIT error precedes committed-state mutation and proves no retry.
 It does not establish actual ambiguous-commit behavior or external integration.
 Gap item 9 remains deferred.
+
+
+## Real HTTP and SQLite acceptance
+
+The separate [integration driver](integration_driver.ts) supplies a loopback
+HTTP catalog and a temporary file-backed SQLite database through the same
+host contract and source workflow. After building this directory, run its
+[seven integration checks](integration_checks.ts) with Deno 2.9.7:
+
+```sh
+deno test --config deno.json --allow-read --allow-write --allow-net=127.0.0.1 integration_checks.ts
+```
+
+They cover persisted bound values, invalid input, malformed/non-success HTTP,
+permanent database rejection, rollback after an actual insert, cancellation
+and connection close. Synchronization waits for the pending HTTP request or
+completed insert before interruption. SQLite calls are synchronous; the check
+interrupts an open transaction after insertion, not a running native SQL call.
+These local checks establish no distributed transaction, ambiguous-commit,
+idempotency or exactly-once guarantee. The original recording checks remain.
