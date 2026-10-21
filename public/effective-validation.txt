@@ -1479,3 +1479,23 @@ record file in both exported revisions; repository test inputs, assertions and
 permissions stay unchanged. The capture solution and evidence ledger in the
 compiler repository document this verification-only overlay. Website checks
 pass 11 tests and 48 strict snippet units.
+
+
+October 21, 2026: Schedule family cleanup
+
+The R15b pilot moves four source-checker handlers for seven general Schedule
+builtins into check_builtins/schedule.ts. An eight-member BuiltinContext gives
+them the existing checker operations directly. Prelude dispatch, arity and
+pipeline rules, lowering facts and independent validation keep their owners.
+
+The body checker shrinks from 6,929 to 6,750 raw lines. Imports and contracts
+add 42 filtered lines across the three affected files; the branch count stays
+the same. All four handler bodies have identical tokens after changing the
+receiver from this to the context parameter. The remaining R15b families stay
+open. This changes no source form, public core export or application boundary.
+
+Verification: the compiler's deno task check passes formatting, lint, strict
+type checking, 1,816 fast tests and 176 slow tests. The behavior comparison
+against bdf81d0 has 8,970 records on each side, zero missing and zero new, using
+the same documented capture-only record-file permission overlay in both trees.
+Website checks pass 11 tests and 48 strict snippet units.
