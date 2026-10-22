@@ -1825,3 +1825,43 @@ module no longer re-exports methodOfCapability, moduleOfId, nameOfId, and
 readConfig, and it now exports the types TypeReader, TypeNode, and TypeRef.
 The package version stays 0.6.0. Phase 4, manual editor and playground
 acceptance, and the separately recorded refactor deferrals remain open.
+
+October 22, 2026: decoupling Phase 4, the edit spread
+
+Phase 4 reduces the number of places that one change must edit. Each
+builtin family of the checker now holds the rows of its builtins. So a new
+builtin in an existing family no longer edits the body checker. A test
+checks that each prelude name has exactly one row. Pattern checking and
+the operator rules left the body checker. The body checker falls from
+3,039 to 2,092 lines.
+
+The independent validator now keeps its builtin families in separate
+files, behind a context that the validator owns. The validator still
+imports no checker code, and a test checks that for each file. The main
+validator file falls from 4,901 to 1,638 lines. The build watch loop and
+the language server save round now share one save round, with the removal
+rule of each caller as a parameter.
+
+One fix changes visible text. A validation diagnostic inside a schedule
+argument named the field "argument", which does not exist in the IR. It
+now names "times" or "delayMillis". Review also found that the shared save
+round changed the order of the watch loop output. A fix restores the old
+order, and a new test pins it.
+
+The full gate passes 1,861 fast and 177 slow tests. Constant-input
+behavior captures match all records for each group of units, with zero
+missing. The checker and validator units have 9,127 records, and the save
+round has 9,180. One capture had one extra clean program record, which a
+capture of one revision against itself also shows. Token comparisons of
+the moved code match 95 builtin handlers, 95 prologues, 16 pattern and
+operator members, and 119 validator items.
+
+Across the core library,
+filtered lines rise from 34,521 to 35,184, and AST branches go from 7,970
+to 7,969. No performance or memory gain is claimed.
+
+Source forms, canonical IR, golden files, and the public core exports are
+unchanged. Five measured items stay deferred, because they would add edit
+sites or code for a small gain. One difference stays open for a decision.
+The build command writes the outputs of a module that a nested project
+owns, and the language server does not.
