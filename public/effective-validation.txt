@@ -1549,3 +1549,24 @@ New R13 state and boundary tests also run in the full gate. This cleanup changes
 no source syntax, public core exports, canonical IR or application disposition.
 Manual release acceptance remains pending, and the other documented rederive
 items remain separate work.
+
+October 22, 2026: audit and save plan completion
+
+The compiler audit batch AU1 through AU8 and all recorded follow-ups are
+complete. Commit 1af80d7 gives benchmark temporary directories a process-specific
+prefix, so concurrent verification runs cannot affect each other's cleanup
+assertions. The regression verifies that owned leaks are still detected and
+foreign directories are ignored. Two concurrent benchmark test runs pass
+all eight tests each. The full compiler gate passes 1,826 fast tests and
+177 slow tests, including loopback HTTP/SQLite and offline installation.
+
+The save-transpilation plan SV1 through SV6 is complete. The user chose to
+record the full M7 and M4 run in compiler commit 5236308. The large body-save
+p90 is 24.927 ms against the 100 ms budget; sampled RSS is higher with the
+disk program, and the observations establish no memory bound. The completed
+audit and save plans now live under docs/archive/plans/ in the compiler
+repository. Its status page no longer lists the audit batch as open.
+
+This documentation cleanup changes no source form or application disposition.
+Manual editor and playground acceptance remains pending, as do the separately
+tracked rederive items and the package-interoperability deferral.
