@@ -233,7 +233,7 @@ export const saveActive = (id: UserId): Effect.Effect&lt;
 value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure>
 <p>The runtime evaluates the left side once. It then evaluates the stage callee and explicit arguments. Pipelines associate from left to right.</p>
 <p>A stage can name a local function, imported function, builtin, or declared service method. Version 0 excludes placeholders, currying, inline lambda stages, and record-member stages.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Collection workflow using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activeNames = (users: User[]): Name[] =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Collection workflow using chapter 4 declarations <a href="effective-examples/active-names.eff">View complete Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activeNames = (users: User[]): Name[] =&gt;
   users
     |&gt; filter((user) =&gt; user.active)
     |&gt; map((user) =&gt; user.name)
@@ -246,7 +246,7 @@ export const listActiveNames = (): Name[]
 ): ReadonlyArray&lt;Name&gt; =&gt;
   users.filter((user) =&gt; user.active).map((user) =&gt; user.name)
 
-const listActiveNames = (): Effect.Effect&lt;
+export const listActiveNames = (): Effect.Effect&lt;
   ReadonlyArray&lt;Name&gt;,
   StoreUnavailable,
   Users
@@ -254,6 +254,7 @@ const listActiveNames = (): Effect.Effect&lt;
   Users.use((users) =&gt; users.all()),
   activeNames
 )</code></pre></div></figure>
+<p>The pure helper uses collection operations in both languages. The effectful wrapper uses 96 non-whitespace characters in Effective and 144 in Effect-TS: a direct pipeline compared with <code>Effect.map</code> and service-context access. Including the helper and explicit exported contracts, the pair uses 194 and 266 characters respectively. Shared chapter 4 declarations are excluded from both counts.</p>
 <p>The prelude provides map, filter, and fold. Each builtin traverses from left to right. Map and filter preserve order, while fold carries one accumulator.</p>
 <p>Map and filter call their callback once for each visited element. Empty inputs produce empty outputs. Fold returns its initial accumulator for an empty input.</p>
 <p>Each callback must be pure and have empty failure and requirement sets. Contextual inline arrows work because the builtin supplies their parameter types. Known pure functions also work.</p>

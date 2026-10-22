@@ -1622,3 +1622,38 @@ including returned values, typed failures and service-call traces. The site's
 
 Source forms, public core exports, canonical IR and validator policy are
 unchanged. Manual editor and playground acceptance remains pending.
+
+October 22, 2026: LSP parameter schemas and collection comparison
+
+FE-2 completes the R12 front-end cleanup. Private ordered schemas share
+primitive, object, array and optional checks for incoming LSP parameters.
+Exact errors, first-error order, optional-field absence and ignored extra
+fields are preserved. Initialization defaults and warnings remain explicit;
+editor requests still validate positions before optional document versions.
+All ten public narrower signatures are unchanged. The protocol module falls
+from 479 to 469 filtered lines and from 110 to 57 AST branches; maximum
+cyclomatic complexity falls from 11 to 10.
+
+All 100 focused LSP tests pass. The 19 protocol tests, including two new editor
+characterization tests, also pass against the frozen pre-refactor source.
+Two compile probes reject a missing required schema field and an explicitly
+undefined optional field; valid optional fields compile. A deterministic
+corpus compares 30,000 inputs per narrower: all 300,000 results match,
+including exact errors and serialized output. The full compiler gate passes
+1,828 fast and 177 slow tests.
+
+The book's collection pair now exports listActiveNames in both languages and
+links complete source at effective-examples/active-names.eff. The displayed
+pair uses 194 non-whitespace characters in Effective and 266 in Effect-TS,
+including its pure helper and explicit exported contracts. The effectful
+wrapper alone uses 96 and 144 respectively. Shared chapter 4 declarations
+are excluded from both counts. The Effective source passes checking,
+lowering, independent validation and strict emitted TypeScript checking.
+Five runtime cases match the handwritten Effect-TS: empty input, no active
+users, preserved order, duplicate names and a typed service failure. Each
+calls Users.all exactly once. All 11 site tests and 48 strict translation
+units pass, with no Effective block missing a translation panel.
+
+Source forms, public core exports, canonical IR and independent validator
+policy are unchanged. ARC-5 and VAL-8 remain open, along with manual editor
+and playground acceptance.

@@ -1,0 +1,27 @@
+type UserId = string
+type Name = string
+
+type User = {
+  id: string,
+  name: string,
+  active: boolean
+}
+
+error UserMissing = { id: string }
+error StoreUnavailable = { message: string }
+
+service Users {
+  find(id: UserId): Option<User> fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}
+
+const activeNames = (users: User[]): Name[] =>
+  users
+    |> filter((user) => user.active)
+    |> map((user) => user.name)
+
+export const listActiveNames = (): Name[]
+  fails StoreUnavailable
+  uses Users.all =>
+  Users.all() |> activeNames
