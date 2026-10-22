@@ -1570,3 +1570,22 @@ repository. Its status page no longer lists the audit batch as open.
 This documentation cleanup changes no source form or application disposition.
 Manual editor and playground acceptance remains pending, as do the separately
 tracked rederive items and the package-interoperability deferral.
+
+October 22, 2026: checker identity guards
+
+The CHK-11 remainder is complete. The source checker removes 24 identity
+casts and four duplicate error-prefix checks. Declaration metadata now ties
+alias and brand kinds to type identities and error kinds to error identities.
+Explicit guards preserve the existing results of nominal-error lookups.
+Public query signatures and definition-map key types remain unchanged.
+
+All 274 focused tests pass. Three compile probes now reject mismatched
+declaration kinds and identities that the baseline accepted; valid declarations
+still compile. The full compiler gate passes 1,826 fast tests and 177 slow
+tests. Constant-input behavior captures contain 8,986 records on each side,
+with zero missing and zero new records, using the documented record-file
+permission overlay in both temporary trees. The affected source files retain
+8,082 filtered lines and add 12 AST branches for explicit guards.
+
+Source forms, public core exports, canonical IR and independent validator
+policy are unchanged. Manual editor and playground acceptance remains pending.
