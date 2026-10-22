@@ -1865,3 +1865,16 @@ unchanged. Five measured items stay deferred, because they would add edit
 sites or code for a small gain. One difference stays open for a decision.
 The build command writes the outputs of a module that a nested project
 owns, and the language server does not.
+
+October 22, 2026: nested projects in build and watch
+
+A directory under a project root that holds its own effective.json is a
+nested project. The language server already left the outputs of a nested
+project to that project. The build and watch commands wrote them, so two
+projects could write one file. Now build and watch skip those outputs too.
+The outer project still checks the nested modules and prints their
+diagnostics.
+
+One shared ownership rule serves the command-line tool and
+the language server. Two tests cover the rule, and both fail with the old
+rule. The full gate passes 1,862 fast and 177 slow tests with Deno 2.9.7.
