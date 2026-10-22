@@ -292,18 +292,19 @@ export const activationLabel = (id: UserId): Effect.Effect&lt;
 )</code></pre></div></figure>
 <p>This recovery pair uses 181 non-whitespace characters in Effective and 216 in Effect-TS, including the <code>Label</code> alias and explicit exported contracts. Shared declarations and <code>saveActive</code> are excluded from both counts. The Effect-TS version uses <code>Effect.as</code> to replace a successful result and <code>Effect.catchTag</code> to recover a missing user. Effective writes the sequence and typed catch directly; both versions let storage failures continue to the caller.</p>
 <p>retry requires a deferred operation. The function below runs its first attempt and allows two more attempts. Each attempt can perform the Users.find operation again.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Retry using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: UserId): Option&lt;User&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Retry using chapter 4 declarations <a href="effective-examples/retry-lookup.eff">View complete Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: UserId): Option&lt;User&gt;
   fails StoreUnavailable
   uses Users.find =&gt;
-  retry(() =&gt; Users.find(id), { times: 2 })</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-retry"><pre tabindex="0"><code class="language-typescript">const lookupWithRetry = (id: UserId): Effect.Effect&lt;
+  retry(() =&gt; Users.find(id), { times: 2 })</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-retry"><pre tabindex="0"><code class="language-typescript">export const lookupWithRetry = (id: UserId): Effect.Effect&lt;
   Option.Option&lt;User&gt;,
   StoreUnavailable,
   Users
 &gt; =&gt; Effect.retry(
-  Effect.suspend(() =&gt; Users.use((users) =&gt; users.find(id))),
+  Users.use((users) =&gt; users.find(id)),
   { times: 2 }
 )</code></pre></div></figure>
-<p>Passing Users.find(id) directly would run the call before retry took control. Effective never inserts suspension because a parameter expects a deferred function.</p>
+<p>This retry pair uses 123 non-whitespace characters in Effective and 156 in Effect-TS, including explicit exported contracts and excluding shared chapter 4 declarations. Effective passes a deferred direct call. Effect-TS retries the cold effect returned by <code>Users.use</code>; it needs no extra <code>Effect.suspend</code> here. Both allow one initial attempt and two retries.</p>
+<p>In Effective, passing Users.find(id) directly would run the call before retry took control. Effective never inserts suspension because a parameter expects a deferred function.</p>
 <p>Retry preserves the callback result, failures, and requirements. Retry itself has effect execution mode. Its times value must be a finite, nonnegative safe integer literal in version 0.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Provider execution</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">import { UsersLive } from &quot;host:providers&quot;
 

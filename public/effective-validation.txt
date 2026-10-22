@@ -1690,3 +1690,44 @@ Effective block missing a translation panel.
 
 Source forms, public core exports, canonical IR and independent validator
 policy are unchanged. No performance saving is claimed for ARC-5.
+
+October 22, 2026: validator builtin classification and retry comparison
+
+VAL-8 is complete. The independent validator caches typed identity and call
+classifications for map, filter, fold, all and traverse. Import shape checks
+still use the ID; call rules still follow the first recorded name. Every
+prelude value remains marked as a builtin, including malformed IDs. Raw
+names preserve non-string failures in the original guarded call phase.
+Shared container reconstruction and concurrency checks remain independent
+of the source checker. An exhaustive shape switch rejects an added
+unhandled builtin name at compile time.
+
+All 202 existing focused validator tests and three new characterization
+tests pass. The new tests also pass against the frozen validator. The full
+gate passes 1,833 fast and 177 slow tests. Constant-input behavior captures
+match all 9,082 records, with zero missing and zero new. Both temporary
+trees run the same tests and the documented record-file permission overlay.
+A separate corpus compares 16,560 full validator diagnostic arrays for
+malformed IDs and names, callback modes, duplicate prelude entries,
+parameter counts and nested type/container substitutions; every result
+matches. Across two existing files and one new helper, filtered lines rise
+from 5,685 to 5,748 and AST branches stay at 1,631. The measure.ts cyclomatic
+value of checkBuiltinShape falls from 66 to 50. No performance or memory
+gain is claimed.
+
+The retry example now exports lookupWithRetry in both languages and uses
+the cold Users.use effect directly in Effect-TS, without an extra suspension.
+Complete source is available at effective-examples/retry-lookup.eff. The
+shown pair uses 123 non-whitespace characters in Effective and 156 in
+Effect-TS, including explicit exported contracts and excluding shared
+chapter 4 declarations. Effective still requires its deferred direct call.
+The source passes checking, lowering, independent validation and strict
+emitted TypeScript checking. Five runtime cases match the handwritten
+Effect-TS: immediate success, success after one or two failures, exhaustion
+after three attempts, and an immediate None result. Values, typed failures
+and exact service-call counts match. All 11 site tests and 48 strict
+translation units pass; no Effective block lacks a translation panel.
+
+Source forms, public core exports and canonical IR are unchanged. Manual
+editor and playground acceptance remains pending, as do the separately
+recorded refactor deferrals. ARC-5 remains declined as proposed.

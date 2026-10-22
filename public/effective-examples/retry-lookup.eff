@@ -1,0 +1,22 @@
+type UserId = string
+type Name = string
+
+type User = {
+  id: string,
+  name: string,
+  active: boolean
+}
+
+error UserMissing = { id: string }
+error StoreUnavailable = { message: string }
+
+service Users {
+  find(id: UserId): Option<User> fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}
+
+export const lookupWithRetry = (id: UserId): Option<User>
+  fails StoreUnavailable
+  uses Users.find =>
+  retry(() => Users.find(id), { times: 2 })
