@@ -268,7 +268,7 @@ export const total = (amounts: Amount[]): Amount =&gt;
 export const total = (amounts: ReadonlyArray&lt;Amount&gt;): Amount =&gt;
   amounts.reduce((sum, amount) =&gt; sum + amount, 0)</code></pre></div></figure>
 <aside class="exercise"><h3>Exercise</h3><p>Why can version 0 reject a callback parameter whose source type only shows empty effect sets?</p><details><summary>Show the answer</summary><p>An unbodied function type defaults to effect execution. Version 0 has no source annotation that requires pure execution.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 6"><a href="#lookup-update">Previous: Lookup and update</a><a href="#control">Next: Recovery and provision</a></nav></section><section class="section" id="control" aria-labelledby="heading-control"><h2 id="heading-control">Recovery and provision</h2><p class="lead">Effective controls an operation through explicit syntax and deferred zero-argument functions.</p><p>A typed catch handles matching failures from its protected block. Unhandled failures continue to the caller. Catch does not intercept defects or cancellation.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Recovery using chapters 4 and 5 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Label = string
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Recovery using chapters 4 and 5 declarations <a href="effective-examples/activation-label.eff">View complete Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">type Label = string
 
 export const activationLabel = (id: UserId): Label
   fails StoreUnavailable
@@ -280,16 +280,17 @@ export const activationLabel = (id: UserId): Label
     UserMissing(error) =&gt; &quot;missing: &quot; + error.id
   }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-recovery"><pre tabindex="0"><code class="language-typescript">type Label = string
 
-const activationLabel = (id: UserId): Effect.Effect&lt;
+export const activationLabel = (id: UserId): Effect.Effect&lt;
   Label,
   StoreUnavailable,
   Users
-&gt; =&gt; Effect.map(saveActive(id), () =&gt; &quot;active&quot;).pipe(
+&gt; =&gt; Effect.as(saveActive(id), &quot;active&quot;).pipe(
   Effect.catchTag(
     &quot;UserMissing&quot;,
     (error) =&gt; Effect.succeed(&quot;missing: &quot; + error.id)
   )
 )</code></pre></div></figure>
+<p>This recovery pair uses 181 non-whitespace characters in Effective and 216 in Effect-TS, including the <code>Label</code> alias and explicit exported contracts. Shared declarations and <code>saveActive</code> are excluded from both counts. The Effect-TS version uses <code>Effect.as</code> to replace a successful result and <code>Effect.catchTag</code> to recover a missing user. Effective writes the sequence and typed catch directly; both versions let storage failures continue to the caller.</p>
 <p>retry requires a deferred operation. The function below runs its first attempt and allows two more attempts. Each attempt can perform the Users.find operation again.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Retry using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">export const lookupWithRetry = (id: UserId): Option&lt;User&gt;
   fails StoreUnavailable

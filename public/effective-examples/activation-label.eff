@@ -1,0 +1,51 @@
+type UserId = string
+type Name = string
+
+type User = {
+  id: string,
+  name: string,
+  active: boolean
+}
+
+error UserMissing = { id: string }
+error StoreUnavailable = { message: string }
+
+service Users {
+  find(id: UserId): Option<User> fails StoreUnavailable
+  save(user: User): void fails StoreUnavailable
+  all(): User[] fails StoreUnavailable
+}
+
+const getUser = (id: UserId): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find =>
+  match Users.find(id) {
+    Some(user) => user,
+    None => fail(UserMissing({ id }))
+  }
+
+const activate = (user: User): User =>
+  ({ ...user, active: true })
+
+export const saveActive = (id: UserId): User
+  fails UserMissing | StoreUnavailable
+  uses Users.find | Users.save => {
+  const user = getUser(id)
+  if (user.active) { user } else {
+    const active = activate(user)
+    Users.save(active)
+    active
+  }
+}
+
+type Label = string
+
+export const activationLabel = (id: UserId): Label
+  fails StoreUnavailable
+  uses Users.find | Users.save =>
+  try {
+    saveActive(id)
+    "active"
+  } catch {
+    UserMissing(error) => "missing: " + error.id
+  }

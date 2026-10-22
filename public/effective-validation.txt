@@ -1657,3 +1657,36 @@ units pass, with no Effective block missing a translation panel.
 Source forms, public core exports, canonical IR and independent validator
 policy are unchanged. ARC-5 and VAL-8 remain open, along with manual editor
 and playground acceptance.
+
+October 22, 2026: builtin fact assessment and recovery comparison
+
+The ARC-5 name-only lowering proposal is declined after checking its
+prerequisite. The current NodeFact union has 90 distinct kinds, including
+66 payload-free kinds. Of those, 54 are fixed builtin call tags, ten depend
+on callbacks or retry options, and two describe ordinary calls or the None
+value. Six resolved builtin names select different lowering kinds. For
+example, mapEffect can lower to map-stream or map-effect; retry can lower to
+retry or retry-with-schedule. A name-only table would lose these decisions.
+The checker, fact-table and lowering implementation stays unchanged. A
+selective fixed-tag rewrite has no measured benefit and is not accepted work.
+
+Two new regression tests cover 13 valid counterexamples, checking resolved
+names, exact lowered IR kinds and independent validator acceptance. All 231
+focused tests pass. The full compiler gate passes 1,830 fast and 177 slow
+tests. VAL-8 remains open, along with manual editor and playground acceptance.
+
+The book's recovery pair now exports activationLabel in both languages and
+links complete source at effective-examples/activation-label.eff. Its
+Effect-TS version uses Effect.as and Effect.catchTag. The displayed pair
+uses 181 non-whitespace characters in Effective and 216 in Effect-TS,
+including the Label alias and explicit exported contracts; shared
+declarations and saveActive are excluded from both counts. The Effective
+source passes checking, lowering, independent validation and strict emitted
+TypeScript checking. Five runtime cases match the handwritten Effect-TS:
+already active, inactive, recovered missing user, lookup failure and save
+failure. Returned labels, typed storage failures and service-call traces
+match. All 11 site tests and 48 strict translation units pass, with no
+Effective block missing a translation panel.
+
+Source forms, public core exports, canonical IR and independent validator
+policy are unchanged. No performance saving is claimed for ARC-5.
