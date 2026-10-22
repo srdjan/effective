@@ -179,7 +179,7 @@ class Users extends Context.Service&lt;Users, {
 <p>The Effect-TS tab represents successful values inside Effect.Effect. Its error parameter contains tagged errors. Its requirement parameter contains the Users service when a function accesses that context.</p>
 <p>Later TypeScript examples assume these imports, schemas, errors, and the Users class. Later Effective examples assume the declarations above. Each Effect-TS tab shows intended translation, not generated output.</p>
 <p>Effect-TS tracks the whole Users service in its requirement type. Effective retains each method requirement in checked IR or backend metadata.</p>
-<p>These isolated translations use short error tags and service keys. A transpiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous: Function contracts</a><a href="#lookup-update">Next: Lookup and update</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">Lookup and update</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third function sequences lookup, change, and save.</p>
+<p>These isolated translations use short error tags and service keys. A transpiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous: Function contracts</a><a href="#lookup-update">Next: Lookup and update</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">Lookup and update</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third returns an already active user or activates and saves an inactive one.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Lookup using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const getUser = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find =&gt;
@@ -200,31 +200,35 @@ class Users extends Context.Service&lt;Users, {
   )</code></pre></div></figure>
 <p>fail(error) ends the normal path and contributes the error identity. Errors are nominal, so declarations with equal fields remain different error types.</p>
 <p>The match reads the option once and selects one arm. The None arm constructs UserMissing with the requested identifier. StoreUnavailable remains unchanged.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Update workflow using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Activate and save: direct calls and Effect sequencing <a href="effective-examples/activation.eff">View complete Effective source</a></figcaption><div class="code-panel" data-tab="Effective"><pre tabindex="0"><code class="language-effective">const activate = (user: User): User =&gt;
   ({ ...user, active: true })
 
 export const saveActive = (id: UserId): User
   fails UserMissing | StoreUnavailable
   uses Users.find | Users.save =&gt; {
   const user = getUser(id)
-  const active = activate(user)
-  Users.save(active)
-  active
+  if (user.active) { user } else {
+    const active = activate(user)
+    Users.save(active)
+    active
+  }
 }</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="users-update"><pre tabindex="0"><code class="language-typescript">const activate = (user: User): User =&gt;
   ({ ...user, active: true })
 
-const saveActive = (id: UserId): Effect.Effect&lt;
+export const saveActive = (id: UserId): Effect.Effect&lt;
   User,
   UserMissing | StoreUnavailable,
   Users
 &gt; =&gt; Effect.gen(function* () {
   const user = yield* getUser(id)
+  if (user.active) return user
   const active = activate(user)
   yield* Users.use((users) =&gt; users.save(active))
   return active
 })</code></pre></div></figure>
+<p>This pair uses 253 non-whitespace characters in Effective and 304 in Effect-TS, including the pure helper and explicit exported contracts. Shared chapter 4 declarations are excluded from both counts. Effect-TS spells out the <code>Effect.Effect</code> result type, generator, <code>yield*</code>, service-context access and <code>return</code>. Effective keeps direct calls and a final expression.</p>
 <p>Effective uses one direct call syntax for pure functions and service methods. The checked call still distinguishes an ordinary call from a service operation in typed IR.</p>
-<p>The block evaluates each binding and expression in order. A failure stops the remaining steps. The final active value becomes the successful result.</p>
+<p>Both versions read once and skip the write when the user is already active. Otherwise they activate and save the user. A failure stops the remaining steps; success returns the user.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Why does saveActive return active after Users.save(active)?</p><details><summary>Show the answer</summary><p>The final value supports later composition. The save operation returns void, which cannot carry the updated user.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 5"><a href="#users-foundation">Previous: One domain, two languages</a><a href="#pipelines-collections">Next: Pipelines and collections</a></nav></section><section class="section" id="pipelines-collections" aria-labelledby="heading-pipelines-collections"><h2 id="heading-pipelines-collections">Pipelines and collections</h2><p class="lead">A pipeline passes its left value as the first argument of each stage.</p><figure data-ui class="code neutral"><figcaption>Pipeline expansion</figcaption><pre tabindex="0"><code class="language-text">value |&gt; transform          means transform(value)
 value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure>
 <p>The runtime evaluates the left side once. It then evaluates the stage callee and explicit arguments. Pipelines associate from left to right.</p>

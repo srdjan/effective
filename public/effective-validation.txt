@@ -1589,3 +1589,36 @@ permission overlay in both temporary trees. The affected source files retain
 
 Source forms, public core exports, canonical IR and independent validator
 policy are unchanged. Manual editor and playground acceptance remains pending.
+
+October 22, 2026: builtin type table and workflow comparison
+
+CHK-12 is complete. One ordered resolver list derives the 17 named builtin
+types and their exported name set. An exhaustive checker table keeps plain,
+generic and declaration-only Brand policy explicit, with one shared generic
+arity check. The current adaptation retains the later checker ID guards and
+keeps source-order IR separate from interned type references.
+
+All 287 focused tests pass, including exact RetrySchedule and Fiber error
+messages and spans. Three compile probes reject missing and unknown table
+rows and an invalid generic arity. The full compiler gate passes 1,826 fast
+and 177 slow tests. Behavior captures match all 8,986 repository-suite records
+and all 11,416 records after an additional 1,088-program named-type corpus,
+with zero missing and zero new records. The documented record-file permission
+overlay applies equally to both temporary trees. Across the two source files,
+filtered lines increase by 32 and AST branches decrease by 38; named lowering
+falls from 153 to 46 raw lines and from cyclomatic 41 to 15.
+
+The book's activate-and-save pair now includes the same conditional write in
+both languages. Already-active users return without a write; inactive users
+are activated and saved. The shown pair contains 253 non-whitespace characters
+in Effective and 304 in Effect-TS, including its pure helper and explicit
+exported contracts, excluding shared chapter 4 declarations from both counts.
+The complete source is available as effective-examples/activation.eff.
+The Effective snippets pass checking, lowering, independent validation and
+strict emitted TypeScript checking. Five runtime cases match the handwritten Effect-TS:
+already active, inactive, missing user, lookup failure and save failure,
+including returned values, typed failures and service-call traces. The site's
+11 tests and 48 strict translation units pass; no Effective block lacks a panel.
+
+Source forms, public core exports, canonical IR and validator policy are
+unchanged. Manual editor and playground acceptance remains pending.
