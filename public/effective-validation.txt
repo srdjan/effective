@@ -1522,3 +1522,30 @@ checking, 1,816 fast tests and 176 slow tests. Each behavior comparison has
 capture-only record-file permission overlay. Full gates and capture run
 serially because benchmark cleanup assertions observe shared temporary
 directories. Website checks pass 11 tests and 48 strict snippet units.
+
+October 21, 2026: remaining R13 and R15b cleanup
+
+R13 is complete. Generated-file writing consumes tagged ready/failure states;
+validator computations distinguish derived, checked and poisoned results; mode
+solver assumptions no longer mutate published modes. Internal Schema nodes
+carry one presence state, while canonical IR retains its existing flags.
+Language-server project state carries a revision and its delta together and
+retains the last successful pair when a configuration update fails.
+
+R15b now separates all source-checker builtin families. Collections, Effect,
+Layer, Fiber, Scope, Stream/Sink and Schema join the earlier Schedule, Codec and
+Ref modules. Family handlers use shared operations or a narrow family context;
+the shared BuiltinContext stays at ten operations. The body checker owns
+argument evaluation, diagnostics and body-table writes; generic dispatch keeps
+arity and pipeline rejection order. Schema metadata and its exhaustive handler
+table stay together. The validator remains independent of checker policy.
+
+The final compiler gate passes 1,826 fast tests and 176 slow tests. Each remaining
+family unit has a constant-input behavior comparison with 8,986 records on each side,
+zero missing and zero new records. These comparisons cover checking, lowering,
+emission, program queries and independent validation, with the documented
+capture-only record-file permission overlay applied equally to both trees.
+New R13 state and boundary tests also run in the full gate. This cleanup changes
+no source syntax, public core exports, canonical IR or application disposition.
+Manual release acceptance remains pending, and the other documented rederive
+items remain separate work.
