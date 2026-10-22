@@ -1766,3 +1766,29 @@ moves pipeline stage effects to the checker, which also fixes a found defect:
 a scoped or forkScoped stage with an effectful left value lowers to IR that
 the independent validator rejects. Manual editor and playground acceptance
 remains pending.
+
+October 22, 2026: decoupling Phase 2 and the scoped stage fix
+
+Phase 2 gives three rules one owner each. The source checker now computes
+the effect set of a pipeline stage whose left value has effects, and
+lowering reads that set. Before, lowering kept a second copy of these
+rules for every stage kind. That copy had no case for scoped and forkScoped,
+so a program such as makeJob() |> scoped passed the checker, but the
+independent validator rejected its IR with validation/003 and
+validation/004. That program now lowers to valid IR; the direct call form
+was always correct. Hover and the emitter now print a declaration header
+with one shared function; hover still shows the inferred result type. Body
+scheduling in the project checker now has one writer for each result map.
+
+The full gate passes 1,847 fast and 177 slow tests, including ten new stage
+tests with effectful left values. A constant-input behavior capture matches
+all 9,109 records, with zero missing and zero new; it ran the same tests on
+both sides, without the two scoped cases whose result the fix changes, and
+with the documented record-file permission overlay. No golden file or IR
+fixture changes. Across the core library, filtered lines fall from 34,502
+to 34,393 and AST branches from 8,065 to 7,961. No performance or memory
+gain is claimed.
+
+Source forms, public core exports and canonical IR are unchanged. The
+remaining decoupling phases, manual editor and playground acceptance, and
+the separately recorded refactor deferrals remain open.
