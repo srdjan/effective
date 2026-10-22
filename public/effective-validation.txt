@@ -1792,3 +1792,36 @@ gain is claimed.
 Source forms, public core exports and canonical IR are unchanged. The
 remaining decoupling phases, manual editor and playground acceptance, and
 the separately recorded refactor deferrals remain open.
+
+October 22, 2026: decoupling Phase 3, the editor boundary
+
+Phase 3 puts the editor queries behind one boundary. A Revision now answers
+read-only queries for module infos, path lookups, resolutions, imports,
+declaration entries, the type table, and validation. The editor files, the
+build command, the language server, the host outputs, and the playground
+use these queries. The project and checked fields of a Revision are now
+private, so a change to a checker shape no longer reaches the adapters.
+
+Rename and the missing-contract actions no longer compare diagnostic
+counts. They compare diagnostics by code, source, and span, with each span
+moved through the edits. A rename is rejected when it adds an analysis
+diagnostic. An action must remove a diagnostic and add none. A probe ran
+the old and the new rules on 2,800 renames over the 14 fixture projects and
+on 100 contract action cases: it found no difference. One rename outside
+the fixtures now gives a different rejection message; a new test pins it.
+
+The full gate passes 1,852 fast and 177 slow tests. Constant-input
+behavior captures match all records for each unit, with zero missing and
+zero new: 9,115, 9,116, and 9,116 records. One first run lost three clean
+program records to run variance; single-revision reruns matched. No golden
+file or IR fixture changes. Across the core library, filtered lines rise
+from 34,393 to 34,521 and AST branches from 7,961 to 7,970, because the new
+queries add more code than the editor files lose. No performance or memory
+gain is claimed.
+
+Source forms and canonical IR are unchanged. The public core exports
+change: the Revision fields project and checked are private, the core
+module no longer re-exports methodOfCapability, moduleOfId, nameOfId, and
+readConfig, and it now exports the types TypeReader, TypeNode, and TypeRef.
+The package version stays 0.6.0. Phase 4, manual editor and playground
+acceptance, and the separately recorded refactor deferrals remain open.
