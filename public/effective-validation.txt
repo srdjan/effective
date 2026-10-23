@@ -2038,3 +2038,48 @@ A data or error body that does not parse now gets the error type. Before this
 change, each use of such a type gave a false type-mismatch error after
 syntax/008. The compiler commit is 317d018, and its gate passes 1947 fast
 tests and 191 slow tests.
+
+October 23, 2026: the nominal declaration
+
+The specification and the book replace the data declaration and Brand<T>
+with the nominal declaration. The form nominal Name = type declares a nominal
+type. A record body gives a tagged nominal record. Any other body gives a
+brand. The function unbrand is removed.
+
+The specification states the widening rule: a nominal value fits its base
+type, and a base value still needs the constructor. It also states the
+operator rule. The operators + and - on one numeric nominal type give that
+type. Other arithmetic widens to the base type. Two different nominal types
+never mix. The edition advances to draft 0.60 because this change replaces
+source forms.
+
+The book chapter Nominal data is now Nominal types, with the id
+nominal-types. The spec-account figure now declares AccountFields and
+nominal Account = AccountFields. It ends with a function that returns the
+Account value as AccountFields, so the base record needs no second field list.
+The figure units book-data-states, book-data-match, book-data-rules, and
+spec-data-match are renamed to book-nominal-states, book-nominal-match,
+book-nominal-rules, and spec-nominal-match.
+
+The site copies pay.eff, contracts.eff, and orders.eff from the effective-lang
+fixtures. The three files match the fixtures byte for byte. The host files
+and checks.ts did not change. typed-ir.ts moves to IR version 3 with the
+nominal definition kind, the nominal construction node, and the nominal
+pattern kind. log.ir.json gets the version bump only. It comes from a
+different source than the fixture, so the site does not copy the fixture.
+
+The compiler commits are d59b5bf, 9da2ebd, bd52a86, 95c72b7, and 76dc088.
+The compiler builds the Effective source of ten changed figure units with
+--tsc and reports zero diagnostics for each. The units are spec-types,
+spec-account, spec-cents, spec-nominal-match, spec-example-pay, book-values,
+payment, book-nominal-states, book-nominal-match, and book-nominal-rules.
+The Effect-TS panels of spec-account and spec-cents change to match the
+emitted code. The other panels already matched it.
+
+The compiler builds the example directory with --tsc and reports eleven
+modules and zero diagnostics. It builds the four application directories with
+--validate --tsc. Each build reports zero diagnostics. The module counts are
+two for order-lifecycle, two for scheduled-worker, three for service-workflow,
+and two for stream-processor. In the order lifecycle copy, the nine checks in
+checks.ts pass with Deno 2.9.8. The site tests pass 11 of 11, and the strict
+check passes all 52 illustrative units with no missing translation.
