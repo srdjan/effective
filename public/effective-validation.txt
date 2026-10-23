@@ -1882,7 +1882,7 @@ rule. The full gate passes 1,862 fast and 177 slow tests with Deno 2.9.7.
 October 23, 2026: emitter builtin families
 
 The Effect-TS emitter now keeps the code of each builtin family in its own
-file, as the checker and the independent validator already do. Eleven
+file, as the checker and the independent validator already do. Nine
 family files hold the stream, schedule, schema, codec, layer, fiber,
 scope, effect, and collections code. The main expression emitter falls
 from 2,898 to 1,769 lines. A new builtin in an existing family now edits
