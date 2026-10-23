@@ -1987,3 +1987,27 @@ checks, and 8436f78 for the documentation. The measurement used an Apple M4 Pro
 with Deno 2.9.8 and an in-memory host. A wrapped provider adds about 0.14 us for
 each call and about 0.13 us for each stream element. The site tests pass 11 of 11, and the
 strict check passes all 52 illustrative units with no missing translation.
+
+October 23, 2026: companion module of host interfaces
+
+The specification gains a paragraph on the companion module. The compiler
+emits host.effi.ts for each host interface file that a module imports. It holds
+the types, errors, data types, and services of the interface, with their tags.
+Source modules and the host module import them from it.
+
+The data type rules
+gain declaration/016 for an opaque type in a data field, an error field, or a
+brand base. Results that name interface declarations are no longer a trusted
+position, because the companion module gives them a schema. The edition stays
+at draft 0.59, because no source form changes.
+
+The service workflow example now imports the Runtime service from
+host.effi.ts in adapter.ts, driver.ts, and integration_driver.ts. These files
+match the effective-lang fixture byte for byte. The Runtime tag changes from
+service-workflow#Runtime to host#Runtime. The compiler commits are d7f0691,
+decf945, c2428bd, c877fc3, and e6ec178.
+
+The compiler builds a copy of the example with --validate --tsc and reports
+three modules and zero diagnostics. In that copy, main.ts runs, the fifteen
+checks pass, and the seven integration checks pass with Deno 2.9.8. The site
+tests pass 11 of 11, and the strict check passes all 52 illustrative units.

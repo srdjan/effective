@@ -18,7 +18,8 @@ Files in this directory:
 
 Download these files together. Use the effective-lang CLI to build this
 directory with --validate --tsc. Build writes contracts.ts and workflow.ts
-beside the source files. From the downloaded directory, run:
+beside the source files. It also writes host.effi.ts, the companion module of
+host.effi. The adapter and the drivers import the Runtime service from it. From the downloaded directory, run:
 
 ```sh
 deno run --config deno.json main.ts
