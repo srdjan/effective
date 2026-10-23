@@ -2083,3 +2083,8 @@ two for order-lifecycle, two for scheduled-worker, three for service-workflow,
 and two for stream-processor. In the order lifecycle copy, the nine checks in
 checks.ts pass with Deno 2.9.8. The site tests pass 11 of 11, and the strict
 check passes all 52 illustrative units with no missing translation.
+
+A later compiler commit, 5cc0e63, lets the operator rules follow a chain of
+nominal types. With nominal Tip = Cents, a Tip value compares with Tip, Cents,
+and int. The specification sentence on compatible operands now says this. The
+compiler gate passes 1962 fast tests and 195 slow tests.
