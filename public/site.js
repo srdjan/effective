@@ -42,8 +42,6 @@
       success: "User",
       failures: "UserMissing | StoreUnavailable",
       uses: "Users.find",
-      description:
-        "getUser returns a User, can fail when the user is missing or the store is unavailable, and requires Users.find.",
       effect: document.querySelector("#contract-effect > code")?.textContent,
     },
     rename: {
@@ -58,8 +56,6 @@
       success: "User",
       failures: "UserMissing | StoreUnavailable",
       uses: "Users.find | Users.save",
-      description:
-        "rename returns a User, has the same failures as getUser, and requires Users.find and Users.save.",
       effect: `const rename = (id: UserId, name: Name): Effect.Effect<
   User,
   UserMissing | StoreUnavailable,
@@ -83,8 +79,6 @@
       success: "Name",
       failures: "StoreUnavailable",
       uses: "Users.find",
-      description:
-        "displayName returns a Name, handles UserMissing, can fail with StoreUnavailable, and requires Users.find.",
       effect: `const displayName = (id: UserId): Effect.Effect<
   Name,
   StoreUnavailable,
@@ -106,8 +100,6 @@
       success: "Name[]",
       failures: "StoreUnavailable",
       uses: "Users.all",
-      description:
-        "activeNames returns Name[], can fail with StoreUnavailable, and requires Users.all. Its collection callbacks remain pure.",
       effect: `const activeNames = (): Effect.Effect<
   ReadonlyArray<Name>,
   StoreUnavailable,
@@ -263,7 +255,6 @@
     const success = form.querySelector("#contract-success");
     const failures = form.querySelector("#contract-failures");
     const uses = form.querySelector("#contract-uses");
-    const description = form.querySelector("#contract-description");
     const message = form.querySelector("#contract-message");
     const signal = form.querySelector(".contract-signal");
     const readingRows = Array.from(
@@ -279,7 +270,6 @@
       !success ||
       !failures ||
       !uses ||
-      !description ||
       !message
     ) {
       return;
@@ -333,8 +323,8 @@
       success.textContent = contract.success;
       failures.textContent = contract.failures;
       uses.textContent = contract.uses;
-      description.textContent = contract.description;
-      message.textContent = `Showing ${name}.`;
+      // The live contract reading announces a selection, so the status shows only errors.
+      message.textContent = "";
 
       buttons.forEach((button) => {
         button.setAttribute(

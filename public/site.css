@@ -71,7 +71,6 @@ a[aria-busy="true"] { cursor: progress; }
 .hero { position: relative; isolation: isolate; overflow: clip; }
 .hero::before { position: absolute; z-index: -1; top: -180px; right: -120px; width: min(720px, 72vw); aspect-ratio: 1; content: ""; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 13%, transparent), transparent 68%); pointer-events: none; }
 .hero-type { display: grid; place-items: end center; padding-top: clamp(80px, 10vw, 120px); pointer-events: none; }
-.hero-kicker { position: absolute; top: clamp(24px, 3vw, 36px); left: var(--gutter); margin: 0; color: var(--muted); font-size: var(--small); font-weight: 600; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; }
 .hero h1 { position: relative; margin-bottom: .1em; font-size: clamp(48px, 10vw, 120px); line-height: .84; letter-spacing: -.05em; text-align: center; }
 .hero h1::after { position: absolute; z-index: -1; content: ""; inset: .84em -100vmax -100vmax; background: var(--ink); }
 .hero h1 > span { display: block; white-space: nowrap; }
@@ -83,16 +82,8 @@ a[aria-busy="true"] { cursor: progress; }
 .hero .button { white-space: nowrap; }
 .button.continue-action { white-space: normal; text-align: left; }
 .secondary-action { background: transparent; color: var(--bg); box-shadow: inset 0 0 0 2px var(--bg); }
-.argument { padding: 116px var(--gutter) 96px; background: var(--surface); }
-.argument-statement { max-width: 58ch; font-size: 36px; line-height: 1.25; letter-spacing: -.025em; }
-.argument-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 64px; margin-top: 60px; }
-.argument-bottom p:first-child { max-width: 38ch; }
-.argument-bottom p:last-child { font-size: var(--small); }
 .showcase { padding: 116px var(--gutter) 104px; }
-.showcase-heading { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-.showcase-heading p { max-width: 43ch; }
 .contract-controls { margin-top: 64px; }
-.contract-controls label { display: block; font-size: var(--small); margin-bottom: 4px; }
 .function-input { display: flex; align-items: center; gap: 16px; max-width: 100%; }
 .function-input input { min-width: 0; width: 100%; padding: 0 0 8px; border: 0; background: transparent; font-size: clamp(52px, 8vw, 96px); line-height: 1.1; font-weight: 500; letter-spacing: -.05em; border-radius: 0; }
 /* The submit button follows the typed name, so it stays beside the field on a wide screen. */
@@ -111,21 +102,16 @@ a[aria-busy="true"] { cursor: progress; }
 .contract-signal { position: absolute; top: -17px; left: 0; width: 96px; height: 3px; background: var(--accent); opacity: 0; transform: scaleX(0); transform-origin: left; pointer-events: none; }
 .contract-result .code { margin: 0; }
 .contract-reading { padding: 32px; background: var(--surface); }
-.contract-reading dl { margin: 0; }
-.contract-reading dl > div { margin-bottom: 24px; }
+.contract-reading dl { display: grid; gap: 24px; margin: 0; }
 .contract-reading dt { font-size: var(--small); color: var(--muted); }
 .contract-reading dd { font-size: var(--lead); line-height: 1.35; letter-spacing: -.025em; margin: 2px 0 0; overflow-wrap: anywhere; }
-.contract-reading p { margin-top: 32px; max-width: 40ch; }
-#contract-message { margin-top: 28px; font-size: var(--small); }
+#contract-message:not(:empty) { margin-top: 28px; font-size: var(--small); }
 .book-index { display: grid; grid-template-columns: 1fr 1.65fr; gap: 80px; padding: 104px var(--gutter); background: var(--ink); color: var(--bg); }
 .book-index h2 { margin-bottom: 32px; }
-.book-index p { max-width: 33ch; }
 .chapter-index { display: grid; gap: 8px; }
-.chapter-index a { position: relative; display: grid; grid-template-columns: 1.75fr 1fr; gap: 24px; padding: 10px 30px 10px 0; text-decoration: none; line-height: 1.35; }
+.chapter-index a { position: relative; display: block; padding: 10px 30px 10px 0; font-size: var(--lead); letter-spacing: -.025em; text-decoration: none; line-height: 1.35; }
 .chapter-index a::before { position: absolute; inset: auto 0 0; height: 1px; content: ""; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
 .chapter-index a::after { position: absolute; top: 50%; right: 0; content: "↗\FE0E"; content: "↗\FE0E" / ""; color: var(--accent); opacity: 0; transform: translate(-6px, -50%); transition: transform 220ms var(--ease-out), opacity 220ms var(--ease-out); }
-.chapter-index a span:first-child { font-size: var(--lead); letter-spacing: -.025em; }
-.chapter-index a span:last-child { align-self: center; font-size: var(--small); }
 
 .layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); }
 .contents { position: sticky; top: 100px; align-self: start; max-height: calc(100svh - 116px); overflow-y: auto; padding: 42px 24px 42px var(--gutter); font-size: var(--small); line-height: 1.45; scrollbar-width: thin; }
@@ -137,10 +123,6 @@ a[aria-busy="true"] { cursor: progress; }
 .resources-title { margin-top: 32px; }
 .contents .resource { padding-block: 6px; }
 .main { min-width: 0; }
-.reference-links { padding: 48px 64px; font-size: var(--small); background: var(--surface); }
-.reference-links p { margin-bottom: 16px; }
-.reference-links nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
-.reference-links nav a { display: inline-flex; align-items: center; min-height: 44px; }
 .section { padding: 88px 64px 72px; scroll-margin-top: 90px; }
 .section:nth-of-type(even) { background: var(--surface); }
 .section#contracts, .section#control, .section#services, .section#ir { background: var(--ink); color: var(--bg); }
@@ -200,23 +182,18 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .section-nav a { padding-block: 11px; }
 .section-nav a + a { text-align: right; }
 .document-note { padding: 48px 64px; font-size: var(--small); background: var(--surface); }
-.document-note p + p { margin-top: 8px; }
 .contents-menu { display: none; }
 .footer { container-type: inline-size; padding: 88px var(--gutter) 0; background: var(--field-light); overflow: hidden; }
 .footer-top { display: flex; justify-content: space-between; gap: 64px; }
-.footer-top h2 { margin-bottom: 32px; }
 .footer-top nav { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--body); }
 .footer-top nav a { display: inline-flex; align-items: center; min-height: 44px; }
-.footer-note { display: flex; justify-content: space-between; gap: 32px; margin-top: 100px; font-size: var(--small); }
-.footer-note a { display: inline-flex; align-items: center; min-height: 44px; }
 /* The wordmark is about 3.5em wide, so it fills the footer content box from gutter to gutter. */
 .footer-name { font-size: calc(100cqi / 3.56); font-weight: 600; letter-spacing: -.05em; line-height: .85; white-space: nowrap; margin: 44px 0 -.18em -.04em; }
 .reference-hero { padding: 70px var(--gutter) 64px; background: var(--ink); color: var(--bg); }
 .reference-hero h1 { font-size: clamp(64px, 10.1vw, 121px); }
 .reference-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 72px; }
 .reference-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.reference-bottom p { font-size: var(--lead); line-height: 1.4; max-width: 39ch; }
-.edition { font-size: var(--small); margin-top: 48px; }
+.edition { font-size: var(--small); }
 
 /* Ambient light. A rare comet crosses a decorative dark surface, and soft shadows shift as the light passes. */
 :root { --shadow: color-mix(in srgb, var(--code-bg) 70%, black); }
@@ -245,7 +222,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .button:hover span { transform: translate(3px, -3px); }
   .button[href^="#"]:hover span, .button[href^="#"]:focus-visible span { transform: translateY(3px); }
   .copy-code:hover { color: var(--code-ink); }
-  .toplinks a:hover, .contents a:hover, .chapter-index a:hover span:first-child { text-decoration: underline; }
+  .toplinks a:hover, .contents a:hover, .chapter-index a:hover { text-decoration: underline; }
   .chapter-index a:hover::before { transform: scaleX(1); }
   .chapter-index a:hover::after { opacity: 1; transform: translate(0, -50%); }
   .function-choices button:hover { transform: translateY(-2px); }
@@ -256,11 +233,9 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
 .chapter-index a:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
 @media (max-width: 1150px) {
   .layout { grid-template-columns: 218px minmax(0, 1fr); }
-  .section, .document-note, .reference-links { padding-inline: 40px; }
+  .section, .document-note { padding-inline: 40px; }
   .contract-result { gap: 32px; }
   .book-index { gap: 40px; }
-  .chapter-index a { grid-template-columns: 1fr; gap: 2px; }
-  .argument-statement { font-size: 32px; }
   .hero-actions { flex-direction: column; }
 }
 @media (max-width: 800px) {
@@ -270,15 +245,10 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .toplinks { gap: 20px; }
   .hero-bottom { display: block; }
   .hero-actions { flex-direction: row; justify-content: flex-start; margin-top: 24px; }
-  .argument, .showcase, .book-index { padding-block: 80px; }
-  .argument-bottom { gap: 32px; margin-top: 40px; }
-  .showcase-heading { grid-template-columns: 1fr; gap: 24px; }
+  .showcase, .book-index { padding-block: 80px; }
   .contract-result { grid-template-columns: 1fr; }
-  .contract-reading { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-  .contract-reading p { margin-top: 0; }
   .book-index { grid-template-columns: 1fr; }
-  .book-index p { max-width: 50ch; }
-  .chapter-index a { grid-template-columns: 1.8fr 1fr; padding-block: 12px; }
+  .chapter-index a { padding-block: 12px; }
   .layout { display: block; }
   .layout > .contents { display: none; }
   .contents-menu { position: sticky; z-index: 15; top: var(--topbar-height, 76px); display: block; background: var(--surface); padding: 4px var(--gutter); box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ink) 12%, transparent); }
@@ -288,7 +258,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .mobile-contents ol { columns: 2; column-gap: 28px; }
   .mobile-contents li { break-inside: avoid; }
   .mobile-contents .resource { display: inline-block; margin-right: 24px; }
-  .section, .document-note, .reference-links { padding-inline: var(--gutter); }
+  .section, .document-note { padding-inline: var(--gutter); }
   .section { padding-block: 64px; scroll-margin-top: calc(var(--topbar-height, 116px) + 60px); }
   .reference-hero h1 { font-size: 10.1vw; }
   .reference-bottom { gap: 32px; }
@@ -303,28 +273,19 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .hero-actions { display: block; }
   .hero .button { width: 100%; min-height: 54px; }
   .hero .button + .button { margin-top: 12px; }
-  .argument, .showcase, .book-index { padding-block: 64px; }
-  .argument-statement { font-size: var(--lead); line-height: 1.3; }
-  .argument-bottom { display: block; margin-top: 32px; }
-  .argument-bottom p + p { margin-top: 24px; }
-  .showcase-heading { gap: 20px; }
+  .showcase, .book-index { padding-block: 64px; }
   .contract-controls { margin-top: 40px; }
   .function-input input { font-size: 13vw; }
   .function-input button { min-height: 48px; min-width: 48px; }
   .function-choices { gap: 6px; margin-top: 16px; }
   .function-choices button { padding: 12px 15px; font-size: var(--small); }
   .contract-result { margin-top: 28px; }
-  .contract-reading { display: block; padding: 24px 20px; }
-  .contract-reading dl { display: grid; gap: 20px; }
-  .contract-reading dl > div { margin-bottom: 0; }
-  .contract-reading p { margin-top: 24px; }
+  .contract-reading { padding: 24px 20px; }
+  .contract-reading dl { gap: 20px; }
   .contract-reading dd { font-size: var(--body); }
   .book-index { gap: 32px; }
   .book-index h2 { margin-bottom: 20px; }
   .chapter-index { gap: 4px; }
-  .chapter-index a { display: block; padding-block: 12px; }
-  .chapter-index a span { display: block; }
-  .chapter-index a span:last-child { margin-top: 4px; }
   .section { padding-block: 56px; }
   .section h2 { margin-bottom: 24px; }
   .section .lead { font-size: var(--body); font-weight: 500; }
@@ -339,18 +300,14 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .footer-top { display: block; }
   .footer-top nav { margin-top: 40px; }
   .footer-top .button { width: 100%; }
-  .footer-note { display: block; margin-top: 56px; }
-  .footer-note p { margin-bottom: 12px; }
   .footer-name { margin-top: 40px; }
   .reference-hero { padding-block: 56px 48px; }
   .reference-hero h1 { font-size: 11vw; }
   .reference-bottom { display: block; margin-top: 40px; }
-  .reference-bottom p { font-size: var(--body); }
   .reference-bottom .button { width: 100%; margin-top: 28px; }
   .reference-actions { display: block; margin-top: 28px; }
   .reference-actions .button { margin-top: 0; }
   .reference-actions .button + .button { margin-top: 12px; }
-  .edition { margin-top: 32px; }
 }
 
 /* Component widths can differ from the viewport in the reading column and explorer. */
@@ -359,21 +316,10 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
     .showcase { container: showcase / inline-size; }
     figure.code { container: code-example / inline-size; }
     .function-input input { font-size: clamp(3rem, 8cqi, 6rem); }
-    .showcase-heading { grid-template-columns: minmax(0, 1fr); gap: 24px; }
     .contract-result { grid-template-columns: minmax(0, 1fr); }
-    .contract-reading { display: block; }
-    .contract-reading p { margin-block-start: 24px; }
 
-    @container showcase (36rem <= width < 56rem) {
-      .contract-reading { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
-      .contract-reading p { margin-block-start: 0; }
-    }
-    @container showcase (min-width: 48rem) {
-      .showcase-heading { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
-    }
     @container showcase (min-width: 56rem) {
       .contract-result { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .contract-reading p { margin-block-start: 32px; }
     }
     @container code-example (max-width: 36rem) {
       .code figcaption { flex-direction: column; align-items: stretch; row-gap: 4px; padding: 16px 16px 0; }
@@ -394,7 +340,6 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .enter-code { animation: source-arrive 800ms var(--ease-out) var(--entry-delay, 0ms) both; }
   .hero::before { animation: hero-glow-drift 18s ease-in-out infinite alternate paused; }
   .hero.glow-visible::before { animation-play-state: running; }
-  .hero-kicker { animation: quiet-arrive 700ms var(--ease-out) 180ms both; }
   .hero-spark { animation: spark-arrive 850ms var(--ease-out) 360ms both; }
   .hero h1 > span { animation: contract-arrive 1100ms var(--ease-out) both; }
   .hero h1 > span + span { animation-delay: 100ms; }
@@ -420,7 +365,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   html { background: white; }
   body { max-width: none; box-shadow: none; }
   :root { --bg: white; --ink: black; --body: 11pt; --head: 25pt; --code-bg: #f4f4f2; --code-ink: black; --code-keyword: black; --code-string: black; --code-comment: black; }
-  .topbar, .skip, .hero, .argument, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .reference-links, .source-drawer, .comet, .code::after { display: none; }
+  .topbar, .skip, .hero, .showcase, .book-index, .contents-menu, .contents, .section-nav, .footer, .source-drawer, .comet, .code::after { display: none; }
   .layout { display: block; }
   .section, .section#contracts, .section#control, .section#services, .section#ir { background: white; color: black; padding: 20pt 0; }
   .section h2 { break-after: avoid; }
@@ -437,7 +382,7 @@ td code, p code { font-size: .92em; overflow-wrap: anywhere; }
   .exercise details:not([open]) > :not(summary) { display: block; }
   .reference-hero { padding: 0 0 20pt; background: white; color: black; }
   .reference-hero h1 { font-size: 36pt; }
-  .reference-bottom, .edition { margin-top: 20pt; }
+  .reference-bottom { margin-top: 20pt; }
   .reference-bottom .button, .copy-code, .continue-action { display: none; }
   .document-note { padding: 16pt 0; }
   .table-wrap { overflow: visible; }
