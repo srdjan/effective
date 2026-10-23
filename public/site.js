@@ -292,7 +292,7 @@
           { transform: "scaleX(1)", opacity: 1, offset: .65 },
           { transform: "scaleX(1)", opacity: 0 },
         ],
-        { duration: 420, easing },
+        { duration: 560, easing },
       );
       readingRows.forEach((row, index) => {
         row.getAnimations().forEach((animation) => animation.cancel());
@@ -719,7 +719,7 @@
     document.addEventListener("visibilitychange", update);
   };
 
-  // A rare comet crosses a decorative dark surface. Reading sections never get one.
+  // An occasional comet crosses a decorative dark surface. Reading sections never get one.
   const setupComets = () => {
     const surfaces = Array.from(
       document.querySelectorAll(".hero-bottom, .book-index, .reference-hero"),
@@ -760,7 +760,7 @@
       surface.append(comet);
 
       const angle = `rotate(${between(8, 18)}deg)`;
-      const distance = between(0.35, 0.6) * width;
+      const distance = between(0.45, 0.75) * width;
       const animation = comet.animate(
         [
           { transform: `${angle} translateX(0)`, opacity: 0 },
@@ -769,7 +769,7 @@
           { transform: `${angle} translateX(${distance}px)`, opacity: 0 },
         ],
         {
-          duration: between(1100, 1700),
+          duration: between(1300, 1900),
           easing: "cubic-bezier(.3, .1, .4, 1)",
         },
       );
@@ -785,10 +785,10 @@
     const schedule = (delay) => {
       setTimeout(() => {
         launch();
-        schedule(between(22000, 48000));
+        schedule(between(12000, 24000));
       }, delay);
     };
-    schedule(between(7000, 14000));
+    schedule(between(3000, 6000));
   };
 
   const setupEntryMotion = () => {
