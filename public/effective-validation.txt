@@ -1878,3 +1878,25 @@ diagnostics.
 One shared ownership rule serves the command-line tool and
 the language server. Two tests cover the rule, and both fail with the old
 rule. The full gate passes 1,862 fast and 177 slow tests with Deno 2.9.7.
+
+October 23, 2026: emitter builtin families
+
+The Effect-TS emitter now keeps the code of each builtin family in its own
+file, as the checker and the independent validator already do. Eleven
+family files hold the stream, schedule, schema, codec, layer, fiber,
+scope, effect, and collections code. The main expression emitter falls
+from 2,898 to 1,769 lines. A new builtin in an existing family now edits
+one family file in each of the three compiler stages.
+
+Role interfaces now name the parts of the emitter scope. The compiler
+rejects a family file that reads the import ledger, and a test rejects a
+family file that imports the expression emitter. One helper replaces 12
+hand-written type assertions.
+
+Two behavior captures compare 9,198 records on each side, including 1,749
+emitted modules, with no new and no missing record. A comparison of the
+moved code matches 38 items. The full gate passes 1,863 fast and 177 slow
+tests with Deno 2.9.8. Across the core library, filtered lines rise from
+35,184 to 35,626, and AST branches go from 7,969 to 8,003. No performance
+or memory gain is claimed. Source forms, canonical IR, golden files, and
+the public core exports are unchanged.
