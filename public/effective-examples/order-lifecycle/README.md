@@ -1,8 +1,8 @@
 # Order lifecycle application
 
-This application is a witness for nominal data types. It is not one of the three
+This application is a witness for nominal types. It is not one of the three
 gate applications that the accepted stopping rule names. It models an order and
-its pricing with data declarations.
+its pricing with nominal declarations.
 
 Files in this directory:
 
@@ -22,7 +22,7 @@ deno run --config deno.json main.ts
 deno test --config deno.json checks.ts
 ```
 
-The four states Pending, Paid, Shipped and Cancelled are data types. Each has a
+The four states Pending, Paid, Shipped and Cancelled are nominal record types. Each has a
 runtime tag that includes the module name, for example "contracts#Pending". A
 function that accepts one state, such as pay(order: Pending, ...), rejects the
 other states at compile time. A match over Order has one arm for each state and
@@ -34,7 +34,7 @@ possible, because the division operator always gives number and the prelude has
 no rounding function.
 
 The function fromInput decodes the plain record OrderInput from unknown JSON.
-It then builds a Pending value with the data constructor. JSON with a wrong or
+It then builds a Pending value with the nominal constructor. JSON with a wrong or
 missing tag fails decodeOrder.
 
 The nine checks cover each transition, each stateOf and describe result, isOpen
