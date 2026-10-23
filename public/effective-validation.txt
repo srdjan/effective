@@ -1900,3 +1900,45 @@ tests with Deno 2.9.8. Across the core library, filtered lines rise from
 35,184 to 35,626, and AST branches go from 7,969 to 8,003. No performance
 or memory gain is claimed. Source forms, canonical IR, golden files, and
 the public core exports are unchanged.
+
+October 23, 2026: nominal data types
+
+The compiler adds the data declaration. A data type is a nominal record with a
+runtime tag, as in data User = { id: UserId, name: Name }. It has its own type
+table entry and the identity type:module#Name. A program builds a value with
+User(record), reads fields, updates with a spread, and gets the base record
+with unbrand. The generated copy leaves out the tag. The emitter prints
+Schema.TaggedStruct with a tag from the resolved identity, and the encoded form
+keeps the tag.
+
+A match selects data types and errors by name, with coverage by declaration. A
+record pattern on such a subject, a subject that mixes nominal and other
+types, and a constructor pattern that names an alias or a brand all give
+pattern/004. A data or error field cannot hold a function or deferred type
+(declaration/015). A data type can be recursive when every cycle passes through
+an Option, an array, an optional field, or a union with a member outside the
+cycle. The emitter then prints explicit types and suspended references. A brand
+of a record, of a data type, or of a union with such a member now gives
+declaration/014, so the form Brand<{ ... }> is gone. The editor, the TextMate
+grammar and the playground highlighter know the word data.
+
+The change has seven commits in the effective-lang repository: 2a57d9c,
+2404446, 2285033, 6b21dc2, ac90799, 8ab15c0, and 24f3937. The first six change
+the compiler and the last changes its documents. The full gate passed for
+each commit. Before the last commit, one slow test lost its child process once
+(exit code 139), and it passed on three reruns. The last run passes 1,927 fast tests and 181 slow tests with Deno
+2.9.8. The slow tests build and run the emitted data forms, including a match
+that selects each arm by tag and a recursive tree, list, and forest that encode
+and decode. The five example programs and their golden files do not change,
+because each of their records is built or read by host code.
+
+The website now shows data types in the specification: the declaration rules,
+a construction, update, field read and unbrand figure, a match by name figure,
+the grammar rule dataDecl, and the IR nodes. typed-ir.ts gains the data
+expression node, the data pattern, and the data type definition. Each new
+Effect-TS panel was checked in two ways. The compiler builds the Effective
+source with --validate --tsc and reports zero diagnostics. The strict check
+passes all 49 illustrative units with no missing translation, and the eleven
+server tests pass. The panels use short tags and compact layout, as the other
+panels do. The edition advances to draft 0.59 because this change adds a
+source form.
