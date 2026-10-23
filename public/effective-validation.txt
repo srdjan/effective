@@ -2011,3 +2011,18 @@ The compiler builds a copy of the example with --validate --tsc and reports
 three modules and zero diagnostics. In that copy, main.ts runs, the fifteen
 checks pass, and the seven integration checks pass with Deno 2.9.8. The site
 tests pass 11 of 11, and the strict check passes all 52 illustrative units.
+
+October 23, 2026: review fixes of the companion module
+
+A code review of the companion module found eight problems, and six of them
+are fixed. An unnamed host opaque type now comes from its host module, not
+from the companion module. Data construction and the host check now copy a
+value without a prototype when an optional field has an Object.prototype name.
+
+The specification gains one sentence on this copy in the host provider
+paragraph. The lowerProject function now lowers .effi modules too, so the
+public API emits each companion module. The edition stays at draft 0.59,
+because no source form changes.
+
+The compiler commits are 857c84a, 5d8de3d, e15a3db, 418603e, and dc03e9d. The
+compiler gate passes 1946 fast tests and 191 slow tests with Deno 2.9.8.
