@@ -2026,3 +2026,15 @@ because no source form changes.
 
 The compiler commits are 857c84a, 5d8de3d, e15a3db, 418603e, and dc03e9d. The
 compiler gate passes 1946 fast tests and 191 slow tests with Deno 2.9.8.
+
+October 23, 2026: data type figure without a field alias
+
+The data type figure of the specification no longer declares AccountFields. The
+data declaration already gives the base record. A function that is not
+exported infers the unbrand result, and the compiler prints that record type
+inline. The site tests pass 11 of 11, and the strict check passes all 52 units.
+
+A data or error body that does not parse now gets the error type. Before this
+change, each use of such a type gave a false type-mismatch error after
+syntax/008. The compiler commit is 317d018, and its gate passes 1947 fast
+tests and 191 slow tests.
