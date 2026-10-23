@@ -1942,3 +1942,32 @@ passes all 49 illustrative units with no missing translation, and the eleven
 server tests pass. The panels use short tags and compact layout, as the other
 panels do. The edition advances to draft 0.59 because this change adds a
 source form.
+
+October 23, 2026: nominal data chapter and order lifecycle application
+
+The mini-book gains the chapter Nominal data after A payment pipeline. The book
+now has eleven chapters. The chapter has three figures: the order states with a
+construction and a spread update, a match by name over Order with no wildcard
+arm, and the recursive pricing rules. The prose states that a Paid value is not
+a Pending value, even where the fields overlap, and that JSON enters through a
+plain record type. The Effect-TS panels use short tags. The compiler writes
+module-qualified tags such as contracts#Pending. The panel of the recursive
+figure keeps the explicit interfaces, the Encoded mirror interfaces, and
+Schema.suspend, because typeof Rule.Type inside a cycle fails the check.
+
+The site copies the order lifecycle application from the effective-lang
+repository to effective-examples/order-lifecycle/. The copy has the two Effective
+modules, main.ts, checks.ts, deno.json, effective.json, and a README. The
+modules, main.ts and the two configuration files match the fixture byte for
+byte, and checks.ts is runtime_test.ts under a new name. The modules chapter
+and the specification each gain a paragraph that calls the application a
+witness for nominal data types. It is not a gate application, and the stopping
+rule does not count it. The navigation labels, the Previous and Next links, and
+the three chapter menus now include the new chapter.
+
+The compiler builds the downloaded copy with --validate --tsc and reports two
+modules and zero diagnostics. In that copy, main.ts runs, and the nine checks in
+checks.ts pass with Deno 2.9.8. The compiler also builds the Effective source of
+the three figures with --validate --tsc and reports zero diagnostics. The strict
+check passes all 52 illustrative units with no missing translation, and the
+eleven server tests pass.
