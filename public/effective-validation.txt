@@ -1971,3 +1971,19 @@ checks.ts pass with Deno 2.9.8. The compiler also builds the Effective source of
 the three figures with --validate --tsc and reports zero diagnostics. The strict
 check passes all 52 illustrative units with no missing translation, and the
 eleven server tests pass.
+
+October 23, 2026: runtime checks at the host boundary
+
+The specification gains two paragraphs. The first states that a match whose
+last arm is not _ tests that arm too. A value outside the subject type then
+causes a defect instead of taking the last arm. The second states that each
+module wraps a host provider whose method results contain data types. Each
+result and each stream element goes through Schema.is, and the paragraph lists
+the positions that stay trusted. The edition stays at draft 0.59, because no
+source form changes.
+
+The compiler commits are 94c64bd for the match test, 29fc514 for the provider
+checks, and 8436f78 for the documentation. The measurement used an Apple M4 Pro
+with Deno 2.9.8 and an in-memory host. A wrapped provider adds about 0.14 us for
+each call and about 0.13 us for each stream element. The site tests pass 11 of 11, and the
+strict check passes all 52 illustrative units with no missing translation.
