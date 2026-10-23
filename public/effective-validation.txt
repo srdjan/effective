@@ -2088,3 +2088,25 @@ A later compiler commit, 5cc0e63, lets the operator rules follow a chain of
 nominal types. With nominal Tip = Cents, a Tip value compares with Tip, Cents,
 and int. The specification sentence on compatible operands now says this. The
 compiler gate passes 1962 fast tests and 195 slow tests.
+
+Portable publisher witness (2026-10-23)
+
+The portable publisher is an exploratory witness, not a gate application.
+The accepted three-application stopping rule remains unchanged. Effective
+source owns assessment, planning, validation, conflict policy, grants, and
+serial batching. Generic memory and SQLite implementations share textual
+keys, payloads, and opaque storage versions.
+
+Focused compiler checks cover source contracts, lowering, and independent
+IR validation. Twenty compiled memory workflow and lifetime cases pass.
+One ten-case KV suite passes on each implementation. Five further SQLite
+cases cover backend parity, cross-lease invalidation, an open failure, persistence through independent leases, and simulated lost
+acknowledgement after an actual commit. The simulated failure
+returns uncertainty without retry. A scoped integration process receives
+filesystem access only to its temporary directory and no network permission.
+
+The witness establishes finite batch behavior in one process. It does not
+establish HTTP admission control, distributed transactions, crash recovery,
+or exactly-once delivery. Synchronous SQLite operations remain synchronous.
+No new language form is selected. Sealed predicates, reusable purity
+contracts, and optional import rules remain review-only design proposals.
