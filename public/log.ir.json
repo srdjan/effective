@@ -1,6 +1,6 @@
 {
   "format": "light-functional-ir",
-  "version": 3,
+  "version": 4,
   "module": "example/log",
   "sources": [
     "log.lft"

@@ -2211,3 +2211,28 @@ types. The specification text for TE1 to TE4 has no compiled example,
 because each Effektive panel needs a manual Effect-TS tab. The compiler
 tests for these rules live in effektive-lang. The site runs no compiler.
 deno fmt --check reports 47 unformatted files before and after this change.
+
+Draft 0.63 checks, October 24, 2026
+The compiler separates frontend queries from TypeScript output caches and emits
+IR v4. The downloadable typed-ir.ts is the compiler model. The manual fixture
+uses version 4. Earlier wire versions are rejected without conversion.
+
+The concise figure and the downloadable examples build with --validate --tsc.
+The worker and stream downloads also build independently with those flags.
+The compiler check passes 2,098 fast tests and 207 slow tests, including all five
+application witnesses and runtime checks for all four new source forms.
+The site passes 55 strict TypeScript units and 11 server/asset tests.
+The new figure has an Effect-TS panel; no Effektive figure lacks one.
+
+Bare arrows preserve explicit exported contracts. Option fallback evaluates its
+subject once and the fallback only for None. Record bindings read fields in
+written order. Resource finalization runs once after successful acquisition,
+including typed failure, defect, and interruption.
+
+A real VS Code development host displays all four forms without diagnostics.
+The resource binding has three references across acquisition naming, use, and
+finalization, and its hover is available. The compiler repository retains the
+screenshot and the detailed migration and performance evidence.
+
+These checks cover the selected examples and contracts. They do not establish
+bounded memory, arbitrary backend compatibility, or website deployment.
