@@ -33,7 +33,7 @@ After a compiler rule change, check the Effektive side with the compiler itself,
    Walk the tree for the rule. For R1, report each `NamedType` node named `string`, `int`, `number`, or `boolean`, and each `LiteralType` node, that has no `TypeDecl` or `ErrorDecl` ancestor. The fragments in the figures `spec-pipe` and `spec-deferred` are not modules, so they give syntax findings. Those findings are expected.
 2. Build each figure with the figures that it requires. For each `data-check` unit, collect the Effektive blocks of its `data-check-requires` chain in dependency order. Add the own blocks of the unit last.
 
-   Write them to one `.eff` file in a copy of `/Users/srdjans/Code/effektive-lang/fixtures/examples`. The copy needs `effektive.json`, the `host` directory, and `users-live.ts`. Run `deno task effective build <dir> --tsc` from effektive-lang. Expect 0 diagnostics. Only `spec-diagnostics` must give its documented `failure-contract/001`.
+   Write them to one `.eff` file in a copy of `/Users/srdjans/Code/effektive-lang/fixtures/examples`. The copy needs `effektive.json`, the `host` directory, and `users-live.ts`. Run `deno task effektive build <dir> --tsc` from effektive-lang. Expect 0 diagnostics. Only `spec-diagnostics` must give its documented `failure-contract/001`.
 
 Also look for Effektive code outside `language-effektive` blocks. An exercise answer in a plain `<pre><code>` escapes both the site check and pass 1. On draft 0.2, the answer `const rename = (user: User, name: string): User => ...` in `index.html` broke R1 until a review found it.
 
