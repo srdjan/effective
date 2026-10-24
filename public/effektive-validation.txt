@@ -1868,7 +1868,7 @@ owns, and the language server does not.
 
 October 22, 2026: nested projects in build and watch
 
-A directory under a project root that holds its own effective.json is a
+A directory under a project root that holds its own effektive.json is a
 nested project. The language server already left the outputs of a nested
 project to that project. The build and watch commands wrote them, so two
 projects could write one file. Now build and watch skip those outputs too.
@@ -1957,7 +1957,7 @@ Schema.suspend, because typeof Rule.Type inside a cycle fails the check.
 
 The site copies the order lifecycle application from the effektive-lang
 repository to effektive-examples/order-lifecycle/. The copy has the two Effektive
-modules, main.ts, checks.ts, deno.json, effective.json, and a README. The
+modules, main.ts, checks.ts, deno.json, effektive.json, and a README. The
 modules, main.ts and the two configuration files match the fixture byte for
 byte, and checks.ts is runtime_test.ts under a new name. The modules chapter
 and the specification each gain a paragraph that calls the application a

@@ -10,7 +10,7 @@ Files in this directory:
 - [orders.eff](orders.eff): transitions, match by name, pricing and JSON decoding.
 - [main.ts](main.ts): runnable entry point that prints a JSON report.
 - [checks.ts](checks.ts): nine compiled application checks.
-- [effective.json](effective.json): compiler project configuration.
+- [effektive.json](effektive.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
 Download these files together. Use the effektive-lang CLI to build this

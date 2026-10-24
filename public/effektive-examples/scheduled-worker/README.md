@@ -12,7 +12,7 @@ Files in this directory:
 - [main.ts](main.ts): runnable entry point.
 - [reference.ts](reference.ts): pinned native repetition and retry reference.
 - [checks.ts](checks.ts): ten compiled application checks.
-- [effective.json](effective.json): compiler project configuration.
+- [effektive.json](effektive.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
 Download these files together. Use the effektive-lang CLI to build this

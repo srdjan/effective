@@ -13,7 +13,7 @@ Files in this directory:
 - [driver.ts](driver.ts): recording SQL connections and catalog driver.
 - [main.ts](main.ts): runnable entry point.
 - [checks.ts](checks.ts): fifteen compiled application checks.
-- [effective.json](effective.json): registered host configuration.
+- [effektive.json](effektive.json): registered host configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
 Download these files together. Use the effektive-lang CLI to build this

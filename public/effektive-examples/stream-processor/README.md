@@ -11,7 +11,7 @@ Files in this directory:
 - [driver.ts](driver.ts): primitive input, transformation and output drivers.
 - [main.ts](main.ts): runnable entry point.
 - [checks.ts](checks.ts): thirteen compiled application checks.
-- [effective.json](effective.json): compiler project configuration.
+- [effektive.json](effektive.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
 Download these files together. Use the effektive-lang CLI to build this
