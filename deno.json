@@ -1,6 +1,6 @@
 {
   "name": "@srdjan/effektive",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "exports": "./main.ts",
   "tasks": {
     "dev": "deno serve --watch --allow-read=public --port 8787 main.ts",
