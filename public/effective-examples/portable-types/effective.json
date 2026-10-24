@@ -1,0 +1,6 @@
+{
+  "imports": [
+    { "from": "domain", "allow": [] },
+    { "from": "consumer", "allow": ["domain"] }
+  ]
+}

@@ -2108,5 +2108,50 @@ filesystem access only to its temporary directory and no network permission.
 The witness establishes finite batch behavior in one process. It does not
 establish HTTP admission control, distributed transactions, crash recovery,
 or exactly-once delivery. Synchronous SQLite operations remain synchronous.
-No new language form is selected. Sealed predicates, reusable purity
+No new language form was selected by that witness. Sealed nominal types, reusable purity
 contracts, and optional import rules remain review-only design proposals.
+
+
+Approved portable type controls (2026-10-23)
+
+The user approved sealed nominal types, pure function types, and optional
+project import rules after the portability witness. The compiler implements
+all three controls. The three-application stopping rule remains unchanged.
+
+A sealed nominal type gives its declaring module construction authority.
+Foreign construction, retained updates, arithmetic, implicit base widening,
+and Schema derivation or decoding fail. Schema callbacks also preserve input
+authority when their final decoded result is unsealed. Encoding remains legal.
+Owner-provided conversions remain callable. Existing open nominal types keep
+their behavior. Optional sealed metadata extends IR version 3.
+
+Pure function types require pure execution and empty effect rows. Unmarked
+function types retain effect execution. Empty rows do not make run or provide
+pure. Ordered import rules restrict resolved direct edges without selecting
+a platform. Services and Layers still provide platform composition.
+
+The final compiler gate passes formatting, linting, type checking, 2030 fast
+tests, and 199 slow tests. Independent validator regressions reject altered
+sealed operations and identity forgeries. Project validation binds lowered
+module names to their keys. Non-prelude imported declarations cannot claim
+the consumer's identity. Supporting types can still belong to third modules.
+
+The updated specification includes two new paired source and TypeScript
+panels. Both Effective panels pass checking, lowering, and independent
+validation. All 54 illustrative TypeScript units pass strict checking, with
+no missing translation. The site passes all 11 serving and asset tests.
+The linked public IR model passes deno check, and site.js passes node --check.
+
+The portable-types example builds as two modules with zero diagnostics under
+--validate --tsc. Its three compiled runtime checks cover positive parsing,
+an imported pure callback, and an inline pure callback. Three mutations reject
+foreign construction, an effectful callback, and a forbidden import.
+The four existing application examples also report zero source diagnostics.
+
+Generated TypeScript and host implementations remain trusted. The validator
+checks provided declaration metadata and does not compare imported payloads
+with separate producer IR. TextMate fallback coloring stays conservative;
+LSP semantic tokens correctly classify parsed multiline pure function types.
+
+Compiler commits: 843b011 adds pure contracts and import rules; 7818a95 adds
+sealed authority, validator identity checks, and callback-input protection.

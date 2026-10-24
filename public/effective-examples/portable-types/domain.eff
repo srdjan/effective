@@ -1,0 +1,8 @@
+export type Int = int
+export sealed nominal Positive = Int
+
+export const parsePositive = (value: Int): Option<Positive> =>
+  if (value > 0) { Some(Positive(value)) } else { None }
+
+export const double = (value: Positive): Positive => value + value
+export const toInt = (value: Positive): Int => value

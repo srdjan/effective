@@ -1,0 +1,9 @@
+import { Positive, double } from "./domain.eff"
+
+export const apply = (
+  values: Positive[],
+  change: pure (value: Positive) => Positive
+): Positive[] => map(values, change)
+
+export const doubleAll = (values: Positive[]): Positive[] => apply(values, double)
+export const keepAll = (values: Positive[]): Positive[] => apply(values, (value) => value)
