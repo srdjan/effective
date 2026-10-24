@@ -72,7 +72,11 @@
       "kind": "function",
       "id": "value:example/log#log",
       "name": "log",
-      "contract": "explicit",
+      "written": {
+        "result": true,
+        "fails": true,
+        "uses": true
+      },
       "parameters": [
         {
           "id": "local:example/log#log/message",

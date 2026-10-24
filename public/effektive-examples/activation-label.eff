@@ -16,15 +16,13 @@ service Users {
   all(): User[] fails StoreUnavailable
 }
 
-const getUser = (id: UserId): User
-  fails UserMissing | StoreUnavailable
-  uses Users.find =>
+const getUser = (id: UserId) =>
   match Users.find(id) {
     Some(user) => user,
     None => fail(UserMissing({ id }))
   }
 
-const activate = (user: User): User =>
+const activate = (user: User) =>
   ({ ...user, active: true })
 
 export const saveActive = (id: UserId): User

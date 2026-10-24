@@ -52,7 +52,7 @@
   fails UserMissing | StoreUnavailable
   uses Users.find | Users.save => {
   const user = getUser(id)
-  const renamed: User = { ...user, name }
+  const renamed = { ...user, name }
   Users.save(renamed)
   renamed
 }`,

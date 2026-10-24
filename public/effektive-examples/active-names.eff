@@ -16,7 +16,7 @@ service Users {
   all(): User[] fails StoreUnavailable
 }
 
-const activeNames = (users: User[]): Name[] =>
+const activeNames = (users: User[]) =>
   users
     |> filter((user) => user.active)
     |> map((user) => user.name)

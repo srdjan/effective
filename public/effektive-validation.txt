@@ -2155,3 +2155,59 @@ LSP semantic tokens correctly classify parsed multiline pure function types.
 
 Compiler commits: 843b011 adds pure contracts and import rules; 7818a95 adds
 sealed authority, validator identity checks, and callback-input protection.
+
+
+Terse source rules (2026-10-24)
+
+Draft 0.62 follows the compiler changes TE1 to TE4 and TE7 of the terse
+source plan. A non-exported function infers each omitted fails and uses
+clause. A written clause closes its own set. A result annotation alone no
+longer closes the sets. Exported functions and function types stay closed.
+A recursive local function needs parameter and result annotations only.
+A fails clause can name an alias of errors. Branches of different nominal
+records or errors join to their union. A sinkForEach callback and the method
+records of a source Layer take expected types from their context. The
+language server shows the inferred clauses as inlay hints.
+
+The linked IR model and log.ir.json replace the function field contract with
+written, which holds the flags result, fails, and uses. The IR keeps version 3.
+The specification, the mini book, site.js, and the example sources follow
+these rules. Non-exported helpers lose their fails, uses, and result
+annotations. The invalid example in the specification now exports broken,
+because a non-exported function no longer fails that check.
+
+Checks run on 2026-10-24
+The compiler is effektive-lang at 15ee871. Commits 3d0f17b..15ee871 hold the
+changes. Every changed example source reports 0 diagnostics under
+deno task effektive check: activation, activation-label, active-names,
+retry-lookup, core1, pay, users, log, collections, and the main project.
+The four synced applications and portable-types build with --validate --tsc
+and report 0 diagnostics. Their checks.ts files pass 9, 10, 15, 13, and 3
+cases for order-lifecycle, scheduled-worker, service-workflow,
+stream-processor, and portable-types.
+The Effektive panels of both pages form 51 units, chained by their
+data-check names. The only changes against the earlier pages are
+spec-diagnostics, which now reports failure-contract/001 as documented, and
+the units that already failed before. Those units are fragments or depend on
+a host module that the check project does not register.
+The strict TypeScript check passes for 54 units with 0 Effektive blocks that
+lack an Effect-TS tab. The site passes all 11 tests after deno task stamp
+renewed the asset version to 0.7.0. The linked public IR model passes
+deno check. The function declaration in log.ir.json carries the three
+written flags; no type check binds that JSON file to the model.
+
+Measured counts
+The convention counts non-whitespace characters of the panel code.
+The activate and save pair went from 253 to 248 in Effektive, because
+activate loses its result annotation. Effect-TS stays at 304.
+The collection pair went from 194 to 187, because activeNames loses its
+result annotation. The wrapper counts of 96 and 144 are unchanged. The recovery
+pair (181 and 216) and the retry pair (123 and 156) are unchanged.
+
+Limits
+These checks cover the listed panels and sources, not every language form.
+The Effect-TS tabs still show the full intended output with explicit
+types. The specification text for TE1 to TE4 has no compiled example,
+because each Effektive panel needs a manual Effect-TS tab. The compiler
+tests for these rules live in effektive-lang. The site runs no compiler.
+deno fmt --check reports 47 unformatted files before and after this change.

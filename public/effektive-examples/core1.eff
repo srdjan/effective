@@ -20,7 +20,7 @@ const shiftedField: SchemaOptional<Int, Int, Read.next> =
   schemaOptionalTransform(
     optional,
     optional,
-    (value: Option<Int>): Option<Int> uses Read.next =>
+    (value: Option<Int>): Option<Int> =>
       match value {
         Some(score) => Some(Read.next(score)),
         None => None
@@ -31,7 +31,7 @@ const shifted: Schema<Optional, Optional, Read.next> =
   schemaStruct({ score: shiftedField })
 const defaulted: Schema<Required, Optional, Defaults.make> =
   schemaStruct({
-    score: schemaDefaultKey(integer, (): Int uses Defaults.make => Defaults.make())
+    score: schemaDefaultKey(integer, (): Int => Defaults.make())
   })
 
 export const readShifted = (input: unknown): Optional fails SchemaError uses Read.next =>
@@ -64,7 +64,7 @@ const checkedName: Schema<Name, Name, Validation.accept> =
   schemaTransform(
     name,
     name,
-    (value: Name): Name fails SchemaIssue uses Validation.accept => Validation.accept(value),
+    (value: Name): Name => Validation.accept(value),
     (value: Name): Option<Name> => Some(value)
   )
 export const fallbackName: Schema<Name, Name, Validation.accept> =
@@ -105,8 +105,8 @@ service Wire {
 const wireText: Schema<Text> = schema()
 const wireScore: Schema<Int, Text, Wire.parse, Wire.print> = schemaTransform(
   wireText, integer,
-  (value: Text): Int fails SchemaIssue uses Wire.parse => Wire.parse(value),
-  (value: Int): Text fails SchemaIssue uses Wire.print => Wire.print(value)
+  (value: Text): Int => Wire.parse(value),
+  (value: Int): Text => Wire.print(value)
 )
 export const encodedDefault: Schema<RequiredScore, WireRecord, Wire.parse, Wire.print> =
   schemaStruct({ score: schemaDefaultKey(wireScore,

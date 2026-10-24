@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><title>Effektive - Mini book</title><link rel="canonical" href="https://effektive.timok.deno.net/"><meta property="og:site_name" content="Effektive"><meta property="og:type" content="website"><meta property="og:title" content="Effektive - Mini book"><meta property="og:description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><meta property="og:url" content="https://effektive.timok.deno.net/"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effektive. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><meta property="og:image" content="https://effektive.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effektive - Mini book"><meta name="twitter:description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><meta name="twitter:image" content="https://effektive.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effektive. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://effektive.timok.deno.net/#website","name":"Effektive","url":"https://effektive.timok.deno.net/","description":"Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output.","inLanguage":"en"},{"@type":"TechArticle","@id":"https://effektive.timok.deno.net/#book","headline":"Effektive mini book","name":"Effektive - Mini book","description":"Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output.","url":"https://effektive.timok.deno.net/","image":"https://effektive.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@id":"https://effektive.timok.deno.net/#website"}}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css?v=0.6.6"><script src="site.js?v=0.6.6" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><title>Effektive - Mini book</title><link rel="canonical" href="https://effektive.timok.deno.net/"><meta property="og:site_name" content="Effektive"><meta property="og:type" content="website"><meta property="og:title" content="Effektive - Mini book"><meta property="og:description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><meta property="og:url" content="https://effektive.timok.deno.net/"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Effektive. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><meta property="og:image" content="https://effektive.timok.deno.net/og-image.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Effektive - Mini book"><meta name="twitter:description" content="Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output."><meta name="twitter:image" content="https://effektive.timok.deno.net/og-image.png"><meta name="twitter:image:alt" content="Effektive. Plain code. Typed effects. A small language designed to transpile to Effect-TS."><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://effektive.timok.deno.net/#website","name":"Effektive","url":"https://effektive.timok.deno.net/","description":"Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output.","inLanguage":"en"},{"@type":"TechArticle","@id":"https://effektive.timok.deno.net/#book","headline":"Effektive mini book","name":"Effektive - Mini book","description":"Effektive is a small language designed to transpile to Effect-TS. Eleven chapters pair Effektive source with its intended Effect-TS output.","url":"https://effektive.timok.deno.net/","image":"https://effektive.timok.deno.net/og-image.png","inLanguage":"en","isPartOf":{"@id":"https://effektive.timok.deno.net/#website"}}]}</script><link rel="icon" href="data:,"><link rel="stylesheet" href="site.css?v=0.7.0"><script src="site.js?v=0.7.0" defer></script></head>
 <body id="top" class="book-page"><a class="skip" href="#content">Skip to content</a>
 <header class="topbar"><a class="brand" href="index.html">Effektive<span class="brand-period" aria-hidden="true">.</span></a><nav class="toplinks" aria-label="Documents"><a href="index.html" aria-current="page">Mini book</a><a href="effektive-spec.html">Specification</a></nav></header>
 <main id="site-content"><section class="hero" aria-labelledby="hero-heading"><div class="hero-type"><h1 id="hero-heading"><span>Plain code.</span><span>Typed effects.</span><i class="hero-spark" aria-hidden="true">✳︎</i></h1></div><div class="hero-bottom"><p class="subtitle">Effektive is a small language designed to transpile to Effect-TS. You write direct code, and each contract becomes an <code>Effect.Effect&lt;A, E, R&gt;</code> type.</p><div class="hero-actions"><a class="button primary-action" href="#orientation">Read the book <span aria-hidden="true">↓</span></a><a class="button secondary-action" href="effektive-spec.html">Read the specification <span aria-hidden="true">↗</span></a></div></div></section><section class="showcase" id="contracts-explorer" aria-labelledby="explorer-heading"><h2 id="explorer-heading">Read a contract.</h2><form data-contract-explorer><div class="contract-controls" hidden><label class="visually-hidden" for="contract-function">Function name</label><div class="function-input"><input id="contract-function" name="function" value="getUser" list="function-names" autocomplete="off" spellcheck="false" aria-describedby="contract-message"><button type="submit" aria-label="Show function contract">↵</button></div><datalist id="function-names"><option value="getUser"></option><option value="rename"></option><option value="displayName"></option><option value="activeNames"></option></datalist><div class="function-choices" aria-label="Example functions"><button type="button" data-function="getUser" aria-pressed="true">Lookup</button><button type="button" data-function="rename" aria-pressed="false">Rename</button><button type="button" data-function="displayName" aria-pressed="false">Recover</button><button type="button" data-function="activeNames" aria-pressed="false">Collect</button></div></div><div class="contract-result"><span class="contract-signal" aria-hidden="true"></span><figure class="code contract-source" data-ui data-tabs data-check="explorer-getUser" data-check-requires="users-declarations"><figcaption>Selected contract <a href="effektive-examples/users.eff">View Users source</a></figcaption><div class="code-panel" data-tab="Effektive"><pre id="contract-source" tabindex="0"><code class="language-effektive">export const getUser = (id: UserId): User
@@ -94,13 +94,13 @@ const rename = (user: User, name: Name): User =&gt; ({ ...user, name })</code></
 
 const add = (a: Count, b: Count): Count =&gt; a + b
 
-const load = (id: UserId): Option&lt;User&gt;
+export const load = (id: UserId): Option&lt;User&gt;
   fails StoreUnavailable
   uses Users.find =&gt; Users.find(id)</code></pre></div><div class="code-panel" data-tab="Effect-TS" data-check-id="book-contracts"><pre tabindex="0"><code class="language-typescript">type Count = number
 
 const add = (a: Count, b: Count): Count =&gt; a + b
 
-const load = (id: UserId): Effect.Effect&lt;
+export const load = (id: UserId): Effect.Effect&lt;
   Option.Option&lt;User&gt;,
   StoreUnavailable,
   Users
@@ -108,8 +108,8 @@ const load = (id: UserId): Effect.Effect&lt;
 <p>The result type remains Option&lt;User&gt;. A service call performs its operation when the running function reaches the call. The source type never becomes Effect&lt;Option&lt;User&gt;, E, R&gt;.</p>
 <p>A declared failure is an expected outcome. A required capability records a call to one service method. A service name in uses expands to every method in that service.</p>
 <p>Calls propagate the declared contract of the callee. The declared sets can exceed the body sets, but they cannot omit a body effect.</p>
-<p>A result annotation closes the contract. An omitted fails clause means no expected failures. An omitted uses clause means no service requirements. The body cannot exceed either set.</p>
-<p>Local functions can omit result annotations and infer their result and effects. Exported functions require parameter and result annotations. Parameters also require annotations without a contextual function type.</p>
+<p>An exported function closes its contract. An omitted fails clause means no expected failures. An omitted uses clause means no service requirements. The body cannot exceed either set.</p>
+<p>A local function can omit its result annotation, its fails clause, and its uses clause. The compiler infers each omitted part from the body. A written clause closes its own set, but a result annotation alone does not. Exported functions require parameter and result annotations. Parameters also require annotations without a contextual function type.</p>
 <p>Execution mode is separate from failure and requirement sets. A provider can remove every requirement while the computation remains effectful. Empty sets can therefore describe either execution mode.</p>
 <p>Creating an arrow function is pure. Calling that function runs its body each time. Unbodied source function types default to effect execution in version 0.</p>
 <p>Nonempty failure or requirement sets imply effect execution. Empty sets do not imply purity. The transpiler must preserve the independently inferred execution mode.</p>
@@ -121,7 +121,7 @@ const load = (id: UserId): Effect.Effect&lt;
   return active.active ? 1 : 0
 }</code></pre></div></figure>
 <p>A block returns its final expression. Effektive source has no return statement. Ordered expressions run from left to right, and only the selected branch runs.</p>
-<aside class="exercise"><h3>Exercise</h3><p>What do omitted fails and uses clauses mean when a function has a result annotation?</p><details><summary>Show the answer</summary><p>Both sets are empty. The body must handle failures and provide requirements before the function boundary.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 3"><a href="#values">Previous: Values and types</a><a href="#users-foundation">Next: One domain, two languages</a></nav></section><section class="section" id="users-foundation" aria-labelledby="heading-users-foundation"><h2 id="heading-users-foundation">One domain, two languages</h2><p class="lead">The Users domain provides the shared declarations for the next four chapters.</p><p>Effektive service declarations contain method signatures. Service methods have no this binding. Each method remains a distinct capability after name resolution.</p>
+<aside class="exercise"><h3>Exercise</h3><p>What do omitted fails and uses clauses mean in an exported function, and in a local function?</p><details><summary>Show the answer</summary><p>In an exported function, both sets are empty. The body must handle failures and provide requirements before the function boundary. A local function infers both sets from its body.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 3"><a href="#values">Previous: Values and types</a><a href="#users-foundation">Next: One domain, two languages</a></nav></section><section class="section" id="users-foundation" aria-labelledby="heading-users-foundation"><h2 id="heading-users-foundation">One domain, two languages</h2><p class="lead">The Users domain provides the shared declarations for the next four chapters.</p><p>Effektive service declarations contain method signatures. Service methods have no this binding. Each method remains a distinct capability after name resolution.</p>
 <figure data-ui class="code" data-tabs data-check="users"><figcaption>Shared Users declarations</figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">type UserId = string
 type Name = string
 
@@ -180,9 +180,7 @@ class Users extends Context.Service&lt;Users, {
 <p>Later TypeScript examples assume these imports, schemas, errors, and the Users class. Later Effektive examples assume the declarations above. Each Effect-TS tab shows intended translation, not generated output.</p>
 <p>Effect-TS tracks the whole Users service in its requirement type. Effektive retains each method requirement in checked IR or backend metadata.</p>
 <p>These isolated translations use short error tags and service keys. A transpiler backend must encode resolved identities in tags, keys, and brand tokens across modules.</p><nav class="section-nav" aria-label="Navigation for section 4"><a href="#contracts">Previous: Function contracts</a><a href="#lookup-update">Next: Lookup and update</a></nav></section><section class="section" id="lookup-update" aria-labelledby="heading-lookup-update"><h2 id="heading-lookup-update">Lookup and update</h2><p class="lead">Small functions keep service operations, domain decisions, and record changes separate.</p><p>The first function converts None into a named domain failure. The second function changes a value. The third returns an already active user or activates and saves an inactive one.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Lookup using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const getUser = (id: UserId): User
-  fails UserMissing | StoreUnavailable
-  uses Users.find =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Lookup using chapter 4 declarations</figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const getUser = (id: UserId) =&gt;
   match Users.find(id) {
     Some(user) =&gt; user,
     None =&gt; fail(UserMissing({ id }))
@@ -198,9 +196,9 @@ class Users extends Context.Service&lt;Users, {
       onSome: (user) =&gt; Effect.succeed(user)
     })
   )</code></pre></div></figure>
-<p>fail(error) ends the normal path and contributes the error identity. Errors are nominal, so declarations with equal fields remain different error types.</p>
+<p>getUser is not exported, so the compiler infers its failures and requirements from the body: UserMissing, StoreUnavailable, and Users.find. fail(error) ends the normal path and contributes the error identity. Errors are nominal, so declarations with equal fields remain different error types.</p>
 <p>The match reads the option once and selects one arm. The None arm constructs UserMissing with the requested identifier. StoreUnavailable remains unchanged.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Activate and save: direct calls and Effect sequencing <a href="effektive-examples/activation.eff">View complete Effektive source</a></figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const activate = (user: User): User =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Activate and save: direct calls and Effect sequencing <a href="effektive-examples/activation.eff">View complete Effektive source</a></figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const activate = (user: User) =&gt;
   ({ ...user, active: true })
 
 export const saveActive = (id: UserId): User
@@ -226,14 +224,14 @@ export const saveActive = (id: UserId): Effect.Effect&lt;
   yield* Users.use((users) =&gt; users.save(active))
   return active
 })</code></pre></div></figure>
-<p>This pair uses 253 non-whitespace characters in Effektive and 304 in Effect-TS, including the pure helper and explicit exported contracts. Shared chapter 4 declarations are excluded from both counts. Effect-TS spells out the <code>Effect.Effect</code> result type, generator, <code>yield*</code>, service-context access and <code>return</code>. Effektive keeps direct calls and a final expression.</p>
+<p>This pair uses 248 non-whitespace characters in Effektive and 304 in Effect-TS, including the pure helper and explicit exported contracts. Shared chapter 4 declarations are excluded from both counts. Effect-TS spells out the <code>Effect.Effect</code> result type, generator, <code>yield*</code>, service-context access and <code>return</code>. Effektive keeps direct calls and a final expression.</p>
 <p>Effektive uses one direct call syntax for pure functions and service methods. The checked call still distinguishes an ordinary call from a service operation in typed IR.</p>
 <p>Both versions read once and skip the write when the user is already active. Otherwise they activate and save the user. A failure stops the remaining steps; success returns the user.</p>
 <aside class="exercise"><h3>Exercise</h3><p>Why does saveActive return active after Users.save(active)?</p><details><summary>Show the answer</summary><p>The final value supports later composition. The save operation returns void, which cannot carry the updated user.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 5"><a href="#users-foundation">Previous: One domain, two languages</a><a href="#pipelines-collections">Next: Pipelines and collections</a></nav></section><section class="section" id="pipelines-collections" aria-labelledby="heading-pipelines-collections"><h2 id="heading-pipelines-collections">Pipelines and collections</h2><p class="lead">A pipeline passes its left value as the first argument of each stage.</p><figure data-ui class="code neutral"><figcaption>Pipeline expansion</figcaption><pre tabindex="0"><code class="language-text">value |&gt; transform          means transform(value)
 value |&gt; transform(a, b)    means transform(value, a, b)</code></pre></figure>
 <p>The runtime evaluates the left side once. It then evaluates the stage callee and explicit arguments. Pipelines associate from left to right.</p>
 <p>A stage can name a local function, imported function, builtin, or declared service method. Version 0 excludes placeholders, currying, inline lambda stages, and record-member stages.</p>
-<figure data-ui class="code" data-tabs data-check="users"><figcaption>Collection workflow using chapter 4 declarations <a href="effektive-examples/active-names.eff">View complete Effektive source</a></figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const activeNames = (users: User[]): Name[] =&gt;
+<figure data-ui class="code" data-tabs data-check="users"><figcaption>Collection workflow using chapter 4 declarations <a href="effektive-examples/active-names.eff">View complete Effektive source</a></figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">const activeNames = (users: User[]) =&gt;
   users
     |&gt; filter((user) =&gt; user.active)
     |&gt; map((user) =&gt; user.name)
@@ -254,7 +252,7 @@ export const listActiveNames = (): Effect.Effect&lt;
   Users.use((users) =&gt; users.all()),
   activeNames
 )</code></pre></div></figure>
-<p>The pure helper uses collection operations in both languages. The effectful wrapper uses 96 non-whitespace characters in Effektive and 144 in Effect-TS: a direct pipeline compared with <code>Effect.map</code> and service-context access. Including the helper and explicit exported contracts, the pair uses 194 and 266 characters respectively. Shared chapter 4 declarations are excluded from both counts.</p>
+<p>The pure helper uses collection operations in both languages. The effectful wrapper uses 96 non-whitespace characters in Effektive and 144 in Effect-TS: a direct pipeline compared with <code>Effect.map</code> and service-context access. Including the helper and explicit exported contracts, the pair uses 187 and 266 characters respectively. Shared chapter 4 declarations are excluded from both counts.</p>
 <p>The prelude provides map, filter, and fold. Each builtin traverses from left to right. Map and filter preserve order, while fold carries one accumulator.</p>
 <p>Map and filter call their callback once for each visited element. Empty inputs produce empty outputs. Fold returns its initial accumulator for an empty input.</p>
 <p>Each callback must be pure and have empty failure and requirement sets. Contextual inline arrows work because the builtin supplies their parameter types. Known pure functions also work.</p>
@@ -344,26 +342,21 @@ service Payments {
   charge(amount: Cents): ChargeId fails PaymentDeclined
 }
 
-const findOrder = (id: OrderId): Order
-  fails OrderNotFound
-  uses Orders.find =&gt;
+const findOrder = (id: OrderId) =&gt;
   match Orders.find(id) {
     Some(order) =&gt; order,
     None =&gt; fail(OrderNotFound({ id }))
   }
 
-const chargeOrder = (order: Order): Order
-  fails PaymentDeclined
-  uses Payments.charge =&gt; {
+const chargeOrder = (order: Order) =&gt; {
   retry(() =&gt; Payments.charge(order.totalCents), { times: 2 })
   order
 }
 
-const markPaid = (order: Order): Order =&gt;
+const markPaid = (order: Order) =&gt;
   ({ ...order, status: &quot;paid&quot; })
 
-const saveOrder = (order: Order): Order
-  uses Orders.save =&gt; {
+const saveOrder = (order: Order) =&gt; {
   Orders.save(order)
   order
 }
@@ -468,7 +461,7 @@ const pay = (id: OrderId): Effect.Effect&lt;
 <p>The charge service can repeat an external action. The application author must decide whether the provider makes repeated charges safe, such as through idempotency.</p>
 <p>The Effect-TS tab uses a schema to check safe integers at a boundary. Effektive separately requires its checker and runtime to preserve int arithmetic rules.</p>
 <p>The Effect-TS tab uses Effect.gen for ordered operations. Effektive keeps the same order through final-expression blocks and pipeline stages. The source contract presents plain Order as its success type.</p>
-<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. Its contract has no fails or uses clauses, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous: Recovery and provision</a><a href="#nominal-types">Next: Nominal types</a></nav></section><section class="section" id="nominal-types" aria-labelledby="heading-nominal-types"><h2 id="heading-nominal-types">Nominal types</h2><p class="lead">A nominal declaration gives a type its own identity, so two types with the same body stay different types.</p>
+<aside class="exercise"><h3>Exercise</h3><p>Which pay stage is pure, and how does that fact affect its contract?</p><details><summary>Show the answer</summary><p>markPaid is pure. The compiler infers empty failure and requirement sets for it, and it returns a new Order value.</p></details></aside><nav class="section-nav" aria-label="Navigation for section 8"><a href="#control">Previous: Recovery and provision</a><a href="#nominal-types">Next: Nominal types</a></nav></section><section class="section" id="nominal-types" aria-labelledby="heading-nominal-types"><h2 id="heading-nominal-types">Nominal types</h2><p class="lead">A nominal declaration gives a type its own identity, so two types with the same body stay different types.</p>
 <figure data-ui class="code" data-tabs data-check="book-nominal-states"><figcaption>Order states as nominal records</figcaption><div class="code-panel" data-tab="Effektive"><pre tabindex="0"><code class="language-effektive">nominal OrderId = string
 nominal Cents = int
 type Text = string
@@ -570,7 +563,7 @@ nominal Capped = { rule: Rule, cap: Cents }
 nominal Sum = { parts: Rule[] }
 type Rule = Fixed | Times | Capped | Sum
 
-const min = (left: Cents, right: Cents): Cents =&gt;
+const min = (left: Cents, right: Cents) =&gt;
   if (left &lt; right) { left } else { right }
 
 const price = (rule: Rule, base: Cents): Cents =&gt;
@@ -694,7 +687,7 @@ const shiftedField: SchemaOptional&lt;Int, Int, Read.next&gt; =
   schemaOptionalTransform(
     optional,
     optional,
-    (value: Option&lt;Int&gt;): Option&lt;Int&gt; uses Read.next =&gt;
+    (value: Option&lt;Int&gt;): Option&lt;Int&gt; =&gt;
       match value {
         Some(score) =&gt; Some(Read.next(score)),
         None =&gt; None
@@ -705,7 +698,7 @@ const shifted: Schema&lt;Optional, Optional, Read.next&gt; =
   schemaStruct({ score: shiftedField })
 const defaulted: Schema&lt;Required, Optional, Defaults.make&gt; =
   schemaStruct({
-    score: schemaDefaultKey(integer, (): Int uses Defaults.make =&gt; Defaults.make())
+    score: schemaDefaultKey(integer, (): Int =&gt; Defaults.make())
   })
 
 export const readShifted = (input: unknown): Optional fails SchemaError uses Read.next =&gt;
@@ -796,7 +789,7 @@ const checkedName: Schema&lt;Name, Name, Validation.accept&gt; =
   schemaTransform(
     name,
     name,
-    (value: Name): Name fails SchemaIssue uses Validation.accept =&gt; Validation.accept(value),
+    (value: Name): Name =&gt; Validation.accept(value),
     (value: Name): Option&lt;Name&gt; =&gt; Some(value)
   )
 export const fallbackName: Schema&lt;Name, Name, Validation.accept&gt; =
@@ -918,8 +911,8 @@ const wireText: Schema&lt;Text&gt; = schema()
 const integer: Schema&lt;Int&gt; = schema()
 const wireScore: Schema&lt;Int, Text, Wire.parse, Wire.print&gt; = schemaTransform(
   wireText, integer,
-  (value: Text): Int fails SchemaIssue uses Wire.parse =&gt; Wire.parse(value),
-  (value: Int): Text fails SchemaIssue uses Wire.print =&gt; Wire.print(value)
+  (value: Text): Int =&gt; Wire.parse(value),
+  (value: Int): Text =&gt; Wire.print(value)
 )
 export const encodedDefault: Schema&lt;RequiredScore, WireRecord, Wire.parse, Wire.print&gt; =
   schemaStruct({ score: schemaDefaultKey(wireScore,
@@ -1083,8 +1076,8 @@ const integer: Schema&lt;Int&gt; = schema()
 const wireText: Schema&lt;Text&gt; = schema()
 const wireScore: Schema&lt;Int, Text, Wire.parse, Wire.print&gt; = schemaTransform(
   wireText, integer,
-  (value: Text): Int fails SchemaIssue uses Wire.parse =&gt; Wire.parse(value),
-  (value: Int): Text fails SchemaIssue uses Wire.print =&gt; Wire.print(value)
+  (value: Text): Int =&gt; Wire.parse(value),
+  (value: Int): Text =&gt; Wire.print(value)
 )
 export const wireTree: Schema&lt;Tree, WireTree, Wire.parse, Wire.print, TreeInput&gt; = schemaRecursive(
   (self: Schema&lt;Tree, WireTree, Wire.parse, Wire.print, TreeInput&gt;): Schema&lt;Tree, WireTree, Wire.parse, Wire.print, TreeInput&gt; =&gt;
