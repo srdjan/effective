@@ -1,6 +1,6 @@
 # Stream processor application
 
-The processor uses existing Effective forms. Source owns live pulls, ordered
+The processor uses existing Effektive forms. Source owns live pulls, ordered
 concurrent mapping, selective fallback, buffering, batching and session brackets.
 The driver supplies primitive recording operations and performs no external I/O.
 
@@ -14,7 +14,7 @@ Files in this directory:
 - [effective.json](effective.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
-Download these files together. Use the effective-lang CLI to build this
+Download these files together. Use the effektive-lang CLI to build this
 directory with --validate --tsc. Build writes contracts.ts and processor.ts
 beside the source files. From the downloaded directory, run:
 

@@ -1,6 +1,6 @@
 # Service workflow application
 
-The workflow uses existing Effective forms. Source validates input, checks
+The workflow uses existing Effektive forms. Source validates input, checks
 business rules, obtains a catalog price and selects transient storage retries.
 The registered typed host adapter supplies one atomic save through native SqlClient.
 
@@ -16,7 +16,7 @@ Files in this directory:
 - [effective.json](effective.json): registered host configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
-Download these files together. Use the effective-lang CLI to build this
+Download these files together. Use the effektive-lang CLI to build this
 directory with --validate --tsc. Build writes contracts.ts and workflow.ts
 beside the source files. It also writes host.effi.ts, the companion module of
 host.effi. The adapter and the drivers import the Runtime service from it. From the downloaded directory, run:

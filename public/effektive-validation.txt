@@ -1,10 +1,10 @@
-Effective documentation - validation report
+Effektive documentation - validation report
 Draft 0.1, language core version 0, October 15, 2026.
 
 Delivered content
 Two linked HTML documents contain 18 reference sections and nine book chapters.
 The documents contain 65 code blocks, 30 Effect-TS tabs, and seven exercises.
-Each Effective example has an Effect-TS tab with a manual translation.
+Each Effektive example has an Effect-TS tab with a manual translation.
 Five .eff files provide canonical source examples.
 The site also includes typed-ir.ts and the manual log.ir.json fixture.
 The fixture retains log.lft as its source identity.
@@ -46,27 +46,27 @@ Official Effect v4 documentation supports the target API choices.
 
 Draft 0.2 checks, October 17, 2026
 Draft 0.2 adds the rule on primitive types, nominal records, and numeric brand operators.
-The strict TypeScript check passes for 29 units, with 0 Effective blocks that lack an Effect-TS tab.
-The effective-lang parser at commit fc00ef7 parses the 32 Effective blocks of both pages and the five example files.
+The strict TypeScript check passes for 29 units, with 0 Effektive blocks that lack an Effect-TS tab.
+The effektive-lang parser at commit fc00ef7 parses the 32 Effektive blocks of both pages and the five example files.
 No block has a primitive type outside a type or error declaration.
 The two fragments for pipelines and deferred control are not modules, so they do not parse alone.
 
 Draft 0.2 compiler checks
-The effective-lang compiler builds each other figure together with the figures it requires.
+The effektive-lang compiler builds each other figure together with the figures it requires.
 Each figure gives 0 diagnostics, except the invalid example, which gives failure-contract/001 as documented.
-The five example files equal fixtures/examples in effective-lang.
+The five example files equal fixtures/examples in effektive-lang.
 The draft 0.1 sections above describe the earlier edition; their counts were not measured again.
 
 Limits
-This package contains no Effective parser, checker, transpiler, interpreter, or runtime.
+This package contains no Effektive parser, checker, transpiler, interpreter, or runtime.
 All source examples, target comparisons, and the IR fixture are manually authored.
-No check executes Effective source or proves translation equivalence.
+No check executes Effektive source or proves translation equivalence.
 Strict target checking proves static compatibility for the checked target examples and declared provider interface.
 Static HTML checks do not establish visual rendering or printed pagination.
 No browser rendering check ran for these documents.
 
 Commands
-python3 work/check_effective.py
+python3 work/check_effektive.py
 python3 work/check-deliverables.py
 tsc --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --noEmit outputs/typed-ir.ts work/typecheck-fixture.ts
 deno task typecheck
@@ -78,13 +78,13 @@ Draft 0.3 specification, October 17, 2026
 Language core version 1 specifies references, races, scoped fibers, borrowed handles,
 buffered and merged streams, retry schedules, pure codecs, source Layers, and a typed
 file service host adapter. The specification requires light-functional-ir version 2.
-The effective-lang compiler implements the listed core 1 extensions and emits IR version 2.
+The effektive-lang compiler implements the listed core 1 extensions and emits IR version 2.
 The core 1 example is an illustrative source/target pair; the compiler also
-accepts its Effective source. The strict target check covers its Effect-TS tab.
+accepts its Effektive source. The strict target check covers its Effect-TS tab.
 Historical counts and compiler checks above apply to their named drafts only.
 
 IR version 2 migration
-The effective-lang compiler and independent validator emit and accept version 2.
+The effektive-lang compiler and independent validator emit and accept version 2.
 Version 1 input now produces validation/008. Canonical compiler fixtures and this
 site's linked model and log fixture use version 2. The full compiler check passed.
 
@@ -591,12 +591,12 @@ version 2. Required-to-optional transformations and general union
 backtracking remain separate work. Package interoperability stays deferred.
 
 Draft 0.43 code showcase, October 19, 2026
-The mini book now pairs Effective and Effect-TS code for scoped child work,
+The mini book now pairs Effektive and Effect-TS code for scoped child work,
 scheduled stream batches, and effectful optional Schema getters and defaults.
-The full effective-examples/core1.eff source has zero compiler diagnostics,
+The full effektive-examples/core1.eff source has zero compiler diagnostics,
 zero independent IR diagnostics, and strict checks of emitted TypeScript
 against effect@4.0.5. The site's 33 illustrative Effect-TS units pass strict
-checks, with no Effective panel missing a translation. The site's 11 tests
+checks, with no Effektive panel missing a translation. The site's 11 tests
 pass. These checks do not establish runtime equivalence for the illustrative
 tabs; the compiler runtime fixtures and target probes cover the selected
 behaviors separately.
@@ -615,12 +615,12 @@ backtracking remains the next bounded gap; package interoperability stays
 deferred.
 
 Draft 0.44 code showcase, October 19, 2026
-The Core 1 mini book adds a fourth Effective/Effect-TS pair for a required
+The Core 1 mini book adds a fourth Effektive/Effect-TS pair for a required
 encoded name that can decode to an absent field. The full
-public/effective-examples/core1.eff source builds with zero compiler and
+public/effektive-examples/core1.eff source builds with zero compiler and
 independent validator diagnostics and strict emitted TypeScript checking.
 The site's 34 illustrative Effect-TS units pass strict type checking with
-zero Effective panels missing a translation. The site's 11 tests pass.
+zero Effektive panels missing a translation. The site's 11 tests pass.
 Illustrative tabs are manually authored; selected runtime behavior has
 separate pinned target and compiled source witnesses.
 
@@ -642,9 +642,9 @@ remain the next bounded Schema gap; package interoperability stays deferred.
 Draft 0.45 code showcase, October 19, 2026
 The fifth Core 1 pair shows unlike scalar branches and a service-backed name
 transformation that can fall through to a plain string branch. The full
-public/effective-examples/core1.eff source builds with zero compiler and
+public/effektive-examples/core1.eff source builds with zero compiler and
 independent validator diagnostics and strict emitted TypeScript checking.
-All 35 illustrative Effect-TS units pass strict checking, with zero Effective
+All 35 illustrative Effect-TS units pass strict checking, with zero Effektive
 panels missing a translation. The site's 11 tests pass. Illustrative tabs
 remain manually authored and have separate runtime evidence for the selected
 behaviors.
@@ -673,9 +673,9 @@ marker. The compiler check passed with 1,105 fast tests and 116 slow tests.
 Draft 0.46 code showcase, October 19, 2026
 The sixth Core 1 pair shows preserving null and treating it as an absent key,
 with distinct source values for a missing field and a present null. The full
-public/effective-examples/core1.eff source builds with zero compiler and
+public/effektive-examples/core1.eff source builds with zero compiler and
 independent validator diagnostics and strict emitted TypeScript checking.
-All 36 illustrative Effect-TS units pass strict checking, with zero Effective
+All 36 illustrative Effect-TS units pass strict checking, with zero Effektive
 panels missing a translation. The site's 11 tests pass. Alternate default
 encoding strategies are next; broader package interoperability stays deferred.
 
@@ -701,10 +701,10 @@ passed with 1,107 fast tests and 118 slow tests.
 
 Draft 0.47 code showcase, October 19, 2026
 The seventh Core 1 pair shows unconditional omission versus passthrough for a
-defaulted name. The full public/effective-examples/core1.eff source builds
+defaulted name. The full public/effektive-examples/core1.eff source builds
 with zero compiler and independent validator diagnostics and strict emitted
 TypeScript checking. All 37 illustrative Effect-TS units pass strict checking,
-with zero Effective panels missing a translation. The site's 11 tests pass.
+with zero Effektive panels missing a translation. The site's 11 tests pass.
 Defaults for missing-or-null keys are next; broader package interoperability
 stays deferred.
 
@@ -730,10 +730,10 @@ compiler check passed with 1,110 fast tests and 119 slow tests on Deno 2.9.7.
 
 Draft 0.48 code showcase, October 19, 2026
 The eighth Core 1 pair shows missing and null names receiving the same required
-decoded default. The full public/effective-examples/core1.eff source builds with
+decoded default. The full public/effektive-examples/core1.eff source builds with
 zero compiler and independent validator diagnostics and strict emitted
 TypeScript checking. All 38 illustrative Effect-TS units pass strict checking,
-with zero Effective panels missing a translation. The site's 11 tests pass.
+with zero Effektive panels missing a translation. The site's 11 tests pass.
 Encoded-value defaults are next; broader package interoperability stays deferred.
 
 Draft 0.49 encoded-value defaults, October 19, 2026
@@ -766,10 +766,10 @@ Deno 2.9.7.
 Draft 0.49 code showcase, October 19, 2026
 The ninth Core 1 pair shows an encoded text default passing through a
 service-backed integer decoder, and explains why omission still calls the
-encoder. The full public/effective-examples/core1.eff source builds with zero
+encoder. The full public/effektive-examples/core1.eff source builds with zero
 compiler and independent validator diagnostics and strict emitted TypeScript
 checking. All 39 illustrative Effect-TS units pass strict checking, with zero
-Effective panels missing a translation. The site's 11 tests pass. Schema
+Effektive panels missing a translation. The site's 11 tests pass. Schema
 construction defaults are next; broader package interoperability stays deferred.
 
 Draft 0.50 type-side construction and explicit defaults, October 19, 2026
@@ -1090,7 +1090,7 @@ Accepted application acceptance rule, October 19, 2026
 The user accepted an application-based stopping rule after draft 0.57. Three
 complete applications must compile with precise contracts and pass failure,
 cancellation, and cleanup checks: a service workflow, a scheduled worker, and
-a stream processor. Application orchestration stays in Effective. Typed host
+a stream processor. Application orchestration stays in Effektive. Typed host
 adapters may supply drivers and the runtime entry point. All three application
 gates are pending; existing operator tests and adapter probes do not complete them.
 
@@ -1112,7 +1112,7 @@ pending.
 
 Scheduled-worker application gate, October 19, 2026
 The scheduled worker now passes the accepted application gate with existing
-Effective forms. Source owns policy validation, repetition, transient retry
+Effektive forms. Source owns policy validation, repetition, transient retry
 selection, progress and per-attempt resource release. The driver supplies
 recording in-memory job operations and primitive waits. The runtime entry point
 supplies whole-worker interruption for shutdown. No new language form, builtin,
@@ -1156,7 +1156,7 @@ at draft 0.57 because this application adds no source forms.
 
 Service workflow application gate, October 19, 2026
 The service workflow now passes the accepted application gate with existing
-Effective forms. Source validates unknown input, applies business rules,
+Effektive forms. Source validates unknown input, applies business rules,
 obtains a catalog price, calculates a bounded integer total and selects
 transient storage retries. Its exported contract retains SchemaError,
 InvalidOrder, CatalogFailure and StoreFailure, plus Catalog.price and
@@ -1211,7 +1211,7 @@ callbacks. Gap item 9 remains deferred. The language edition stays at draft
 
 Stream processor application gate, October 19, 2026
 The stream processor now passes the accepted application gate with existing
-Effective forms. Source owns nested session brackets, live input pulls,
+Effektive forms. Source owns nested session brackets, live input pulls,
 buffering, ordered concurrent mapping, selected fallbacks, batching and terminal
 consumption. The recording driver supplies primitive operations only.
 The source contract retains InputFailure, TransformFailure and OutputFailure,
@@ -1316,7 +1316,7 @@ All three public checks.ts files match the compiler runtime_test.ts fixtures.
 
 On Deno 2.9.7, the website passes deno task test (eleven tests) and deno task
 typecheck (48 strict illustrative Effect-TS units, no missing translations).
-The new Effective example builds with --validate --tsc: one module and zero
+The new Effektive example builds with --validate --tsc: one module and zero
 diagnostics. Fresh copies of all three downloadable projects build with those
 same options, pass their checks.ts suites (10 worker, 15 service, 13 stream)
 and run main.ts to completion. The Markdown link audit passes.
@@ -1402,7 +1402,7 @@ The compiler implements the FX correctness plan and ER editor/release plan.
 Target-check subprocesses use the permitted PATH Deno executable. Emitted
 records, schemas and nominal errors preserve prototype-sensitive own fields.
 Watch target checking responds to local host and configuration changes without
-claiming that unchanged Effective modules were rechecked. No source form or
+claiming that unchanged Effektive modules were rechecked. No source form or
 package-interoperability deferral changes.
 
 Editor references, prepare-rename and validated versioned rename, scoped
@@ -1611,14 +1611,14 @@ falls from 153 to 46 raw lines and from cyclomatic 41 to 15.
 The book's activate-and-save pair now includes the same conditional write in
 both languages. Already-active users return without a write; inactive users
 are activated and saved. The shown pair contains 253 non-whitespace characters
-in Effective and 304 in Effect-TS, including its pure helper and explicit
+in Effektive and 304 in Effect-TS, including its pure helper and explicit
 exported contracts, excluding shared chapter 4 declarations from both counts.
-The complete source is available as effective-examples/activation.eff.
-The Effective snippets pass checking, lowering, independent validation and
+The complete source is available as effektive-examples/activation.eff.
+The Effektive snippets pass checking, lowering, independent validation and
 strict emitted TypeScript checking. Five runtime cases match the handwritten Effect-TS:
 already active, inactive, missing user, lookup failure and save failure,
 including returned values, typed failures and service-call traces. The site's
-11 tests and 48 strict translation units pass; no Effective block lacks a panel.
+11 tests and 48 strict translation units pass; no Effektive block lacks a panel.
 
 Source forms, public core exports, canonical IR and validator policy are
 unchanged. Manual editor and playground acceptance remains pending.
@@ -1643,16 +1643,16 @@ including exact errors and serialized output. The full compiler gate passes
 1,828 fast and 177 slow tests.
 
 The book's collection pair now exports listActiveNames in both languages and
-links complete source at effective-examples/active-names.eff. The displayed
-pair uses 194 non-whitespace characters in Effective and 266 in Effect-TS,
+links complete source at effektive-examples/active-names.eff. The displayed
+pair uses 194 non-whitespace characters in Effektive and 266 in Effect-TS,
 including its pure helper and explicit exported contracts. The effectful
 wrapper alone uses 96 and 144 respectively. Shared chapter 4 declarations
-are excluded from both counts. The Effective source passes checking,
+are excluded from both counts. The Effektive source passes checking,
 lowering, independent validation and strict emitted TypeScript checking.
 Five runtime cases match the handwritten Effect-TS: empty input, no active
 users, preserved order, duplicate names and a typed service failure. Each
 calls Users.all exactly once. All 11 site tests and 48 strict translation
-units pass, with no Effective block missing a translation panel.
+units pass, with no Effektive block missing a translation panel.
 
 Source forms, public core exports, canonical IR and independent validator
 policy are unchanged. ARC-5 and VAL-8 remain open, along with manual editor
@@ -1676,17 +1676,17 @@ focused tests pass. The full compiler gate passes 1,830 fast and 177 slow
 tests. VAL-8 remains open, along with manual editor and playground acceptance.
 
 The book's recovery pair now exports activationLabel in both languages and
-links complete source at effective-examples/activation-label.eff. Its
+links complete source at effektive-examples/activation-label.eff. Its
 Effect-TS version uses Effect.as and Effect.catchTag. The displayed pair
-uses 181 non-whitespace characters in Effective and 216 in Effect-TS,
+uses 181 non-whitespace characters in Effektive and 216 in Effect-TS,
 including the Label alias and explicit exported contracts; shared
-declarations and saveActive are excluded from both counts. The Effective
+declarations and saveActive are excluded from both counts. The Effektive
 source passes checking, lowering, independent validation and strict emitted
 TypeScript checking. Five runtime cases match the handwritten Effect-TS:
 already active, inactive, recovered missing user, lookup failure and save
 failure. Returned labels, typed storage failures and service-call traces
 match. All 11 site tests and 48 strict translation units pass, with no
-Effective block missing a translation panel.
+Effektive block missing a translation panel.
 
 Source forms, public core exports, canonical IR and independent validator
 policy are unchanged. No performance saving is claimed for ARC-5.
@@ -1717,16 +1717,16 @@ gain is claimed.
 
 The retry example now exports lookupWithRetry in both languages and uses
 the cold Users.use effect directly in Effect-TS, without an extra suspension.
-Complete source is available at effective-examples/retry-lookup.eff. The
-shown pair uses 123 non-whitespace characters in Effective and 156 in
+Complete source is available at effektive-examples/retry-lookup.eff. The
+shown pair uses 123 non-whitespace characters in Effektive and 156 in
 Effect-TS, including explicit exported contracts and excluding shared
-chapter 4 declarations. Effective still requires its deferred direct call.
+chapter 4 declarations. Effektive still requires its deferred direct call.
 The source passes checking, lowering, independent validation and strict
 emitted TypeScript checking. Five runtime cases match the handwritten
 Effect-TS: immediate success, success after one or two failures, exhaustion
 after three attempts, and an immediate None result. Values, typed failures
 and exact service-call counts match. All 11 site tests and 48 strict
-translation units pass; no Effective block lacks a translation panel.
+translation units pass; no Effektive block lacks a translation panel.
 
 Source forms, public core exports and canonical IR are unchanged. Manual
 editor and playground acceptance remains pending, as do the separately
@@ -1922,7 +1922,7 @@ of a record, of a data type, or of a union with such a member now gives
 declaration/014, so the form Brand<{ ... }> is gone. The editor, the TextMate
 grammar and the playground highlighter know the word data.
 
-The change has seven commits in the effective-lang repository: 2a57d9c,
+The change has seven commits in the effektive-lang repository: 2a57d9c,
 2404446, 2285033, 6b21dc2, ac90799, 8ab15c0, and 24f3937. The first six change
 the compiler and the last changes its documents. The full gate passed for
 each commit. Before the last commit, one slow test lost its child process once
@@ -1936,7 +1936,7 @@ The website now shows data types in the specification: the declaration rules,
 a construction, update, field read and unbrand figure, a match by name figure,
 the grammar rule dataDecl, and the IR nodes. typed-ir.ts gains the data
 expression node, the data pattern, and the data type definition. Each new
-Effect-TS panel was checked in two ways. The compiler builds the Effective
+Effect-TS panel was checked in two ways. The compiler builds the Effektive
 source with --validate --tsc and reports zero diagnostics. The strict check
 passes all 49 illustrative units with no missing translation, and the eleven
 server tests pass. The panels use short tags and compact layout, as the other
@@ -1955,8 +1955,8 @@ module-qualified tags such as contracts#Pending. The panel of the recursive
 figure keeps the explicit interfaces, the Encoded mirror interfaces, and
 Schema.suspend, because typeof Rule.Type inside a cycle fails the check.
 
-The site copies the order lifecycle application from the effective-lang
-repository to effective-examples/order-lifecycle/. The copy has the two Effective
+The site copies the order lifecycle application from the effektive-lang
+repository to effektive-examples/order-lifecycle/. The copy has the two Effektive
 modules, main.ts, checks.ts, deno.json, effective.json, and a README. The
 modules, main.ts and the two configuration files match the fixture byte for
 byte, and checks.ts is runtime_test.ts under a new name. The modules chapter
@@ -1967,7 +1967,7 @@ the three chapter menus now include the new chapter.
 
 The compiler builds the downloaded copy with --validate --tsc and reports two
 modules and zero diagnostics. In that copy, main.ts runs, and the nine checks in
-checks.ts pass with Deno 2.9.8. The compiler also builds the Effective source of
+checks.ts pass with Deno 2.9.8. The compiler also builds the Effektive source of
 the three figures with --validate --tsc and reports zero diagnostics. The strict
 check passes all 52 illustrative units with no missing translation, and the
 eleven server tests pass.
@@ -2003,7 +2003,7 @@ at draft 0.59, because no source form changes.
 
 The service workflow example now imports the Runtime service from
 host.effi.ts in adapter.ts, driver.ts, and integration_driver.ts. These files
-match the effective-lang fixture byte for byte. The Runtime tag changes from
+match the effektive-lang fixture byte for byte. The Runtime tag changes from
 service-workflow#Runtime to host#Runtime. The compiler commits are d7f0691,
 decf945, c2428bd, c877fc3, and e6ec178.
 
@@ -2061,7 +2061,7 @@ The figure units book-data-states, book-data-match, book-data-rules, and
 spec-data-match are renamed to book-nominal-states, book-nominal-match,
 book-nominal-rules, and spec-nominal-match.
 
-The site copies pay.eff, contracts.eff, and orders.eff from the effective-lang
+The site copies pay.eff, contracts.eff, and orders.eff from the effektive-lang
 fixtures. The three files match the fixtures byte for byte. The host files
 and checks.ts did not change. typed-ir.ts moves to IR version 3 with the
 nominal definition kind, the nominal construction node, and the nominal
@@ -2069,7 +2069,7 @@ pattern kind. log.ir.json gets the version bump only. It comes from a
 different source than the fixture, so the site does not copy the fixture.
 
 The compiler commits are d59b5bf, 9da2ebd, bd52a86, 95c72b7, and 76dc088.
-The compiler builds the Effective source of ten changed figure units with
+The compiler builds the Effektive source of ten changed figure units with
 --tsc and reports zero diagnostics for each. The units are spec-types,
 spec-account, spec-cents, spec-nominal-match, spec-example-pay, book-values,
 payment, book-nominal-states, book-nominal-match, and book-nominal-rules.
@@ -2092,7 +2092,7 @@ compiler gate passes 1962 fast tests and 195 slow tests.
 Portable publisher witness (2026-10-23)
 
 The portable publisher is an exploratory witness, not a gate application.
-The accepted three-application stopping rule remains unchanged. Effective
+The accepted three-application stopping rule remains unchanged. Effektive
 source owns assessment, planning, validation, conflict policy, grants, and
 serial batching. Generic memory and SQLite implementations share textual
 keys, payloads, and opaque storage versions.
@@ -2137,7 +2137,7 @@ module names to their keys. Non-prelude imported declarations cannot claim
 the consumer's identity. Supporting types can still belong to third modules.
 
 The updated specification includes two new paired source and TypeScript
-panels. Both Effective panels pass checking, lowering, and independent
+panels. Both Effektive panels pass checking, lowering, and independent
 validation. All 54 illustrative TypeScript units pass strict checking, with
 no missing translation. The site passes all 11 serving and asset tests.
 The linked public IR model passes deno check, and site.js passes node --check.

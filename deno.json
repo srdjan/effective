@@ -1,5 +1,5 @@
 {
-  "name": "@srdjan/effective",
+  "name": "@srdjan/effektive",
   "version": "0.6.6",
   "exports": "./main.ts",
   "tasks": {

@@ -1,6 +1,6 @@
-# Effective
+# Effektive
 
-Effective is a friendly language that transpiles to [Effect-TS](https://effect.website), version 4. Inspired by https://forma-lang.com/effect. Each function contract names its result, its expected failures, and the services that it uses. The transpiler turns that contract into an `Effect.Effect<A, E, R>` type.
+Effektive is a friendly language that transpiles to [Effect-TS](https://effect.website), version 4. Inspired by https://forma-lang.com/effect. Each function contract names its result, its expected failures, and the services that it uses. The transpiler turns that contract into an `Effect.Effect<A, E, R>` type.
 
 The transpiler targets selected `effect` core modules, including `Effect`, `Context`, `Layer`, `Option`, `Schema`, `Stream`, `Sink`, and `Schedule`. It also uses selected ecosystem modules through typed host adapters:
 
@@ -8,17 +8,17 @@ The transpiler targets selected `effect` core modules, including `Effect`, `Cont
 - `effect/sql` and the `@effect/sql-*` drivers, such as `@effect/sql-pg`
 - `@effect/opentelemetry` for traces, metrics, and logs
 
-Core 1 is specified in design draft 0.60. The effective-lang repository implements the documented core 1 subset, including four-channel Schema composition, effectful optional-field getters and defaults, guarded required-encoded to optional-decoded fields, ordered general unions, nullable optional fields with explicit null policies, default encoding strategies, missing-or-null defaults, encoded-value defaults, type-side construction, constructor metadata with separate make inputs, propagation through optional adapters and guarded recursive Schemas, guarded recursive data records, separate recursive decoded and encoded representations, constructor defaults on field descriptors with preserved presence flags, explicit retained, target-selected or reset defaults through adapter order, and guarded recursive fields through wire-default and optional-bridge adapters. The [Core 1 showcase](public/index.html#core1-showcase) pairs scoped concurrency, scheduled streams, and Schema field-presence source with Effect-TS translations; its [full Effective source](public/effective-examples/core1.eff) passes the compiler and strict emitted TypeScript check. The repository tracks the remaining parity gaps. Ecosystem packages require typed host adapters. The Effect-TS examples are manually written and pass strict TypeScript checks against Effect 4.0.5.
+Core 1 is specified in design draft 0.60. The effektive-lang repository implements the documented core 1 subset, including four-channel Schema composition, effectful optional-field getters and defaults, guarded required-encoded to optional-decoded fields, ordered general unions, nullable optional fields with explicit null policies, default encoding strategies, missing-or-null defaults, encoded-value defaults, type-side construction, constructor metadata with separate make inputs, propagation through optional adapters and guarded recursive Schemas, guarded recursive data records, separate recursive decoded and encoded representations, constructor defaults on field descriptors with preserved presence flags, explicit retained, target-selected or reset defaults through adapter order, and guarded recursive fields through wire-default and optional-bridge adapters. The [Core 1 showcase](public/index.html#core1-showcase) pairs scoped concurrency, scheduled streams, and Schema field-presence source with Effect-TS translations; its [full Effektive source](public/effektive-examples/core1.eff) passes the compiler and strict emitted TypeScript check. The repository tracks the remaining parity gaps. Ecosystem packages require typed host adapters. The Effect-TS examples are manually written and pass strict TypeScript checks against Effect 4.0.5.
 
-The accepted [application acceptance rule](public/effective-spec.html#application-acceptance) bounds further additions. A service workflow, a scheduled worker, and a stream processor must compile with precise contracts and pass failure, cancellation, and cleanup checks.
+The accepted [application acceptance rule](public/effektive-spec.html#application-acceptance) bounds further additions. A service workflow, a scheduled worker, and a stream processor must compile with precise contracts and pass failure, cancellation, and cleanup checks.
 
-The [scheduled worker](public/effective-examples/scheduled-worker/README.md) now passes with existing source forms and ten compiled runtime checks. The [service workflow](public/effective-examples/service-workflow/README.md) also passes with a registered atomic SQL adapter and fifteen compiled runtime checks. The [stream processor](public/effective-examples/stream-processor/README.md) also passes with ordered concurrent mapping, backpressure, selective fallback and thirteen runtime cases.
+The [scheduled worker](public/effektive-examples/scheduled-worker/README.md) now passes with existing source forms and ten compiled runtime checks. The [service workflow](public/effektive-examples/service-workflow/README.md) also passes with a registered atomic SQL adapter and fifteen compiled runtime checks. The [stream processor](public/effektive-examples/stream-processor/README.md) also passes with ordered concurrent mapping, backpressure, selective fallback and thirteen runtime cases.
 
-All three application gates are complete. The accepted stopping rule selects no further automatic API additions; release acceptance remains separate work. Item 9 remains deferred. The [remaining and deferred gaps](public/effective-spec.html#remaining-gaps) distinguish API boundaries, runtime limits and separate release acceptance.
+All three application gates are complete. The accepted stopping rule selects no further automatic API additions; release acceptance remains separate work. Item 9 remains deferred. The [remaining and deferred gaps](public/effektive-spec.html#remaining-gaps) distinguish API boundaries, runtime limits and separate release acceptance.
 
 ## This repository
 
-This repository contains the Effective mini book, the language specification, and their source files. The site files are in `public/`.
+This repository contains the Effektive mini book, the language specification, and their source files. The site files are in `public/`.
 
 ## Serve the site
 
@@ -26,7 +26,7 @@ To preview the site locally, run `deno task dev` and open `http://localhost:8787
 
 ## Check the site
 
-Each Effective example on both pages has an Effect-TS tab. Run `deno task typecheck` to check every Effect-TS translation against Effect 4.0.5 under strict settings. The check fails when an Effective example has no Effect-TS tab. Run `deno task test` to test the server in `main.ts`.
+Each Effektive example on both pages has an Effect-TS tab. Run `deno task typecheck` to check every Effect-TS translation against Effect 4.0.5 under strict settings. The check fails when an Effektive example has no Effect-TS tab. Run `deno task test` to test the server in `main.ts`.
 
 ## Publish a CSS or JavaScript change
 
@@ -39,7 +39,7 @@ The `deploy` section of `deno.json` sets the runtime: a dynamic app with `main.t
 To create the application, run this command in the repository root. Replace `<org>` with your Deno Deploy organization.
 
 ```sh
-deno deploy create --org <org> --app effective --source local --runtime-mode dynamic --entrypoint main.ts --region global
+deno deploy create --org <org> --app effektive --source local --runtime-mode dynamic --entrypoint main.ts --region global
 ```
 
 To deploy a new version, run `deno deploy --prod` in the repository root.

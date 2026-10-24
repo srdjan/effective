@@ -7,7 +7,7 @@ The consumer imports the domain's `double` function and passes that pure functio
 The consumer can also pass an inline pure callback. The project configuration prevents the domain from importing another module.
 
 Download [domain.eff](domain.eff), [consumer.eff](consumer.eff), [effective.json](effective.json), [deno.json](deno.json), and [checks.ts](checks.ts) together.
-From the current effective-lang checkout, build the downloaded directory:
+From the current effektive-lang checkout, build the downloaded directory:
 
 ```sh
 deno task effective build /path/to/portable-types --validate --tsc

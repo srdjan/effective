@@ -13,7 +13,7 @@ Deno.test("replaces or adds the version on asset links", () => {
 });
 
 Deno.test("pages load assets with the deno.json version", async () => {
-  for (const page of ["public/index.html", "public/effective-spec.html"]) {
+  for (const page of ["public/index.html", "public/effektive-spec.html"]) {
     const html = await Deno.readTextFile(page);
     assertStringIncludes(html, `href="site.css?v=${config.version}"`, page);
     assertStringIncludes(html, `src="site.js?v=${config.version}"`, page);

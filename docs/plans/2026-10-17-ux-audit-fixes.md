@@ -2,8 +2,8 @@
 
 ## Context
 
-- Target: the mini book (`public/index.html`) and the specification (`public/effective-spec.html`).
-- Primary user: a TypeScript developer who evaluates Effective. The task is to read the chapters, compare each Effective example with its Effect-TS output, and open the source files.
+- Target: the mini book (`public/index.html`) and the specification (`public/effektive-spec.html`).
+- Primary user: a TypeScript developer who evaluates Effektive. The task is to read the chapters, compare each Effektive example with its Effect-TS output, and open the source files.
 - Evidence: the running site at 1440x900 and 390x844 in Playwright, and the source in `public/site.js`, `public/site.css`, and both pages.
 - Limits: no analytics, no user research, and no test on a real phone, Windows, or a screen reader. Severity ratings are expert assessments, not measured outcomes.
 
@@ -15,7 +15,7 @@
 - At 390 px, the sticky top bar is 102 px high, which is 12 percent of the viewport.
 - Section navigation links read "Previous section" and "Next section" on all 27 sections.
 - No code figure has a copy action. No heading has a permalink.
-- `.eff` links open the source drawer. `typed-ir.ts`, `log.ir.json`, `effective-validation.txt`, and `log.lft` open plain text pages.
+- `.eff` links open the source drawer. `typed-ir.ts`, `log.ir.json`, `effektive-validation.txt`, and `log.lft` open plain text pages.
 
 ## Heuristic findings (Nielsen H1-H10, severity 0-4)
 
@@ -38,7 +38,7 @@ R1: a returning reader has no resume point. The reader must remember the chapter
 
 ## Implementation plan
 
-All work is in `public/site.js`, `public/site.css`, `public/index.html`, and `public/effective-spec.html`. Follow the existing style: one IIFE, `const` arrow functions, `setupX` functions called at the end, compact one-line CSS rules. Every feature is progressive enhancement: without JavaScript the pages work as before. Respect `prefers-reduced-motion`. Wrap every `localStorage` access in `try`/`catch`, because storage can throw in private modes.
+All work is in `public/site.js`, `public/site.css`, `public/index.html`, and `public/effektive-spec.html`. Follow the existing style: one IIFE, `const` arrow functions, `setupX` functions called at the end, compact one-line CSS rules. Every feature is progressive enhancement: without JavaScript the pages work as before. Respect `prefers-reduced-motion`. Wrap every `localStorage` access in `try`/`catch`, because storage can throw in private modes.
 
 ### P1 (U1): sticky chapters menu with the current chapter
 
@@ -51,14 +51,14 @@ All work is in `public/site.js`, `public/site.css`, `public/index.html`, and `pu
 
 - In `setupCodeTabs`, when a tab is activated by a user (click or arrow keys), activate the tab with the same label in every other tabbed figure on the page. Do not move focus in the other figures.
 - Keep the scroll position of the figure that the user clicked. Other figures above it can change height when their panel changes. Read the clicked figure's `getBoundingClientRect().top` before the change and correct `scrollBy` after it.
-- Store the label in `localStorage` under `effective.tab`. On load, activate the stored label in each figure that has it. Default to the first tab when nothing is stored.
+- Store the label in `localStorage` under `effektive.tab`. On load, activate the stored label in each figure that has it. Default to the first tab when nothing is stored.
 
 ### P3 (U3): copy button on code figures
 
 - In JS, add a `<button type="button" class="copy-code">Copy</button>` to every `figure.code` figcaption, and to the drawer figcaption before Close. Do not change the static HTML, because `typecheck/check.ts` parses figcaptions in the HTML files.
 - On click, copy the `textContent` of the visible `pre code` in that figure with `navigator.clipboard.writeText`. Change the label to "Copied" for 1.6 s, then back. On failure, change it to "Copy failed" for 1.6 s. Announce through `aria-live="polite"` on the button label or a visually hidden status.
 - Skip the copy button when `navigator.clipboard` is missing.
-- Group the figcaption actions on the right. A figcaption can already contain a link ("View Effective source"). Put the link and the button in one flex group.
+- Group the figcaption actions on the right. A figcaption can already contain a link ("View Effektive source"). Put the link and the button in one flex group.
 - Style the button like the drawer Close button but quieter: transparent, `min-height: 44px` for touch, `--code-comment` text, `--code-ink` on hover and focus.
 
 ### P4 (U4 + U8): drawer for all source files
@@ -78,7 +78,7 @@ All work is in `public/site.js`, `public/site.css`, `public/index.html`, and `pu
 
 ### P7 (R1): continue reading
 
-- Store the current section id under `effective.section.<page>` when the current section changes, where `<page>` is `book` or `spec` from `body.book-page` or `body.spec-page`. Throttle writes to one per second.
+- Store the current section id under `effektive.section.<page>` when the current section changes, where `<page>` is `book` or `spec` from `body.book-page` or `body.spec-page`. Throttle writes to one per second.
 - On load, when the URL has no hash and a stored id exists that is not the first section, add a link to the hero actions: "Continue: <chapter name>" with `href="#<id>"`. On the book page put it after "Read the book". On the spec page put it after "Read the reference". Style it as the secondary button style of its hero.
 
 ### Deferred
@@ -93,7 +93,7 @@ All work is in `public/site.js`, `public/site.css`, `public/index.html`, and `pu
    - U1: scroll to chapter 5 at 390 px. The chapters menu is visible under the top bar and shows the chapter name. Open it, click a chapter, the menu closes, and the heading is not hidden.
    - U2: switch one figure to Effect-TS. All tabbed figures show Effect-TS. The clicked figure does not move. Reload: Effect-TS stays selected.
    - U3: click Copy on a code figure and in the drawer. The clipboard holds the visible panel text.
-   - U4: open `typed-ir.ts`, `log.ir.json`, and `effective-validation.txt` from the contents. Each opens in the drawer. The `.txt` file has no keyword colors.
+   - U4: open `typed-ir.ts`, `log.ir.json`, and `effektive-validation.txt` from the contents. Each opens in the drawer. The `.txt` file has no keyword colors.
    - U5: section links name their targets.
    - U6: at 390 px the top bar is one row.
    - R1: read to chapter 5, reload without a hash, and see "Continue: <chapter>". Click it and land on chapter 5.

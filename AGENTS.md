@@ -1,4 +1,4 @@
-# Effective
+# Effektive
 
 Keep `name`, `version`, and `exports` in `deno.json`. Do not remove them. Deno warns when `name` has no `exports`.
 

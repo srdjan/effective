@@ -1,7 +1,7 @@
 // Type-check harness for the Effect-TS panels on the documentation pages.
 //
 // The harness reads the Effect-TS panels from public/index.html,
-// public/effective-spec.html, and the contract explorer in public/site.js.
+// public/effektive-spec.html, and the contract explorer in public/site.js.
 // It builds one TypeScript file for each unit and runs `deno check` over all
 // units. See docs/plans/2026-10-16-effect-ts-tabs.md for the full contract.
 //
@@ -153,7 +153,7 @@ const scanPage = (
       ]);
     }
 
-    if (effectPanels === 0 && body.includes('class="language-effective"')) {
+    if (effectPanels === 0 && body.includes('class="language-effektive"')) {
       missing.push({ page, origin: `${origin} ${label}` });
     }
   }
@@ -196,11 +196,11 @@ const load = async (): Promise<Result<Loaded, string[]>> => {
   const errors: string[] = [];
   const [indexHtml, specHtml, siteJs] = await Promise.all([
     Deno.readTextFile(rootPath("public/index.html")),
-    Deno.readTextFile(rootPath("public/effective-spec.html")),
+    Deno.readTextFile(rootPath("public/effektive-spec.html")),
     Deno.readTextFile(rootPath("public/site.js")),
   ]);
   const index = scanPage("index", "public/index.html", indexHtml, errors);
-  const spec = scanPage("spec", "public/effective-spec.html", specHtml, errors);
+  const spec = scanPage("spec", "public/effektive-spec.html", specHtml, errors);
 
   const panels: Panel[] = [...index.panels, ...spec.panels];
   const requiresByUnit = new Map<string, string[]>();
@@ -396,7 +396,7 @@ const main = async (): Promise<number> => {
     page === "all" || block.page === page
   );
 
-  const tempDir = await Deno.makeTempDir({ prefix: "effective-typecheck-" });
+  const tempDir = await Deno.makeTempDir({ prefix: "effektive-typecheck-" });
   let failed = false;
   try {
     const files: string[] = [];
@@ -445,7 +445,7 @@ const main = async (): Promise<number> => {
   const byPage = (name: PageName): number =>
     missing.filter((block) => block.page === name).length;
   console.log(
-    `Missing: ${missing.length} Effective blocks have no Effect-TS panel (book ${
+    `Missing: ${missing.length} Effektive blocks have no Effect-TS panel (book ${
       byPage("index")
     }, spec ${byPage("spec")}).`,
   );

@@ -3,11 +3,11 @@
     "allow": [
       "Bash(deno deploy *)",
       "Bash(mkdir public *)",
-      "Bash(command mv effective-examples effective-mini-book.html effective-spec.html effective-validation.txt log.ir.json log.lft typed-ir.ts public/)",
-      "Bash(sed -i '' 's/effective-docs/effective/g' README.md deno.json public/index.html public/effective-spec.html && git grep -n \"effective-docs\"; git diff README.md deno.json public)"
+      "Bash(command mv effektive-examples effektive-mini-book.html effektive-spec.html effektive-validation.txt log.ir.json log.lft typed-ir.ts public/)",
+      "Bash(sed -i '' 's/effektive-docs/effektive/g' README.md deno.json public/index.html public/effektive-spec.html && git grep -n \"effektive-docs\"; git diff README.md deno.json public)"
     ],
     "additionalDirectories": [
-      "/Users/srdjans/Code/effective"
+      "/Users/srdjans/Code/effektive"
     ]
   }
 }

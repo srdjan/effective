@@ -1,7 +1,7 @@
 import config from "./deno.json" with { type: "json" };
 
 // Assets have a one-hour cache lifetime, so each release needs new asset URLs.
-const PAGES = ["public/index.html", "public/effective-spec.html"];
+const PAGES = ["public/index.html", "public/effektive-spec.html"];
 const ASSET_LINK = /(href="site\.css|src="site\.js)(\?v=[^"]*)?"/g;
 
 export const stampAssets = (html: string, version: string): string =>

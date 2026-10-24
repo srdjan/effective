@@ -39,7 +39,7 @@ Deno.test("sends plain text when the client does not accept gzip", async () => {
   }
 });
 
-Deno.test("keeps the plain-text type for Effective and TypeScript sources", async () => {
+Deno.test("keeps the plain-text type for Effektive and TypeScript sources", async () => {
   const response = await get("/typed-ir.ts", { "accept-encoding": "gzip" });
   assertEquals(
     response.headers.get("content-type"),
@@ -66,7 +66,7 @@ Deno.test("sets cache lifetimes for assets but not for pages", async () => {
     ["/site.js", "public, max-age=3600"],
     ["/fonts/bricolage-grotesque-latin.woff2", "public, max-age=2592000"],
     ["/", null],
-    ["/effective-spec.html", null],
+    ["/effektive-spec.html", null],
   ];
   for (const [path, cacheControl] of expected) {
     const response = await get(path);

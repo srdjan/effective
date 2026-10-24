@@ -224,13 +224,13 @@
     }
   };
 
-  const tabStorageKey = "effective.tab";
+  const tabStorageKey = "effektive.tab";
   const pageName = document.body.classList.contains("book-page")
     ? "book"
     : document.body.classList.contains("spec-page")
     ? "spec"
     : null;
-  const sectionStorageKey = `effective.section.${pageName}`;
+  const sectionStorageKey = `effektive.section.${pageName}`;
 
   // Keeps the anchor at the same screen position while a change above it moves the page.
   const holdPosition = (anchor, change) => {
@@ -842,7 +842,7 @@
     drawer.className = "source-drawer";
     drawer.setAttribute("aria-labelledby", "source-drawer-title");
     drawer.innerHTML =
-      '<figure class="code"><figcaption><span id="source-drawer-title"></span><div class="code-actions"><button type="button" class="copy-code" aria-describedby="source-drawer-title">Copy</button><button type="button" class="close-drawer" autofocus>Close</button></div></figcaption><pre tabindex="0"><code class="language-effective"></code></pre></figure>';
+      '<figure class="code"><figcaption><span id="source-drawer-title"></span><div class="code-actions"><button type="button" class="copy-code" aria-describedby="source-drawer-title">Copy</button><button type="button" class="close-drawer" autofocus>Close</button></div></figcaption><pre tabindex="0"><code class="language-effektive"></code></pre></figure>';
     document.body.append(drawer);
 
     const title = drawer.querySelector("#source-drawer-title");

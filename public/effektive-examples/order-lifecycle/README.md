@@ -13,7 +13,7 @@ Files in this directory:
 - [effective.json](effective.json): compiler project configuration.
 - [deno.json](deno.json): pinned Effect imports and strict checking options.
 
-Download these files together. Use the effective-lang CLI to build this
+Download these files together. Use the effektive-lang CLI to build this
 directory with --validate --tsc. Build writes contracts.ts and orders.ts
 beside the source files. From the downloaded directory, run:
 

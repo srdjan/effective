@@ -1,6 +1,6 @@
 # Design System
 
-This file records the design rules of the Effective site. The values come from `:root` in `public/site.css`. When a rule changes, update this file in the same commit.
+This file records the design rules of the Effektive site. The values come from `:root` in `public/site.css`. When a rule changes, update this file in the same commit.
 
 ## Direction
 
@@ -58,7 +58,7 @@ Spacing uses an 8px base. The gutter is 32px, 24px below 800px, and 20px below 5
 
 ### Code figure
 
-- `figure.code` holds a caption, Copy, an Effective tab, and an Effect-TS tab.
+- `figure.code` holds a caption, Copy, an Effektive tab, and an Effect-TS tab.
 - Below a 36rem container width, the caption stacks. Copy then starts on the caption edge.
 
 ### Contract explorer
